@@ -41,7 +41,10 @@ function SiteAdminRoutes() {
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
         <Route path="/universities" element={<UniversitiesList />} />
-        <Route path="/universities/create" element={<CreateUniversity />} />
+        <Route
+          path="/universities/create/:uniId?"
+          element={<CreateUniversity />}
+        />
       </Route>
       <Route
         path="*"

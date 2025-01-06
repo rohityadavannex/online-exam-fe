@@ -7,6 +7,7 @@ export const dummyData: UniversityType[] = [
     email: "rtu@gmail.com",
     phone: "9874563210",
     address: "Dummy Address",
+    status: true,
   },
   {
     id: 2,
@@ -14,6 +15,7 @@ export const dummyData: UniversityType[] = [
     email: "ru@gmail.com",
     phone: "9874563210",
     address: "Dummy Address",
+    status: true,
   },
   {
     id: 3,
@@ -21,5 +23,6 @@ export const dummyData: UniversityType[] = [
     email: "lpu@gmail.com",
     phone: "7896541320",
     address: "Dummy Address",
+    status: false,
   },
 ];

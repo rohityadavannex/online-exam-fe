@@ -1,12 +1,15 @@
 import { Image, TableProps } from "antd";
 import { useNavigate } from "react-router-dom";
+import Toggle from "src/components/toggles/Toggle";
 import { getImageUrl } from "src/helpers/helpers";
 import ActionCell from "./ActionCell";
 import UniversityType from "./university-types";
 
 const useUniversityTableColumns = ({
+  onStatusChange,
   onDelete,
 }: {
+  onStatusChange: (id: number, status: boolean) => void;
   onDelete: (id: number) => void;
 }) => {
   const navigate = useNavigate();
@@ -48,6 +51,16 @@ const useUniversityTableColumns = ({
       title: "Address",
       dataIndex: "address",
       render: (text: string) => text,
+    },
+    {
+      title: "Status",
+      dataIndex: "active",
+      render: (text: boolean, record: UniversityType) => (
+        <Toggle
+          checked={text}
+          onToggle={(value) => onStatusChange(record?.id, value)}
+        />
+      ),
     },
     {
       title: "Action",
