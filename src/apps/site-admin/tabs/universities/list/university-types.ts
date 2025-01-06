@@ -4,6 +4,7 @@ type UniversityType = {
   email: string;
   phone: string;
   address: string;
+  image?: string;
 };
 
 export default UniversityType;

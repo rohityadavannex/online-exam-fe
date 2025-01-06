@@ -14,8 +14,8 @@ enum FORM_FIELDS {
   SUBJECT_NAME = "subjectName",
 }
 
-const CreateSubject = () => {
-  useSetActiveTab(TAB_NAMES.SUBJECT);
+const CreateUniversity = () => {
+  useSetActiveTab(TAB_NAMES.UNIVERSITY);
   const { subjectId } = useParams();
   const { errorNotification, successNotification } = useNotification();
   const {
@@ -99,4 +99,4 @@ const CreateSubject = () => {
   );
 };
 
-export default CreateSubject;
+export default CreateUniversity;
