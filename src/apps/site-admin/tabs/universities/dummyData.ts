@@ -1,22 +1,25 @@
-import UniversityType from "./list/subject-types";
+import UniversityType from "./list/university-types";
 
 export const dummyData: UniversityType[] = [
   {
     id: 1,
     name: "Rajasthan Technical University",
-    class: "8",
-    teacher: ["John Doe", "John Doe", "John Doe", "John Doe"],
+    email: "rtu@gmail.com",
+    phone: "9874563210",
+    address: "Dummy Address",
   },
   {
     id: 2,
     name: "Rajasthan University",
-    class: "8",
-    teacher: ["John Doe"],
+    email: "ru@gmail.com",
+    phone: "9874563210",
+    address: "Dummy Address",
   },
   {
     id: 3,
     name: "Lovely Professional University",
-    class: "8",
-    teacher: ["John Doe"],
+    email: "lpu@gmail.com",
+    phone: "7896541320",
+    address: "Dummy Address",
   },
 ];

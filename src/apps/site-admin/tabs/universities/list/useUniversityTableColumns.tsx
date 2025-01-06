@@ -1,6 +1,5 @@
 import { TableProps } from "antd";
 import { useNavigate } from "react-router-dom";
-import ListTextCell from "src/apps/super-admin/tabs/roles/list/ListTextCell";
 import ActionCell from "./ActionCell";
 import UniversityType from "./university-types";
 
@@ -24,15 +23,18 @@ const useUniversityTableColumns = ({
       render: (text: string) => text,
     },
     {
-      title: "Teacher Name",
-      dataIndex: "teacher",
-      render: (text) => (
-        <ListTextCell value={text} className="!justify-start" />
-      ),
+      title: "Email",
+      dataIndex: "email",
+      render: (text: string) => text,
     },
     {
-      title: "Class",
-      dataIndex: "class",
+      title: "Contact",
+      dataIndex: "phone",
+      render: (text: string) => text,
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
       render: (text: string) => text,
     },
     {

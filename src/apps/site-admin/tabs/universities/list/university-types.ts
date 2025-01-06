@@ -1,7 +1,9 @@
 type UniversityType = {
   id: number;
   name: string;
-  class?: string;
+  email: string;
+  phone: string;
+  address: string;
 };
 
 export default UniversityType;
