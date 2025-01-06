@@ -13,7 +13,7 @@ import TableHeader from "./TableHeader";
 import useUniversityTableColumns from "./useUniversityTableColumns";
 
 const UniversitiesList = () => {
-  useSetActiveTab(TAB_NAMES.INSTITUTE);
+  useSetActiveTab(TAB_NAMES.UNIVERSITY);
   const [length, setLength] = useState(10);
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState("");
