@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "css/react-modal.css";
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+@import "tippy.js/themes/light.css";
+@import "css/tooltip.css";
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-family: "Nunito", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100vh;
+}
+
+code {
+  font-family: "Nunito", sans-serif;
+}
+
+:root {
+  --primary-color: #5900d9;
+  --primary-color-100: rgb(12, 140, 233, 0.1);
+  --primary-color-800: rgb(12, 140, 233, 0.8);
+}
+
+::placeholder {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 19.6px */
+  letter-spacing: -0.28px;
+  color: #2d3748;
+}
+
+input:focus {
+  outline: none;
+}
+
+/* ------------ scroll bar css -------- */
+
+/* For Firefox */
+html {
+  scrollbar-width: thin; /* Use thin scrollbars */
+  scrollbar-color: #888 #f1f1f1; /* thumb and track colors */
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin; /* Use thin scrollbars */
+  scrollbar-color: #888 #f1f1f1; /* thumb and track colors */
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset; /* Change to your desired background color */
+  -webkit-text-fill-color: #000000; /* Change text color if needed */
+  transition: background-color 5000s ease-in-out 0s; /* Prevent flicker */
+}

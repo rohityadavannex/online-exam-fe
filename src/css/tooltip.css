@@ -1,0 +1,8 @@
+.tippy-content {
+  padding: 0;
+}
+
+.tippy-box {
+  max-width: 100% !important;
+  /* min-width: 200px; */
+}

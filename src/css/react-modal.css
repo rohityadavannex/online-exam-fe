@@ -1,0 +1,21 @@
+.ReactModal__Overlay {
+  opacity: 0;
+  transform: translateY(-100px);
+  /* transition: all 500ms ease-in-out; */
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+  transform: translateY(0px);
+  z-index: 50;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+  transform: translateY(-100px);
+}
+
+.ReactModal__Content {
+  scrollbar-width: thin; /* Use thin scrollbars */
+  scrollbar-color: #888 #f1f1f1; /* thumb and track colors */
+}
