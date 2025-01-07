@@ -26,6 +26,7 @@ export const TAB_NAMES = {
   STAFF: "STAFF",
   STUDENT: "STUDENT",
   UNIVERSITY: "UNIVERSITY",
+  COLLAGES: "COLLAGES",
 };
 
 export const siteAdminNavOptions = [
@@ -39,6 +40,36 @@ export const siteAdminNavOptions = [
     label: "University",
     name: TAB_NAMES.UNIVERSITY,
     href: "/universities",
+    icon: UserIcon,
+  },
+];
+
+export const universityNavOptions = [
+  {
+    label: "Dashboard",
+    name: TAB_NAMES.DASHBOARD,
+    href: "/",
+    icon: DashboardIcon,
+  },
+  {
+    label: "Collages",
+    name: TAB_NAMES.COLLAGES,
+    href: "/collages",
+    icon: UserIcon,
+  },
+];
+
+export const collageNavOptions = [
+  {
+    label: "Dashboard",
+    name: TAB_NAMES.DASHBOARD,
+    href: "/",
+    icon: DashboardIcon,
+  },
+  {
+    label: "Staff",
+    name: TAB_NAMES.STAFF,
+    href: "/staff",
     icon: UserIcon,
   },
 ];

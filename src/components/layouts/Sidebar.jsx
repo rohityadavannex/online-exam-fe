@@ -3,9 +3,10 @@ import { isEqual } from "lodash";
 import { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getRoleName } from "src/helpers/helpers";
 import usePrevious from "src/hooks/usePrevious";
 import { ArrowDownIcon, MainLogoIcon, ToggleIcon, UserIcon2 } from "src/icons";
-import { getActiveTab } from "../../redux/selectors/app";
+import { getActiveTab, getCurrentUserInfo } from "../../redux/selectors/app";
 import useGetNav from "./useGetNav";
 
 const Sidebar = () => {
@@ -113,6 +114,7 @@ const Sidebar = () => {
 export default Sidebar;
 
 const UserInfo = () => {
+  const userInfo = useSelector(getCurrentUserInfo);
   return (
     <div className="flex items-center space-x-4 p-3 border rounded-[10px] shadow-sm bg-white max-w-sm ">
       <div className="w-[40px] h-[40px]  rounded-full flex items-center justify-center">
@@ -121,9 +123,11 @@ const UserInfo = () => {
 
       <div>
         <h2 className="text-lg text-[16px] leading-[28px] font-medium text-600">
-          Sunil Choudhary
+          {userInfo?.name ?? "Anonymous"}
         </h2>
-        <p className="text-[16px] leading-[20px] text-400">Admin</p>
+        <p className="text-[16px] leading-[20px] text-400">
+          {getRoleName(userInfo?.role)}
+        </p>
       </div>
     </div>
   );
