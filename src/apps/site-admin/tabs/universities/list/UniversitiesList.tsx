@@ -1,13 +1,16 @@
-import { Table } from "antd";
+import { Modal, Table } from "antd";
 import classNames from "classnames";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
 import TabHeader from "src/apps/common/tab-header/TabHeader";
 import { useNotification } from "src/components/contexts/NotificationContext";
 import useDebounce from "src/hooks/useDebounce";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
-import { useDeleteSubject, useGetSubjects } from "../api-subject";
-import { dummyData } from "../dummyData";
+import {
+  useDeleteUniversity,
+  useGetUniversities,
+  useUpdateUniversityStatus,
+} from "../api-client";
 import SubjectFilterOverlay from "./SubjectFilterOverlay";
 import TableHeader from "./TableHeader";
 import useUniversityTableColumns from "./useUniversityTableColumns";
@@ -20,39 +23,54 @@ const UniversitiesList = () => {
   const debouncedSearch = useDebounce(searchText);
   const [isFilterOverlayOpen, setIsFilterOverlayOpen] = useState(false);
   const { successNotification, errorNotification } = useNotification();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [idToOperate, setIdToOperate] = useState<Number | undefined>(undefined);
 
   const {
     isLoading,
     error,
     data,
-    mutate: updateSectionData,
+    mutate: mutateUniversityList,
     isValidating,
-  } = useGetSubjects({ length, page, search: debouncedSearch });
+  } = useGetUniversities({ length, page, search: debouncedSearch });
 
   const {
     isLoading: isDeleteLoading,
     isSuccess: isDeleteSucceed,
     error: deleteErr,
-    execute: deleteSubject,
-  } = useDeleteSubject();
+    execute: deleteUniversity,
+  } = useDeleteUniversity();
 
-  const subjectsData = useMemo(() => data?.data?.rows ?? [], [data?.data]);
+  const {
+    execute: handleUniStatusChange,
+    isSuccess: isStatusChangeSuccess,
+    error: statusChangeError,
+  } = useUpdateUniversityStatus();
+
+  const universitiesData = useMemo(() => data?.data?.rows ?? [], [data?.data]);
 
   const totalRecords = useMemo(
     () => data?.data?.count ?? 0,
     [data?.data?.count]
   );
 
+  const closeDeleteModal = useCallback(() => setIsDeleteModalOpen(false), []);
+
   const { columns } = useUniversityTableColumns({
+    onStatusChange: (id: number, status: boolean) => {
+      handleUniStatusChange({ uniId: id, data: { status } });
+    },
     onDelete: (id: number) => {
-      deleteSubject(id);
+      setIdToOperate(id);
+      setIsDeleteModalOpen(true);
     },
   });
 
   useEffect(() => {
     if (isDeleteSucceed) {
-      updateSectionData();
-      successNotification("Subject Deleted.");
+      mutateUniversityList();
+      successNotification("University Deleted.");
+      closeDeleteModal();
     }
     if (deleteErr) {
       errorNotification();
@@ -62,7 +80,24 @@ const UniversitiesList = () => {
     errorNotification,
     isDeleteSucceed,
     successNotification,
-    updateSectionData,
+    mutateUniversityList,
+    closeDeleteModal,
+  ]);
+
+  useEffect(() => {
+    if (isStatusChangeSuccess) {
+      mutateUniversityList();
+      successNotification("University Status Updated.");
+    }
+    if (statusChangeError) {
+      errorNotification();
+    }
+  }, [
+    errorNotification,
+    isStatusChangeSuccess,
+    mutateUniversityList,
+    statusChangeError,
+    successNotification,
   ]);
 
   return (
@@ -72,16 +107,22 @@ const UniversitiesList = () => {
         onClose={() => setIsFilterOverlayOpen(false)}
         handleFilter={(filter) => {}}
       />
+      <Modal
+        title="Are You sure you want to delete this ?"
+        open={isDeleteModalOpen}
+        onOk={() => deleteUniversity(idToOperate)}
+        onCancel={closeDeleteModal}
+        okText={isDeleteLoading ? "Loading..." : "Delete"}
+      ></Modal>
       <div className="flex flex-col gap-6">
         <TabHeader label="Universities" />
         <div className="bg-white rounded-lg px-6 py-9 flex flex-col gap-5">
           <TableHeader handleFilterClick={() => setIsFilterOverlayOpen(true)} />
           <Table
             className={classNames({
-              "overflow-hidden": subjectsData.length < 1,
+              "overflow-hidden": universitiesData.length < 1,
             })}
-            // dataSource={subjectsData}
-            dataSource={dummyData}
+            dataSource={universitiesData}
             columns={columns}
             rowHoverable={false}
             scroll={{ x: true }}

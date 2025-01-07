@@ -62,7 +62,7 @@ const UploadImage = ({
             }
             alt="avatar"
             style={{ width: "100%", height: "100%" }}
-            className="rounded-full object-cover"
+            className="rounded-md object-cover"
           />
         ) : (
           uploadButton

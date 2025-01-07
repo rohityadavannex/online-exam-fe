@@ -72,6 +72,10 @@ export const usePatch = (url) => {
   return useFetchAsync((data) => patch(url, data));
 };
 
+export const useDelete = (url) => {
+  return useFetchAsync((data) => patch(url, data));
+};
+
 export const useGet = (url) => {
   const result = useSWR(url, get);
 

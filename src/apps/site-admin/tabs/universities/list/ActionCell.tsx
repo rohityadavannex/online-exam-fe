@@ -1,5 +1,4 @@
-import DeleteButton from "src/components/buttons/DeleteButton";
-import { ViewIcon } from "src/icons";
+import { DeleteIcon, ViewIcon } from "src/icons";
 
 const ActionCell = ({
   onView,
@@ -13,7 +12,9 @@ const ActionCell = ({
       <span className="cursor-pointer" onClick={onView}>
         <ViewIcon />
       </span>
-      <DeleteButton onDelete={onDelete} />
+      <span className="cursor-pointer" onClick={onDelete}>
+        <DeleteIcon />
+      </span>
     </div>
   );
 };
