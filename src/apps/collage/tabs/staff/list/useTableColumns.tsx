@@ -63,7 +63,7 @@ const useTableColumns = ({
       render: (text: boolean, record: StaffType) => (
         <Toggle
           checked={text}
-          onToggle={(value) => onStatusChange(record?.id, value)}
+          onToggle={(value) => onStatusChange(record?.userId, value)}
         />
       ),
     },
