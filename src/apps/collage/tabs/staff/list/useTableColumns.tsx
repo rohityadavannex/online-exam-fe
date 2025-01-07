@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Toggle from "src/components/toggles/Toggle";
 import { getImageUrl } from "src/helpers/helpers";
 import ActionCell from "./ActionCell";
-import UniversityType from "./university-types";
+import StaffType from "./types";
 
 const useTableColumns = ({
   onStatusChange,
@@ -13,18 +13,17 @@ const useTableColumns = ({
   onDelete: (id: number) => void;
 }) => {
   const navigate = useNavigate();
-  const columns: TableProps<UniversityType>["columns"] = [
+  const columns: TableProps<StaffType>["columns"] = [
     {
       title: "#",
       dataIndex: "id",
-      render: (text: string, record: UniversityType, index: number) =>
-        index + 1,
+      render: (text: string, record: StaffType, index: number) => index + 1,
       sorter: (a, b) => a.id - b.id,
     },
     {
       title: "Name",
       dataIndex: "name",
-      render: (text: string, record: UniversityType) => (
+      render: (text: string, record: StaffType) => (
         <div className="flex flex-row gap-3 items-center">
           <Image
             src={record?.image ? getImageUrl(record?.image) : undefined}
@@ -48,14 +47,19 @@ const useTableColumns = ({
       render: (text: string) => text,
     },
     {
-      title: "Address",
-      dataIndex: "address",
+      title: "Gender",
+      dataIndex: "gender",
+      render: (text: string) => text,
+    },
+    {
+      title: "Designation",
+      dataIndex: "designation",
       render: (text: string) => text,
     },
     {
       title: "Status",
       dataIndex: "active",
-      render: (text: boolean, record: UniversityType) => (
+      render: (text: boolean, record: StaffType) => (
         <Toggle
           checked={text}
           onToggle={(value) => onStatusChange(record?.id, value)}

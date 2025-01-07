@@ -566,3 +566,14 @@ export const HOUSES = [
   { label: "White", value: 3 },
   { label: "Black", value: 4 },
 ];
+
+export enum STAFF {
+  TEACHER = 4,
+}
+
+export const STAFF_OPTIONS = [
+  {
+    label: "Teacher",
+    value: STAFF.TEACHER,
+  },
+];

@@ -1,4 +1,4 @@
-type UniversityType = {
+type StaffType = {
   id: number;
   name: string;
   email: string;
@@ -8,4 +8,4 @@ type UniversityType = {
   status: boolean;
 };
 
-export default UniversityType;
+export default StaffType;

@@ -4,27 +4,31 @@ import { useNavigate, useParams } from "react-router-dom";
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
 import TabHeader from "src/apps/common/tab-header/TabHeader";
 import Button from "src/components/buttons/Button";
+import DatePicker from "src/components/calendar/DatePicker";
 import UploadImage from "src/components/image-upload/UploadImage";
 import Input from "src/components/inputs/Input";
 import Select from "src/components/select/Select";
 import Toggle from "src/components/toggles/Toggle";
 import useNotification from "src/hooks/useNotification";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
-import cities from "src/utils/cities.json";
-import states from "src/utils/states.json";
-import { object, string } from "yup";
+import { GENDERS, STAFF_OPTIONS } from "src/utils/constants";
+import { number, object, string } from "yup";
 import { useCreateStaff, useGetStaffInfo, useUpdateStaff } from "./api-client";
 
 enum FORM_FIELDS {
   NAME = "name",
   EMAIL = "email",
   PHONE = "phone",
+  ROLE = "role",
+  DEPARTMENT = "department",
+  DESIGNATION = "designation",
+  GENDER = "gender",
+  AADHAR_CARD = "aadharCard",
   ADDRESS = "address",
-  CITY = "city",
-  STATE = "state",
-  DISTRICT = "district",
   LOGO = "logo",
   STATUS = "active",
+  DOB = "dob",
+  DOJ = "doj",
 }
 
 const CreateStaff = () => {
@@ -60,10 +64,14 @@ const CreateStaff = () => {
         [FORM_FIELDS.NAME]: initialData?.name ?? "",
         [FORM_FIELDS.EMAIL]: initialData?.email ?? "",
         [FORM_FIELDS.PHONE]: initialData?.phone ?? "",
+        [FORM_FIELDS.ROLE]: initialData?.role ?? undefined,
+        [FORM_FIELDS.DEPARTMENT]: initialData?.department ?? "",
+        [FORM_FIELDS.DESIGNATION]: initialData?.designation ?? "",
+        [FORM_FIELDS.DOB]: initialData?.dob ?? "",
+        [FORM_FIELDS.DOJ]: initialData?.doj ?? "",
+        [FORM_FIELDS.GENDER]: initialData?.gender ?? undefined,
+        [FORM_FIELDS.AADHAR_CARD]: initialData?.aadharCard ?? "",
         [FORM_FIELDS.ADDRESS]: initialData?.address ?? "",
-        [FORM_FIELDS.CITY]: initialData?.city ?? "",
-        [FORM_FIELDS.STATE]: initialData?.state ?? "",
-        [FORM_FIELDS.DISTRICT]: initialData?.district ?? "",
         [FORM_FIELDS.LOGO]: initialData?.logo ?? "",
         [FORM_FIELDS.STATUS]: initialData?.status ?? false,
       },
@@ -73,6 +81,7 @@ const CreateStaff = () => {
           .email()
           .required("This is a Required field."),
         [FORM_FIELDS.PHONE]: string().required("This is a Required field."),
+        [FORM_FIELDS.ROLE]: number().required("This is a Required field."),
       }),
       onSubmit: (values) => {
         console.log("Form submitted ", values);
@@ -156,6 +165,84 @@ const CreateStaff = () => {
               required
             />
 
+            <Select
+              label="Role"
+              showSearch
+              placeholder="Role"
+              optionFilterProp="label"
+              options={STAFF_OPTIONS}
+              name={FORM_FIELDS.ROLE}
+              value={values[FORM_FIELDS.ROLE] as string}
+              error={errors[FORM_FIELDS.ROLE] as string}
+              onChange={(val: string) =>
+                setFieldValue(`${FORM_FIELDS.ROLE}`, val)
+              }
+              required
+            />
+
+            <Select
+              label="Gender"
+              showSearch
+              placeholder="Gender"
+              optionFilterProp="label"
+              options={GENDERS}
+              name={FORM_FIELDS.GENDER}
+              value={values[FORM_FIELDS.GENDER] as string}
+              error={errors[FORM_FIELDS.GENDER] as string}
+              onChange={(val: string) =>
+                setFieldValue(`${FORM_FIELDS.GENDER}`, val)
+              }
+            />
+
+            <Input
+              type="number"
+              label="Aadhar Card No."
+              placeholder="Enter Aadhar No."
+              name={FORM_FIELDS.AADHAR_CARD}
+              value={values[FORM_FIELDS.AADHAR_CARD] as string}
+              error={getFieldError(FORM_FIELDS.AADHAR_CARD)}
+              onChange={handleChange}
+              disabled={isUpdateLoading}
+            />
+
+            <Input
+              label="Department"
+              placeholder="Enter Department"
+              name={FORM_FIELDS.DEPARTMENT}
+              value={values[FORM_FIELDS.DEPARTMENT] as string}
+              error={getFieldError(FORM_FIELDS.DEPARTMENT)}
+              onChange={handleChange}
+              disabled={isUpdateLoading}
+            />
+
+            <Input
+              label="Designation"
+              placeholder="Enter Designation"
+              name={FORM_FIELDS.DESIGNATION}
+              value={values[FORM_FIELDS.DESIGNATION] as string}
+              error={getFieldError(FORM_FIELDS.DESIGNATION)}
+              onChange={handleChange}
+              disabled={isUpdateLoading}
+            />
+
+            <DatePicker
+              label="Date Of Birth"
+              name={FORM_FIELDS.DOB}
+              value={values[FORM_FIELDS.DOB]}
+              error={getFieldError(FORM_FIELDS.DOB)}
+              onChange={handleChange}
+              disabled={isUpdateLoading}
+            />
+
+            <DatePicker
+              label="Date Of Joining"
+              name={FORM_FIELDS.DOJ}
+              value={values[FORM_FIELDS.DOJ]}
+              error={getFieldError(FORM_FIELDS.DOJ)}
+              onChange={handleChange}
+              disabled={isUpdateLoading}
+            />
+
             <Input
               label="Address"
               placeholder="Enter Address"
@@ -166,46 +253,6 @@ const CreateStaff = () => {
               disabled={isUpdateLoading}
             />
 
-            <Select
-              label="State"
-              showSearch
-              placeholder="State"
-              optionFilterProp="label"
-              options={states}
-              name={FORM_FIELDS.STATE}
-              value={values[FORM_FIELDS.STATE] as string}
-              error={errors[FORM_FIELDS.STATE] as string}
-              onChange={(val: string) =>
-                setFieldValue(`${FORM_FIELDS.STATE}`, val)
-              }
-            />
-            <Select
-              label="District"
-              showSearch
-              placeholder="District"
-              optionFilterProp="label"
-              options={cities}
-              name={FORM_FIELDS.DISTRICT}
-              value={values[FORM_FIELDS.DISTRICT] as string}
-              error={errors[FORM_FIELDS.DISTRICT] as string}
-              onChange={(val: string) =>
-                setFieldValue(`${FORM_FIELDS.DISTRICT}`, val)
-              }
-            />
-            <Select
-              label="City"
-              showSearch
-              placeholder="City"
-              optionFilterProp="label"
-              options={cities}
-              value={values[FORM_FIELDS.CITY] as string}
-              name={FORM_FIELDS.CITY}
-              error={errors[FORM_FIELDS.CITY] as string}
-              onChange={(val: string) =>
-                setFieldValue(`${FORM_FIELDS.CITY}`, val)
-              }
-            />
-
             <Toggle
               label="Status"
               checked={values[FORM_FIELDS.STATUS] as boolean}
@@ -214,7 +261,7 @@ const CreateStaff = () => {
             />
 
             <UploadImage
-              label="Institute Logo"
+              label="Staff Image"
               error={getFieldError(FORM_FIELDS.LOGO)}
               value={values[FORM_FIELDS.LOGO] as unknown as string}
               onChange={(value) => setFieldValue(FORM_FIELDS.LOGO, value)}
