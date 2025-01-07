@@ -10,7 +10,7 @@ import {
 } from "src/http-clients/clients";
 
 export const useCreateStaff = () => {
-  return usePost("/university/collages/create");
+  return usePost("/collage/staff/create");
 };
 
 export const useGetStaff = ({
@@ -22,13 +22,11 @@ export const useGetStaff = ({
   page: number;
   search?: string;
 }) => {
-  return useGet(
-    `/university/collages${getQueryData({ length, page, search })}`
-  );
+  return useGet(`/collage/staff${getQueryData({ length, page, search })}`);
 };
 
 export const useUpdateStaff = ({ staffId }: { staffId: number }) => {
-  return usePatch(`/university/collages/edit/${staffId}`);
+  return usePatch(`/collage/staff/edit/${staffId}`);
 };
 
 export const useDeleteSubject = () => {
@@ -39,12 +37,12 @@ export const useDeleteSubject = () => {
 };
 
 export const useGetStaffInfo = ({ staffId }: { staffId: number }) => {
-  return useGet(`/university/collage/${staffId}`);
+  return useGet(`/collage/staff/${staffId}`);
 };
 
 export const useDeleteStaff = () => {
   const deleteFn = useCallback((staffId: number) => {
-    return deleteReq(`/university/collages/delete/${staffId}`);
+    return deleteReq(`/collage/staff/delete/${staffId}`);
   }, []);
 
   return useFetchAsync(deleteFn);
@@ -53,7 +51,7 @@ export const useDeleteStaff = () => {
 export const useUpdateStaffStatus = () => {
   const updateStatus = useCallback(
     ({ staffId, data }: { staffId: number; data: { status: boolean } }) => {
-      return patch(`/university/collage/status/${staffId}`, data);
+      return patch(`/collage/staff/status/${staffId}`, data);
     },
     []
   );

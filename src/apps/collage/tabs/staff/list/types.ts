@@ -6,6 +6,11 @@ type StaffType = {
   address: string;
   image?: string;
   status: boolean;
+  staff: {
+    designation: string;
+    department: string;
+    gender: number;
+  };
 };
 
 export default StaffType;

@@ -1,7 +1,8 @@
-import { Image, TableProps } from "antd";
+import { Image, TableProps, Tag } from "antd";
 import { useNavigate } from "react-router-dom";
 import Toggle from "src/components/toggles/Toggle";
-import { getImageUrl } from "src/helpers/helpers";
+import { getGenderLabel, getImageUrl } from "src/helpers/helpers";
+import { GENDER_ENUM } from "src/utils/constants";
 import ActionCell from "./ActionCell";
 import StaffType from "./types";
 
@@ -49,7 +50,7 @@ const useTableColumns = ({
     {
       title: "Gender",
       dataIndex: "gender",
-      render: (text: string) => text,
+      render: (text: number) => <GenderCell id={text} />,
     },
     {
       title: "Designation",
@@ -86,3 +87,13 @@ const useTableColumns = ({
 };
 
 export default useTableColumns;
+
+export const GenderCell = ({ id }: { id: number }) => {
+  if (id === GENDER_ENUM.MALE) {
+    return <Tag color="blue">{getGenderLabel(id)}</Tag>;
+  }
+  if (id === GENDER_ENUM.FEMALE) {
+    return <Tag color="pink">{getGenderLabel(id)}</Tag>;
+  }
+  return <Tag>{getGenderLabel(id)}</Tag>;
+};

@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { useFormik } from "formik";
 import { useCallback, useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -67,8 +68,8 @@ const CreateStaff = () => {
         [FORM_FIELDS.ROLE]: initialData?.role ?? undefined,
         [FORM_FIELDS.DEPARTMENT]: initialData?.department ?? "",
         [FORM_FIELDS.DESIGNATION]: initialData?.designation ?? "",
-        [FORM_FIELDS.DOB]: initialData?.dob ?? "",
-        [FORM_FIELDS.DOJ]: initialData?.doj ?? "",
+        [FORM_FIELDS.DOB]: initialData?.dob ?? null,
+        [FORM_FIELDS.DOJ]: initialData?.doj ?? null,
         [FORM_FIELDS.GENDER]: initialData?.gender ?? undefined,
         [FORM_FIELDS.AADHAR_CARD]: initialData?.aadharCard ?? "",
         [FORM_FIELDS.ADDRESS]: initialData?.address ?? "",
@@ -228,18 +229,22 @@ const CreateStaff = () => {
             <DatePicker
               label="Date Of Birth"
               name={FORM_FIELDS.DOB}
-              value={values[FORM_FIELDS.DOB]}
+              value={
+                values[FORM_FIELDS.DOB] ? dayjs(values[FORM_FIELDS.DOB]) : null
+              }
               error={getFieldError(FORM_FIELDS.DOB)}
-              onChange={handleChange}
+              onChange={(value) => setFieldValue(FORM_FIELDS.DOB, value)}
               disabled={isUpdateLoading}
             />
 
             <DatePicker
               label="Date Of Joining"
               name={FORM_FIELDS.DOJ}
-              value={values[FORM_FIELDS.DOJ]}
+              value={
+                values[FORM_FIELDS.DOJ] ? dayjs(values[FORM_FIELDS.DOJ]) : null
+              }
               error={getFieldError(FORM_FIELDS.DOJ)}
-              onChange={handleChange}
+              onChange={(value) => setFieldValue(FORM_FIELDS.DOJ, value)}
               disabled={isUpdateLoading}
             />
 

@@ -58,7 +58,7 @@ const StaffList = () => {
 
   const { columns } = useTableColumns({
     onStatusChange: (id: number, status: boolean) => {
-      handleUniStatusChange({ collageId: id, data: { status } });
+      handleUniStatusChange({ staffId: id, data: { status } });
     },
     onDelete: (id: number) => {
       setIdToOperate(id);
