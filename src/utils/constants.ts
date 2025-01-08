@@ -1,17 +1,23 @@
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
 
+export enum GENDER_ENUM {
+  MALE = 1,
+  FEMALE = 2,
+  OTHERS = 3,
+}
+
 export const GENDERS = [
   {
     label: "Male",
-    value: 1,
+    value: GENDER_ENUM.MALE,
   },
   {
     label: "Female",
-    value: 2,
+    value: GENDER_ENUM.FEMALE,
   },
   {
     label: "Others",
-    value: 3,
+    value: GENDER_ENUM.OTHERS,
   },
 ];
 
@@ -565,4 +571,15 @@ export const HOUSES = [
   { label: "Pink", value: 2 },
   { label: "White", value: 3 },
   { label: "Black", value: 4 },
+];
+
+export enum STAFF {
+  TEACHER = 4,
+}
+
+export const STAFF_OPTIONS = [
+  {
+    label: "Teacher",
+    value: STAFF.TEACHER,
+  },
 ];

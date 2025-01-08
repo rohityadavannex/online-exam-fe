@@ -161,3 +161,22 @@ export function mappedCSVData(
     }),
   }));
 }
+
+export enum ROLES {
+  SITE_ADMIN = 1,
+  UNIVERSITY = 2,
+  COLLAGE = 3,
+}
+
+export function getRoleName(roleId: Number) {
+  if (roleId === ROLES.SITE_ADMIN) {
+    return "SiteAdmin";
+  }
+  if (roleId === ROLES.UNIVERSITY) {
+    return "University";
+  }
+  if (roleId === ROLES.COLLAGE) {
+    return "Collage";
+  }
+  return "-";
+}

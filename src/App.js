@@ -7,11 +7,12 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "tippy.js/dist/tippy.css";
 import "./App.css";
+import CollageRoutes from "./apps/collage/routes/Routes";
 import SiteAdminRoutes from "./apps/site-admin/routes/Routes";
-import SuperAdminRoutes from "./apps/super-admin/routes/Routes";
+import UniversityRoutes from "./apps/university/routes/Routes";
 import UserRoutes from "./apps/user/routes/Routes";
 import HorizontalLayout from "./components/layouts/HorizontalLayout";
-import { getTokenFromLocalStorage } from "./helpers/helpers";
+import { getTokenFromLocalStorage, ROLES } from "./helpers/helpers";
 import { initialize } from "./redux/actions/app";
 import { getCurrentUserInfo, isAppInitializing } from "./redux/selectors/app";
 
@@ -86,11 +87,14 @@ export const AuthRoute = ({ isInLayout = true }) => {
 };
 
 function getRoutes(role) {
-  if (role === 1) {
+  if (role === ROLES.SITE_ADMIN) {
     return <SiteAdminRoutes />;
   }
-  if (role === 2) {
-    return <SuperAdminRoutes />;
+  if (role === ROLES.UNIVERSITY) {
+    return <UniversityRoutes />;
+  }
+  if (role === ROLES.COLLAGE) {
+    return <CollageRoutes />;
   }
   return <UserRoutes />;
 }
