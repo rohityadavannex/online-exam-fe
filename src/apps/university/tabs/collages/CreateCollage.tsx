@@ -69,7 +69,7 @@ const CreateCollage = () => {
         [FORM_FIELDS.STATE]: initialData?.state ?? "",
         [FORM_FIELDS.DISTRICT]: initialData?.district ?? "",
         [FORM_FIELDS.LOGO]: initialData?.logo ?? "",
-        [FORM_FIELDS.STATUS]: initialData?.status ?? false,
+        [FORM_FIELDS.STATUS]: initialData?.active ?? false,
       },
       validationSchema: object({
         [FORM_FIELDS.NAME]: string().required("This is a Required field."),

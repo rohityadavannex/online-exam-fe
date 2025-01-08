@@ -4,6 +4,8 @@ import { useCallback, useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
 import TabHeader from "src/apps/common/tab-header/TabHeader";
+import { useGetUniversityCourses } from "src/apps/university/tabs/courses/api-client";
+import CourseType from "src/apps/university/tabs/courses/list/types";
 import Button from "src/components/buttons/Button";
 import DatePicker from "src/components/calendar/DatePicker";
 import UploadImage from "src/components/image-upload/UploadImage";
@@ -12,7 +14,7 @@ import Select from "src/components/select/Select";
 import Toggle from "src/components/toggles/Toggle";
 import useNotification from "src/hooks/useNotification";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
-import { COURSE_OPTIONS, GENDERS } from "src/utils/constants";
+import { GENDERS } from "src/utils/constants";
 import { object, string } from "yup";
 import {
   useCreateStudent,
@@ -43,6 +45,15 @@ const CreateStudent = () => {
   const navigate = useNavigate();
   const { studentId } = useParams();
   const { errorNotification, successNotification } = useNotification();
+
+  const { isLoading: isCourseLoading, data: coursesData } =
+    useGetUniversityCourses();
+
+  const coursesOptions = useMemo(() => {
+    return (coursesData?.data?.rows ?? []).map((course: CourseType) => {
+      return { label: course.name, value: course.id };
+    });
+  }, [coursesData]);
 
   const {
     isLoading: isCreateLoading,
@@ -213,13 +224,14 @@ const CreateStudent = () => {
               showSearch
               placeholder="Course"
               optionFilterProp="label"
-              options={COURSE_OPTIONS}
+              options={coursesOptions}
               name={FORM_FIELDS.COURSE}
               value={values[FORM_FIELDS.COURSE] as string}
               error={errors[FORM_FIELDS.COURSE] as string}
               onChange={(val: string) =>
                 setFieldValue(`${FORM_FIELDS.COURSE}`, val)
               }
+              loading={isCourseLoading}
             />
 
             <Input

@@ -73,3 +73,8 @@ export const useUpdateCourseStatus = () => {
 
   return useFetchAsync(updateStatus);
 };
+
+export const useGetUniversityCourses = () => {
+  const uniData = useSelector(getCurrentUserInfo);
+  return useGet(`/university/${uniData.id}/courses-list`);
+};

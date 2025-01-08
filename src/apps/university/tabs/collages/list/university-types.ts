@@ -5,6 +5,7 @@ type UniversityType = {
   phone: string;
   address: string;
   image?: string;
+  userId: number;
   status: boolean;
 };
 
