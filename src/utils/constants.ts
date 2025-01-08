@@ -21,6 +21,21 @@ export const GENDERS = [
   },
 ];
 
+export const COURSE_OPTIONS = [
+  {
+    label: "B.SC",
+    value: 1,
+  },
+  {
+    label: "B.Tech",
+    value: 2,
+  },
+  {
+    label: "B.A.",
+    value: 3,
+  },
+];
+
 export const IDENTITY_DOCUMENTS_OPTIONS = [
   {
     label: "Aadhar Card",

@@ -75,7 +75,7 @@ export const collageNavOptions = [
   {
     label: "Student",
     name: TAB_NAMES.STUDENT,
-    href: "/staff",
+    href: "/students",
     icon: UserIcon,
   },
 ];

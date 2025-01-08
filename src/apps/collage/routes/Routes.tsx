@@ -10,6 +10,8 @@ import ResetPassword from "src/tabs/auth/reset-password/ResetPassword";
 import Dashboard from "src/tabs/dashboard/Dashboard";
 import CreateStaff from "../tabs/staff/CreateStaff";
 import StaffList from "../tabs/staff/list/StaffList";
+import CreateStudent from "../tabs/students/CreateStudent";
+import StudentsList from "../tabs/students/list/StudentsList";
 
 function CollageRoutes() {
   const navigate = useNavigate();
@@ -42,6 +44,12 @@ function CollageRoutes() {
         </Route>
         <Route path="/staff" element={<StaffList />} />
         <Route path="/staff/create/:staffId?" element={<CreateStaff />} />
+
+        <Route path="/students" element={<StudentsList />} />
+        <Route
+          path="/students/create/:studentId?"
+          element={<CreateStudent />}
+        />
       </Route>
       <Route
         path="*"
