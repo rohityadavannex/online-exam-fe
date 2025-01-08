@@ -13,7 +13,7 @@ import { getCurrentUserInfo } from "src/redux/selectors/app";
 
 export const useCreateCourse = () => {
   const uniData = useSelector(getCurrentUserInfo);
-  return usePost(`/university/${uniData.id}/courses/create`);
+  return usePost(`/university/${uniData.userId}/courses/create`);
 };
 
 export const useGetCourses = ({
@@ -27,7 +27,7 @@ export const useGetCourses = ({
 }) => {
   const uniData = useSelector(getCurrentUserInfo);
   return useGet(
-    `/university/${uniData.id}/courses${getQueryData({
+    `/university/${uniData.userId}/courses${getQueryData({
       length,
       page,
       search,
@@ -37,13 +37,13 @@ export const useGetCourses = ({
 
 export const useUpdateCourse = ({ courseId }: { courseId: number }) => {
   const uniData = useSelector(getCurrentUserInfo);
-  return usePatch(`/university/${uniData.id}/courses/edit/${courseId}`);
+  return usePatch(`/university/${uniData.userId}/courses/edit/${courseId}`);
 };
 
 export const useGetCourseInfo = ({ courseId }: { courseId: number }) => {
   const uniData = useSelector(getCurrentUserInfo);
   return useGet(
-    courseId ? `/university/${uniData.id}/courses/${courseId}` : undefined
+    courseId ? `/university/${uniData.userId}/courses/${courseId}` : undefined
   );
 };
 
@@ -51,9 +51,11 @@ export const useDeleteCourse = () => {
   const uniData = useSelector(getCurrentUserInfo);
   const deleteFn = useCallback(
     (courseId: number) => {
-      return deleteReq(`/university/${uniData.id}/courses/delete/${courseId}`);
+      return deleteReq(
+        `/university/${uniData.userId}/courses/delete/${courseId}`
+      );
     },
-    [uniData.id]
+    [uniData.userId]
   );
 
   return useFetchAsync(deleteFn);
@@ -64,11 +66,11 @@ export const useUpdateCourseStatus = () => {
   const updateStatus = useCallback(
     ({ courseId, data }: { courseId: number; data: { status: boolean } }) => {
       return patch(
-        `/university/${uniData.id}/courses/status/${courseId}`,
+        `/university/${uniData.userId}/courses/status/${courseId}`,
         data
       );
     },
-    [uniData.id]
+    [uniData.userId]
   );
 
   return useFetchAsync(updateStatus);
@@ -76,5 +78,5 @@ export const useUpdateCourseStatus = () => {
 
 export const useGetUniversityCourses = () => {
   const uniData = useSelector(getCurrentUserInfo);
-  return useGet(`/university/${uniData.id}/courses-list`);
+  return useGet(`/university/${uniData.uniId}/courses-list`);
 };
