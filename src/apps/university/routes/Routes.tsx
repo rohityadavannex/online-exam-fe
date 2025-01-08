@@ -8,6 +8,8 @@ import Login from "src/tabs/auth/Login";
 import Register from "src/tabs/auth/register/Register";
 import ResetPassword from "src/tabs/auth/reset-password/ResetPassword";
 import Dashboard from "src/tabs/dashboard/Dashboard";
+import CreateAcademicYear from "../tabs/academic-years/CreateAcademicYear";
+import AcademicYearsList from "../tabs/academic-years/list/AcademicYearsList";
 import CreateCollage from "../tabs/collages/CreateCollage";
 import CollageList from "../tabs/collages/list/CollageList";
 
@@ -44,6 +46,12 @@ function UniversityRoutes() {
         <Route
           path="/collages/create/:collageId?"
           element={<CreateCollage />}
+        />
+
+        <Route path="/academic-years" element={<AcademicYearsList />} />
+        <Route
+          path="/academic-years/create/:yearId?"
+          element={<CreateAcademicYear />}
         />
       </Route>
       <Route

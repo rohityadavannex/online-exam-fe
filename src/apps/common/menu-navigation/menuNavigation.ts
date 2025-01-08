@@ -57,6 +57,12 @@ export const universityNavOptions = [
     href: "/collages",
     icon: UserIcon,
   },
+  {
+    label: "Academic Years",
+    name: TAB_NAMES.ACADEMIC_YEAR,
+    href: "/academic-years",
+    icon: UserIcon,
+  },
 ];
 
 export const collageNavOptions = [
