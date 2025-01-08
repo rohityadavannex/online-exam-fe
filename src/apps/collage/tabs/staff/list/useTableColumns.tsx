@@ -70,11 +70,11 @@ const useTableColumns = ({
     {
       title: "Action",
       dataIndex: "id",
-      render: (text: number) => {
+      render: (text: number, record: StaffType) => {
         return (
           <ActionCell
-            onView={() => navigate(`create/${text}`)}
-            onDelete={() => onDelete(text)}
+            onView={() => navigate(`create/${record.userId}`)}
+            onDelete={() => onDelete(record.userId)}
           />
         );
       },

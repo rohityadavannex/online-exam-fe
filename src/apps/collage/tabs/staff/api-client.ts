@@ -37,7 +37,7 @@ export const useDeleteSubject = () => {
 };
 
 export const useGetStaffInfo = ({ staffId }: { staffId: number }) => {
-  return useGet(`/collage/staff/${staffId}`);
+  return useGet(staffId ? `/collage/staff/${staffId}` : undefined);
 };
 
 export const useDeleteStaff = () => {

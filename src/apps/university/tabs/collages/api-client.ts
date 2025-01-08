@@ -39,7 +39,7 @@ export const useDeleteSubject = () => {
 };
 
 export const useGetCollageInfo = ({ collageId }: { collageId: number }) => {
-  return useGet(`/university/collage/${collageId}`);
+  return useGet(collageId ? `/university/collage/${collageId}` : undefined);
 };
 
 export const useDeleteCollage = () => {

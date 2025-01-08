@@ -39,7 +39,7 @@ export const useDeleteSubject = () => {
 };
 
 export const useGetUniversityInfo = ({ uniId }: { uniId: number }) => {
-  return useGet(`/site-admin/university/${uniId}`);
+  return useGet(uniId ? `/site-admin/university/${uniId}` : undefined);
 };
 
 export const useDeleteUniversity = () => {
