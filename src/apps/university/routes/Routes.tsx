@@ -12,6 +12,8 @@ import CreateAcademicYear from "../tabs/academic-years/CreateAcademicYear";
 import AcademicYearsList from "../tabs/academic-years/list/AcademicYearsList";
 import CreateCollage from "../tabs/collages/CreateCollage";
 import CollageList from "../tabs/collages/list/CollageList";
+import CreateCourses from "../tabs/courses/CreateCourses";
+import CoursesList from "../tabs/courses/list/CoursesList";
 
 function UniversityRoutes() {
   const navigate = useNavigate();
@@ -53,6 +55,9 @@ function UniversityRoutes() {
           path="/academic-years/create/:yearId?"
           element={<CreateAcademicYear />}
         />
+
+        <Route path="/courses" element={<CoursesList />} />
+        <Route path="/courses/create/:courseId?" element={<CreateCourses />} />
       </Route>
       <Route
         path="*"

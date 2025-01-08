@@ -27,6 +27,7 @@ export const TAB_NAMES = {
   STUDENT: "STUDENT",
   UNIVERSITY: "UNIVERSITY",
   COLLAGES: "COLLAGES",
+  COURSES: "COURSES",
 };
 
 export const siteAdminNavOptions = [
@@ -61,6 +62,12 @@ export const universityNavOptions = [
     label: "Academic Years",
     name: TAB_NAMES.ACADEMIC_YEAR,
     href: "/academic-years",
+    icon: UserIcon,
+  },
+  {
+    label: "Courses",
+    name: TAB_NAMES.COURSES,
+    href: "/courses",
     icon: UserIcon,
   },
 ];
