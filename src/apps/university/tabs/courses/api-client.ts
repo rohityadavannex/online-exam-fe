@@ -86,5 +86,16 @@ export const useGetUniversityCourses = () => {
     });
   }, [data]);
 
-  return { ...rest, data: coursesOptions };
+  const getCourseLabel = useCallback(
+    (id: number) => {
+      return (
+        coursesOptions.find(
+          (course: { label: string; value: number }) => course.value === id
+        )?.label ?? "-"
+      );
+    },
+    [coursesOptions]
+  );
+
+  return { ...rest, data: coursesOptions, getCourseLabel };
 };

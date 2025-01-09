@@ -94,5 +94,16 @@ export const useGetUniversityAcademicYears = () => {
     });
   }, [data?.data?.rows]);
 
-  return { ...rest, data: mappedAcademicYearsData };
+  const getLabel = useCallback(
+    (id: number) => {
+      return (
+        mappedAcademicYearsData.find(
+          (course: { label: string; value: number }) => course.value === id
+        )?.label ?? "-"
+      );
+    },
+    [mappedAcademicYearsData]
+  );
+
+  return { ...rest, data: mappedAcademicYearsData, getLabel };
 };

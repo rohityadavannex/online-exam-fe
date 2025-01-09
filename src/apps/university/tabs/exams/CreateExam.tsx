@@ -17,7 +17,7 @@ import { useCreateExam, useGetExamInfo, useUpdateExam } from "./api-client";
 
 enum FORM_FIELDS {
   EXAM_NAME = "name",
-  ACADEMIC_YEAR = "ACADEMIC_YEAR",
+  ACADEMIC_YEAR = "academicYear",
   COURSE = "course",
   SEMESTER = "semester",
   EXAM_TYPE = "examType",

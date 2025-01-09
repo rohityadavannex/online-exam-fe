@@ -13,7 +13,7 @@ import { getCurrentUserInfo } from "src/redux/selectors/app";
 
 export const useCreateExam = () => {
   const uniData = useSelector(getCurrentUserInfo);
-  return usePost(`/university/${uniData.id}/academic-years/create`);
+  return usePost(`/university/${uniData.id}/exams/create`);
 };
 
 export const useGetExamsList = ({
@@ -27,7 +27,7 @@ export const useGetExamsList = ({
 }) => {
   const uniData = useSelector(getCurrentUserInfo);
   return useGet(
-    `/university/${uniData.id}/academic-years${getQueryData({
+    `/university/${uniData.id}/exams${getQueryData({
       length,
       page,
       search,
@@ -37,13 +37,13 @@ export const useGetExamsList = ({
 
 export const useUpdateExam = ({ examId }: { examId: number }) => {
   const uniData = useSelector(getCurrentUserInfo);
-  return usePatch(`/university/${uniData.id}/academic-years/edit/${examId}`);
+  return usePatch(`/university/${uniData.id}/exams/edit/${examId}`);
 };
 
 export const useGetExamInfo = ({ examId }: { examId: number }) => {
   const uniData = useSelector(getCurrentUserInfo);
   return useGet(
-    examId ? `/university/${uniData.id}/academic-years/${examId}` : undefined
+    examId ? `/university/${uniData.id}/exams/${examId}` : undefined
   );
 };
 
@@ -51,9 +51,7 @@ export const useDeleteExam = () => {
   const uniData = useSelector(getCurrentUserInfo);
   const deleteFn = useCallback(
     (examId: number) => {
-      return deleteReq(
-        `/university/${uniData.id}/academic-years/delete/${examId}`
-      );
+      return deleteReq(`/university/${uniData.id}/exams/delete/${examId}`);
     },
     [uniData.id]
   );
@@ -65,10 +63,7 @@ export const useUpdateExamStatus = () => {
   const uniData = useSelector(getCurrentUserInfo);
   const updateStatus = useCallback(
     ({ examId, data }: { examId: number; data: { status: boolean } }) => {
-      return patch(
-        `/university/${uniData.id}/academic-years/status/${examId}`,
-        data
-      );
+      return patch(`/university/${uniData.id}/exams/status/${examId}`, data);
     },
     [uniData.id]
   );

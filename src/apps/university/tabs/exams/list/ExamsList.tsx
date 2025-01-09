@@ -6,6 +6,8 @@ import TabHeader from "src/apps/common/tab-header/TabHeader";
 import { useNotification } from "src/components/contexts/NotificationContext";
 import useDebounce from "src/hooks/useDebounce";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
+import { useGetUniversityAcademicYears } from "../../academic-years/api-client";
+import { useGetUniversityCourses } from "../../courses/api-client";
 import {
   useDeleteExam,
   useGetExamsList,
@@ -25,6 +27,9 @@ const ExamsList = () => {
   const { successNotification, errorNotification } = useNotification();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [idToOperate, setIdToOperate] = useState<Number | undefined>(undefined);
+
+  const { getCourseLabel } = useGetUniversityCourses();
+  const { getLabel: getAcademicYearLabel } = useGetUniversityAcademicYears();
 
   const {
     isLoading,
@@ -57,6 +62,8 @@ const ExamsList = () => {
   const closeDeleteModal = useCallback(() => setIsDeleteModalOpen(false), []);
 
   const { columns } = useTableColumns({
+    getCourseLabel,
+    getAcademicYearLabel,
     onStatusChange: (id: number, status: boolean) => {
       handleUniStatusChange({ examId: id, data: { status } });
     },
