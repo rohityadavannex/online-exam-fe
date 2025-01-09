@@ -14,6 +14,8 @@ import CreateCollage from "../tabs/collages/CreateCollage";
 import CollageList from "../tabs/collages/list/CollageList";
 import CreateCourses from "../tabs/courses/CreateCourses";
 import CoursesList from "../tabs/courses/list/CoursesList";
+import CreateExam from "../tabs/exams/CreateExam";
+import ExamsList from "../tabs/exams/list/ExamsList";
 
 function UniversityRoutes() {
   const navigate = useNavigate();
@@ -58,6 +60,9 @@ function UniversityRoutes() {
 
         <Route path="/courses" element={<CoursesList />} />
         <Route path="/courses/create/:courseId?" element={<CreateCourses />} />
+
+        <Route path="/exams" element={<ExamsList />} />
+        <Route path="/exams/create/:examId?" element={<CreateExam />} />
       </Route>
       <Route
         path="*"

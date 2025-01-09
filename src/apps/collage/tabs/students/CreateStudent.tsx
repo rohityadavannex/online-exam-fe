@@ -5,7 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
 import TabHeader from "src/apps/common/tab-header/TabHeader";
 import { useGetUniversityCourses } from "src/apps/university/tabs/courses/api-client";
-import CourseType from "src/apps/university/tabs/courses/list/types";
 import Button from "src/components/buttons/Button";
 import DatePicker from "src/components/calendar/DatePicker";
 import UploadImage from "src/components/image-upload/UploadImage";
@@ -48,12 +47,6 @@ const CreateStudent = () => {
 
   const { isLoading: isCourseLoading, data: coursesData } =
     useGetUniversityCourses();
-
-  const coursesOptions = useMemo(() => {
-    return (coursesData?.data?.rows ?? []).map((course: CourseType) => {
-      return { label: course.name, value: course.id };
-    });
-  }, [coursesData]);
 
   const {
     isLoading: isCreateLoading,
@@ -224,7 +217,7 @@ const CreateStudent = () => {
               showSearch
               placeholder="Course"
               optionFilterProp="label"
-              options={coursesOptions}
+              options={coursesData}
               name={FORM_FIELDS.COURSE}
               value={values[FORM_FIELDS.COURSE] as string}
               error={errors[FORM_FIELDS.COURSE] as string}

@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { getQueryData } from "src/helpers/helpers";
 import useFetchAsync from "src/hooks/useFetchAsync";
@@ -10,6 +10,7 @@ import {
   usePost,
 } from "src/http-clients/clients";
 import { getCurrentUserInfo } from "src/redux/selectors/app";
+import CourseType from "./list/types";
 
 export const useCreateCourse = () => {
   const uniData = useSelector(getCurrentUserInfo);
@@ -78,5 +79,12 @@ export const useUpdateCourseStatus = () => {
 
 export const useGetUniversityCourses = () => {
   const uniData = useSelector(getCurrentUserInfo);
-  return useGet(`/university/${uniData.uniId}/courses-list`);
+  const { data, ...rest } = useGet(`/university/${uniData.id}/courses-list`);
+  const coursesOptions = useMemo(() => {
+    return (data?.data?.rows ?? []).map((course: CourseType) => {
+      return { label: course.name, value: course.id };
+    });
+  }, [data]);
+
+  return { ...rest, data: coursesOptions };
 };

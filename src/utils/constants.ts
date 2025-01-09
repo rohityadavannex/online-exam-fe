@@ -598,3 +598,57 @@ export const STAFF_OPTIONS = [
     value: STAFF.TEACHER,
   },
 ];
+
+export const SEMESTER_OPTIONS = [
+  {
+    label: "1St semester",
+    value: 1,
+  },
+  {
+    label: "2nd semester",
+    value: 2,
+  },
+  {
+    label: "3rd semester",
+    value: 3,
+  },
+  {
+    label: "4th semester",
+    value: 4,
+  },
+  {
+    label: "5th semester",
+    value: 5,
+  },
+  {
+    label: "6th semester",
+    value: 6,
+  },
+  {
+    label: "7th semester",
+    value: 7,
+  },
+  {
+    label: "8th semester",
+    value: 8,
+  },
+];
+
+export const EXAM_TYPE_OPTIONS = [
+  {
+    label: "Midterm exam",
+    value: 1,
+  },
+  {
+    label: "End-semester exam",
+    value: 2,
+  },
+  {
+    label: "Supplementary exam",
+    value: 3,
+  },
+  {
+    label: "Practical exam",
+    value: 4,
+  },
+];

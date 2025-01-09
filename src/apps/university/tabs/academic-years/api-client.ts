@@ -1,4 +1,5 @@
-import { useCallback } from "react";
+import dayjs from "dayjs";
+import { useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { getQueryData } from "src/helpers/helpers";
 import useFetchAsync from "src/hooks/useFetchAsync";
@@ -10,6 +11,7 @@ import {
   usePost,
 } from "src/http-clients/clients";
 import { getCurrentUserInfo } from "src/redux/selectors/app";
+import AcademicYearType from "./list/types";
 
 export const useCreateAcademicYear = () => {
   const uniData = useSelector(getCurrentUserInfo);
@@ -74,4 +76,23 @@ export const useUpdateAcademicYearStatus = () => {
   );
 
   return useFetchAsync(updateStatus);
+};
+
+export const useGetUniversityAcademicYears = () => {
+  const uniData = useSelector(getCurrentUserInfo);
+  const { data, ...rest } = useGet(
+    `/university/${uniData.id}/academic-years-list`
+  );
+  const mappedAcademicYearsData = useMemo(() => {
+    return (data?.data?.rows ?? []).map((item: AcademicYearType) => {
+      return {
+        value: item.id,
+        label: `${dayjs(item.startYear).format("YYYY")}-${dayjs(
+          item.endYear
+        ).format("YYYY")}`,
+      };
+    });
+  }, [data?.data?.rows]);
+
+  return { ...rest, data: mappedAcademicYearsData };
 };
