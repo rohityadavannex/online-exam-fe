@@ -16,6 +16,7 @@ import CreateCourses from "../tabs/courses/CreateCourses";
 import CoursesList from "../tabs/courses/list/CoursesList";
 import CreateExam from "../tabs/exams/CreateExam";
 import ExamsList from "../tabs/exams/list/ExamsList";
+import CreateQuestionPaper from "../tabs/question-papers/CreateQuestionPaper";
 
 function UniversityRoutes() {
   const navigate = useNavigate();
@@ -63,6 +64,11 @@ function UniversityRoutes() {
 
         <Route path="/exams" element={<ExamsList />} />
         <Route path="/exams/create/:examId?" element={<CreateExam />} />
+
+        <Route
+          path="/exams/:examId/questions"
+          element={<CreateQuestionPaper />}
+        />
       </Route>
       <Route
         path="*"
