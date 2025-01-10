@@ -72,6 +72,12 @@ export const universityNavOptions = [
     icon: UserIcon,
   },
   {
+    label: "Subjects",
+    name: TAB_NAMES.SUBJECT,
+    href: "/subjects",
+    icon: UserIcon,
+  },
+  {
     label: "Exams",
     name: TAB_NAMES.EXAM,
     href: "/exams",
