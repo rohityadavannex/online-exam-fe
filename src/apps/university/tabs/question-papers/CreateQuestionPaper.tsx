@@ -1,12 +1,13 @@
 import { FieldArray, FormikProvider, useFormik } from "formik";
 import React, { useCallback } from "react";
+import { useParams } from "react-router-dom";
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
 import TabHeader from "src/apps/common/tab-header/TabHeader";
 import Button from "src/components/buttons/Button";
 import Input from "src/components/inputs/Input";
 import { generateRandomId } from "src/helpers/helpers";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
-import { object } from "yup";
+import { useCreateQuestionForExam } from "./api-client";
 import TextEditor from "./TextEditor";
 
 enum FORM_FIELDS {
@@ -29,6 +30,11 @@ interface QuestionItem {
 const CreateQuestionPaper: React.FC = () => {
   useSetActiveTab(TAB_NAMES.EXAM);
 
+  const { examId } = useParams();
+
+  const { isLoading, execute: createQuestionsForExam } =
+    useCreateQuestionForExam({ examId: Number(examId) });
+
   const initialQuestionItem: QuestionItem = {
     id: generateRandomId(),
     question: "",
@@ -40,11 +46,12 @@ const CreateQuestionPaper: React.FC = () => {
     initialValues: {
       [FORM_FIELDS.QUESTIONS]: [initialQuestionItem],
     },
-    validationSchema: object({
-      [FORM_FIELDS.QUESTIONS]: object().required("Questions are required"),
-    }),
+    // validationSchema: object({
+    //   [FORM_FIELDS.QUESTIONS]: object().required("Questions are required"),
+    // }),
     onSubmit: (values) => {
       console.log("Form submitted ", values);
+      createQuestionsForExam(values);
     },
   });
 
@@ -103,7 +110,7 @@ const CreateQuestionPaper: React.FC = () => {
   return (
     <div className="flex flex-col gap-6">
       <TabHeader label="Add Questions" />
-      <div className="flex flex-col bg-white rounded-md py-[42px] px-[34px] gap-6 max-w-[50%]">
+      <div className="flex flex-col bg-white rounded-md py-[42px] px-[34px] gap-6 max-w-[60%]">
         <FormikProvider value={formik}>
           <FieldArray name={FORM_FIELDS.QUESTIONS}>
             {() => (
@@ -212,7 +219,7 @@ const CreateQuestionPaper: React.FC = () => {
                     ))}
                   </div>
                 ))}
-                <Button onClick={() => handleAddQuestion()}>
+                <Button onClick={() => handleAddQuestion()} loading={isLoading}>
                   Add Question
                 </Button>
               </>
@@ -220,7 +227,11 @@ const CreateQuestionPaper: React.FC = () => {
           </FieldArray>
         </FormikProvider>
 
-        <Button type="primary" onClick={() => handleSubmit()}>
+        <Button
+          type="primary"
+          onClick={() => handleSubmit()}
+          loading={isLoading}
+        >
           Submit
         </Button>
       </div>
