@@ -33,6 +33,7 @@ type TabHeaderTypes = {
     onChange: (val: string) => void;
   };
   showBreadcrumb?: boolean;
+  onAddClick?: () => void;
 };
 
 const TabHeader = ({
@@ -46,6 +47,7 @@ const TabHeader = ({
   printButton,
   search,
   showBreadcrumb,
+  onAddClick,
 }: TabHeaderTypes) => {
   const hasEditPermission = useSelector(hasEditAccess);
 

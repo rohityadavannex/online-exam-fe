@@ -81,7 +81,7 @@ const useTableColumns = ({
       render: (text: number, record: AcademicYearType) => {
         return (
           <ActionCell
-            onAdd={() => navigate(`${record.id}/questions`)}
+            onAdd={() => navigate(`${record.id}/subjects`)}
             onView={() => navigate(`create/${record.id}`)}
             onDelete={() => onDelete(record.id)}
           />

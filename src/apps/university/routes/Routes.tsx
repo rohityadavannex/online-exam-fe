@@ -10,6 +10,8 @@ import ResetPassword from "src/tabs/auth/reset-password/ResetPassword";
 import Dashboard from "src/tabs/dashboard/Dashboard";
 import CreateAcademicYear from "../tabs/academic-years/CreateAcademicYear";
 import AcademicYearsList from "../tabs/academic-years/list/AcademicYearsList";
+import AssignSubjects from "../tabs/assigned-subjects/AssignSubjects";
+import AssignedSubjectsList from "../tabs/assigned-subjects/list/AssignedSubjectsList";
 import CreateCollage from "../tabs/collages/CreateCollage";
 import CollageList from "../tabs/collages/list/CollageList";
 import CreateCourses from "../tabs/courses/CreateCourses";
@@ -64,13 +66,22 @@ function UniversityRoutes() {
         <Route path="/courses" element={<CoursesList />} />
         <Route path="/courses/create/:courseId?" element={<CreateCourses />} />
 
-        <Route path="/exams" element={<ExamsList />} />
-        <Route path="/exams/create/:examId?" element={<CreateExam />} />
-
         <Route path="/subjects" element={<SubjectsList />} />
         <Route
           path="/subjects/create/:subjectId?"
           element={<CreateSubject />}
+        />
+
+        <Route path="/exams" element={<ExamsList />} />
+        <Route path="/exams/create/:examId?" element={<CreateExam />} />
+
+        <Route
+          path="/exams/:examId/subjects"
+          element={<AssignedSubjectsList />}
+        />
+        <Route
+          path="/exams/subjects/create/:examId?"
+          element={<AssignSubjects />}
         />
 
         <Route
