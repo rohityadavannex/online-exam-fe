@@ -1,4 +1,4 @@
-import { AddIcon, DeleteIcon, ViewIcon } from "src/icons";
+import { AddIcon, DeleteIcon } from "src/icons";
 
 const ActionCell = ({
   onView,
@@ -14,9 +14,7 @@ const ActionCell = ({
       <span className="cursor-pointer" onClick={onAdd}>
         <AddIcon color="gray" />
       </span>
-      <span className="cursor-pointer" onClick={onView}>
-        <ViewIcon />
-      </span>
+
       <span className="cursor-pointer" onClick={onDelete}>
         <DeleteIcon />
       </span>

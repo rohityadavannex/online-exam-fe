@@ -1,6 +1,6 @@
 import { Modal } from "antd";
 import { useFormik } from "formik";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
 import Select from "src/components/select/Select";
@@ -8,11 +8,7 @@ import useNotification from "src/hooks/useNotification";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
 import { object, string } from "yup";
 import { useGetUniversitySubjects } from "../subjects/api-client";
-import {
-  useAssignSubject,
-  useGetAssignedSubjectInfo,
-  useUpdateAssignedSubject,
-} from "./api-client";
+import { useAssignSubject } from "./api-client";
 
 enum FORM_FIELDS {
   SUBJECT = "subjectId",
@@ -42,35 +38,16 @@ const AssignSubjects = ({
     error: isCreateError,
   } = useAssignSubject({ examId: Number(examId) });
 
-  const {
-    isLoading: isUpdateLoading,
-    execute: executeUpdate,
-    isSuccess: isUpdateSuccess,
-    error: isUpdateError,
-  } = useUpdateAssignedSubject({ subjectId: Number(subjectId) });
-
-  const { isLoading: isGetInfoLoading, data: response } =
-    useGetAssignedSubjectInfo({
-      subjectId: Number(subjectId),
-    });
-
-  const initialData = useMemo(() => response?.data ?? {}, [response?.data]);
-
   const { values, errors, handleSubmit, handleChange, touched, setFieldValue } =
     useFormik({
       enableReinitialize: true,
       initialValues: {
-        [FORM_FIELDS.SUBJECT]: initialData?.subjectId ?? null,
+        [FORM_FIELDS.SUBJECT]: null,
       },
       validationSchema: object({
         [FORM_FIELDS.SUBJECT]: string().required("This is a Required field."),
       }),
       onSubmit: (values) => {
-        console.log("Form submitted ", values);
-        if (subjectId) {
-          executeUpdate(values);
-          return;
-        }
         executeCreate(values);
       },
     });
@@ -98,15 +75,6 @@ const AssignSubjects = ({
     onClose,
     successNotification,
   ]);
-
-  useEffect(() => {
-    if (isUpdateSuccess) {
-      successNotification();
-    }
-    if (isUpdateError) {
-      errorNotification();
-    }
-  }, [errorNotification, isUpdateError, isUpdateSuccess, successNotification]);
 
   return (
     <Modal
