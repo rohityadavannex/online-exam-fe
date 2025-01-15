@@ -8,6 +8,7 @@ import Login from "src/tabs/auth/Login";
 import Register from "src/tabs/auth/register/Register";
 import ResetPassword from "src/tabs/auth/reset-password/ResetPassword";
 import Dashboard from "src/tabs/dashboard/Dashboard";
+import ExamsList from "../tabs/exams/list/ExamsList";
 import CreateStaff from "../tabs/staff/CreateStaff";
 import StaffList from "../tabs/staff/list/StaffList";
 import CreateStudent from "../tabs/students/CreateStudent";
@@ -50,6 +51,8 @@ function CollageRoutes() {
           path="/students/create/:studentId?"
           element={<CreateStudent />}
         />
+
+        <Route path="/exams" element={<ExamsList />} />
       </Route>
       <Route
         path="*"

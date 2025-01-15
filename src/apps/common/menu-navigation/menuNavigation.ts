@@ -104,6 +104,12 @@ export const collageNavOptions = [
     href: "/students",
     icon: UserIcon,
   },
+  {
+    label: "Exams",
+    name: TAB_NAMES.EXAM,
+    href: "/exams",
+    icon: UserIcon,
+  },
 ];
 
 export const superAdminNavOptions = [
