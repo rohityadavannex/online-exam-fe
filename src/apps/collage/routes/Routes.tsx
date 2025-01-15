@@ -53,6 +53,7 @@ function CollageRoutes() {
         />
 
         <Route path="/exams" element={<ExamsList />} />
+        <Route path="/exams/:examId/enroll-students" element={<ExamsList />} />
       </Route>
       <Route
         path="*"

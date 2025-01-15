@@ -6,9 +6,11 @@ import TabHeader from "src/apps/common/tab-header/TabHeader";
 import useDebounce from "src/hooks/useDebounce";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
 
-import { useGetUniversityAcademicYears } from "src/apps/university/tabs/academic-years/api-client";
-import { useGetUniversityCourses } from "src/apps/university/tabs/courses/api-client";
-import { useGetExamsList } from "../api-client";
+import {
+  useGetExamsList,
+  useGetUniversityAcademicYears,
+  useGetUniversityCourses,
+} from "../api-client";
 import SubjectFilterOverlay from "./SubjectFilterOverlay";
 import TableHeader from "./TableHeader";
 import useTableColumns from "./useTableColumns";

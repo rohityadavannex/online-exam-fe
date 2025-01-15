@@ -3,11 +3,9 @@ import { AddIcon, ViewIcon } from "src/icons";
 const ActionCell = ({
   onView,
   onAdd,
-  onDelete,
 }: {
   onAdd: () => void;
   onView: () => void;
-  onDelete: () => void;
 }) => {
   return (
     <div className="w-fit flex px-4 py-3 rounded-lg items-center gap-3 bg-[#FAFBFD] border border-[#EBECEF]">
