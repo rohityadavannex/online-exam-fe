@@ -27,6 +27,7 @@ const useTableColumns = ({ onDelete }: { onDelete: (id: number) => void }) => {
       render: (text: number, record: SubjectType) => {
         return (
           <ActionCell
+            onAdd={() => navigate(`${record.id}/questions`)}
             onView={() => navigate(`create/${record.id}`)}
             onDelete={() => onDelete(record.id)}
           />

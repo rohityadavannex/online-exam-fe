@@ -30,10 +30,13 @@ interface QuestionItem {
 const CreateQuestionPaper: React.FC = () => {
   useSetActiveTab(TAB_NAMES.EXAM);
 
-  const { examId } = useParams();
+  const { examId, subjectId } = useParams();
 
   const { isLoading, execute: createQuestionsForExam } =
-    useCreateQuestionForExam({ examId: Number(examId) });
+    useCreateQuestionForExam({
+      examId: Number(examId),
+      subjectId: Number(subjectId),
+    });
 
   const initialQuestionItem: QuestionItem = {
     id: generateRandomId(),

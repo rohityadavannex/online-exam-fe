@@ -1,7 +1,7 @@
 import { Modal } from "antd";
 import { useFormik } from "formik";
 import { useCallback, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
 import Select from "src/components/select/Select";
 import useNotification from "src/hooks/useNotification";
@@ -29,6 +29,7 @@ const AssignSubjects = ({
 }) => {
   useSetActiveTab(TAB_NAMES.EXAM);
   const navigate = useNavigate();
+  const { examId } = useParams();
   const { errorNotification, successNotification } = useNotification();
 
   const { isLoading: isGetSubjectsLoading, data: subjectsData } =
@@ -39,7 +40,7 @@ const AssignSubjects = ({
     execute: executeCreate,
     isSuccess: isCreateSuccess,
     error: isCreateError,
-  } = useAssignSubject();
+  } = useAssignSubject({ examId: Number(examId) });
 
   const {
     isLoading: isUpdateLoading,
@@ -84,7 +85,7 @@ const AssignSubjects = ({
   useEffect(() => {
     if (isCreateSuccess) {
       successNotification();
-      navigate("/exams/subjects");
+      onClose();
     }
     if (isCreateError) {
       errorNotification();
@@ -94,6 +95,7 @@ const AssignSubjects = ({
     isCreateError,
     isCreateSuccess,
     navigate,
+    onClose,
     successNotification,
   ]);
 

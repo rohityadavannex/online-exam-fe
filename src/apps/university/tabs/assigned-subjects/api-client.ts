@@ -11,27 +11,31 @@ import {
 } from "src/http-clients/clients";
 import { getCurrentUserInfo } from "src/redux/selectors/app";
 
-export const useAssignSubject = () => {
+export const useAssignSubject = ({ examId }: { examId: Number }) => {
   const uniData = useSelector(getCurrentUserInfo);
-  return usePost(`/university/${uniData.userId}/subjects/create`);
+  return usePost(`/university/${uniData.userId}/exams/${examId}/subjects`);
 };
 
 export const useGetAssignedSubjects = ({
   length,
   page,
   search = "",
+  examId,
 }: {
   length: number;
   page: number;
   search?: string;
+  examId: number;
 }) => {
   const uniData = useSelector(getCurrentUserInfo);
   return useGet(
-    `/university/${uniData.userId}/subjects${getQueryData({
-      length,
-      page,
-      search,
-    })}`
+    examId
+      ? `/university/${uniData.userId}/exams/${examId}/subjects${getQueryData({
+          length,
+          page,
+          search,
+        })}`
+      : undefined
   );
 };
 
@@ -57,15 +61,15 @@ export const useGetAssignedSubjectInfo = ({
   );
 };
 
-export const useDeleteAssignedSubject = () => {
+export const useDeleteAssignedSubject = ({ examId }: { examId: number }) => {
   const uniData = useSelector(getCurrentUserInfo);
   const deleteFn = useCallback(
     (subjectId: number) => {
       return deleteReq(
-        `/university/${uniData.userId}/subjects/delete/${subjectId}`
+        `/university/${uniData.userId}/exams/${examId}/subjects/${subjectId}`
       );
     },
-    [uniData.userId]
+    [examId, uniData.userId]
   );
 
   return useFetchAsync(deleteFn);

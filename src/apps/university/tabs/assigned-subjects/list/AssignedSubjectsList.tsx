@@ -1,6 +1,7 @@
 import { Modal, Table } from "antd";
 import classNames from "classnames";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useParams } from "react-router-dom";
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
 import TabHeader from "src/apps/common/tab-header/TabHeader";
 import { useNotification } from "src/components/contexts/NotificationContext";
@@ -17,6 +18,7 @@ import useTableColumns from "./useTableColumns";
 
 const AssignedSubjectsList = () => {
   useSetActiveTab(TAB_NAMES.EXAM);
+  const { examId } = useParams();
   const [length, setLength] = useState(10);
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState("");
@@ -34,14 +36,19 @@ const AssignedSubjectsList = () => {
     data,
     mutate: mutateList,
     isValidating,
-  } = useGetAssignedSubjects({ length, page, search: debouncedSearch });
+  } = useGetAssignedSubjects({
+    length,
+    page,
+    search: debouncedSearch,
+    examId: Number(examId),
+  });
 
   const {
     isLoading: isDeleteLoading,
     isSuccess: isDeleteSucceed,
     error: deleteErr,
     execute: executeDelete,
-  } = useDeleteAssignedSubject();
+  } = useDeleteAssignedSubject({ examId: Number(examId) });
 
   const tableData = useMemo(() => data?.data?.rows ?? [], [data?.data]);
 
