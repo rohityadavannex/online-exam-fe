@@ -27,6 +27,8 @@ export const TAB_NAMES = {
   STUDENT: "STUDENT",
   UNIVERSITY: "UNIVERSITY",
   COLLAGES: "COLLAGES",
+  COURSES: "COURSES",
+  EXAM: "EXAM",
 };
 
 export const siteAdminNavOptions = [
@@ -55,6 +57,30 @@ export const universityNavOptions = [
     label: "Collages",
     name: TAB_NAMES.COLLAGES,
     href: "/collages",
+    icon: UserIcon,
+  },
+  {
+    label: "Academic Years",
+    name: TAB_NAMES.ACADEMIC_YEAR,
+    href: "/academic-years",
+    icon: UserIcon,
+  },
+  {
+    label: "Courses",
+    name: TAB_NAMES.COURSES,
+    href: "/courses",
+    icon: UserIcon,
+  },
+  {
+    label: "Subjects",
+    name: TAB_NAMES.SUBJECT,
+    href: "/subjects",
+    icon: UserIcon,
+  },
+  {
+    label: "Exams",
+    name: TAB_NAMES.EXAM,
+    href: "/exams",
     icon: UserIcon,
   },
 ];

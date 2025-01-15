@@ -58,13 +58,13 @@ const useTableColumns = ({
       render: (text: boolean, record: UniversityType) => (
         <Toggle
           checked={text}
-          onToggle={(value) => onStatusChange(record?.id, value)}
+          onToggle={(value) => onStatusChange(record?.userId, value)}
         />
       ),
     },
     {
       title: "Action",
-      dataIndex: "id",
+      dataIndex: "userId",
       render: (text: number) => {
         return (
           <ActionCell

@@ -71,7 +71,7 @@ const CreateUniversity = () => {
         [FORM_FIELDS.STATE]: uniData?.state ?? "",
         [FORM_FIELDS.DISTRICT]: uniData?.district ?? "",
         [FORM_FIELDS.LOGO]: uniData?.logo ?? "",
-        [FORM_FIELDS.STATUS]: uniData?.status ?? false,
+        [FORM_FIELDS.STATUS]: uniData?.active ?? false,
       },
       validationSchema: object({
         [FORM_FIELDS.NAME]: string().required("This is a Required field."),
