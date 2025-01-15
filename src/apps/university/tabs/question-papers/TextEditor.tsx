@@ -14,8 +14,20 @@ enum FORM_FIELDS {
   STATUS = "status",
 }
 
-const TextEditor = ({ onChange }: { onChange: any }) => {
+const TextEditor = ({
+  onChange,
+  initialValue,
+}: {
+  onChange: any;
+  initialValue: string;
+}) => {
   const { quill, quillRef } = useQuill();
+
+  // useEffect(() => {
+  //   if (quill) {
+  //     quill.root.innerHTML = initialValue;
+  //   }
+  // }, [quill, initialValue]);
 
   useEffect(() => {
     if (quill) {
