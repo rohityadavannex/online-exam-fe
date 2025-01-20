@@ -1,6 +1,6 @@
 import { Spin } from "antd";
 import { useSelector } from "react-redux";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { AuthRoute } from "src/App";
 import { getCurrentUserInfo } from "src/redux/selectors/app";
 import ForgotPassword from "src/tabs/auth/forgot-password/ForgotPassword";
@@ -8,6 +8,9 @@ import Login from "src/tabs/auth/Login";
 import Register from "src/tabs/auth/register/Register";
 import ResetPassword from "src/tabs/auth/reset-password/ResetPassword";
 import Dashboard from "src/tabs/dashboard/Dashboard";
+import CourseStudentsList from "../tabs/enroll-students/course-student-list/CourseStudentsList";
+import EnrolledStudentsList from "../tabs/enroll-students/enrolled-student-list/EnrolledStudentsList";
+import EnrollStudentsList from "../tabs/enroll-students/EnrollStudents";
 import ExamsList from "../tabs/exams/list/ExamsList";
 import CreateStaff from "../tabs/staff/CreateStaff";
 import StaffList from "../tabs/staff/list/StaffList";
@@ -53,7 +56,15 @@ function CollageRoutes() {
         />
 
         <Route path="/exams" element={<ExamsList />} />
-        <Route path="/exams/:examId/enroll-students" element={<ExamsList />} />
+
+        <Route
+          path="/exams/:examId/:courseId/enroll-students"
+          element={<EnrollStudentsList />}
+        >
+          <Route index element={<Navigate to={"enrolled"} />} />
+          <Route path="enrolled" element={<EnrolledStudentsList />} />
+          <Route path="all" element={<CourseStudentsList />} />
+        </Route>
       </Route>
       <Route
         path="*"

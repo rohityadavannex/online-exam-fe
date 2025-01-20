@@ -4,7 +4,6 @@ import { useCallback, useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
 import TabHeader from "src/apps/common/tab-header/TabHeader";
-import { useGetUniversityCourses } from "src/apps/university/tabs/courses/api-client";
 import Button from "src/components/buttons/Button";
 import DatePicker from "src/components/calendar/DatePicker";
 import UploadImage from "src/components/image-upload/UploadImage";
@@ -15,6 +14,7 @@ import useNotification from "src/hooks/useNotification";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
 import { GENDERS } from "src/utils/constants";
 import { object, string } from "yup";
+import { useGetUniversityCourses } from "../exams/api-client";
 import {
   useCreateStudent,
   useGetStudentInfo,

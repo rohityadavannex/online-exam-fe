@@ -7,7 +7,7 @@ import {
 } from "src/helpers/helpers";
 import { GENDER_ENUM } from "src/utils/constants";
 import ActionCell from "./ActionCell";
-import AcademicYearType from "./types";
+import { default as AcademicYearType, default as ExamsType } from "./types";
 
 const useTableColumns = ({
   getCourseLabel,
@@ -64,10 +64,12 @@ const useTableColumns = ({
     {
       title: "Action",
       dataIndex: "id",
-      render: (text: number, record: AcademicYearType) => {
+      render: (text: number, record: ExamsType) => {
         return (
           <ActionCell
-            onAdd={() => navigate(`${record.id}/enroll-students`)}
+            onAdd={() =>
+              navigate(`${record.id}/${record.course}/enroll-students`)
+            }
             onView={() => navigate(`create/${record.id}`)}
           />
         );
