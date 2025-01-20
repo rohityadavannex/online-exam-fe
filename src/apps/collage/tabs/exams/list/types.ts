@@ -1,5 +1,6 @@
 type ExamsType = {
   id: number;
+  course: number;
   startYear: string;
   endYear: string;
   note: string;

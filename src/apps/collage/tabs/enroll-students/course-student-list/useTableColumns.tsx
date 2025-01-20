@@ -1,12 +1,27 @@
-import { Image, TableProps } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Button, Image, TableProps } from "antd";
+import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { getImageUrl } from "src/helpers/helpers";
+import { getCurrentUserInfo } from "src/redux/selectors/app";
 import { COURSE_OPTIONS } from "src/utils/constants";
 import { GenderCell } from "../../exams/list/useTableColumns";
-import ActionCell from "./ActionCell";
 import StudentType from "./types";
 
-const useTableColumns = () => {
+const useTableColumns = ({
+  createEnrollment,
+}: {
+  createEnrollment: ({
+    uniId,
+    collegeId,
+    examId,
+    studentId,
+  }: {
+    uniId: number;
+    collegeId: number;
+    examId: number;
+    studentId: number;
+  }) => void;
+}) => {
   const navigate = useNavigate();
   const columns: TableProps<StudentType>["columns"] = [
     {
@@ -59,11 +74,9 @@ const useTableColumns = () => {
     {
       title: "Action",
       dataIndex: "id",
-      render: (text: number, record: StudentType) => {
-        return (
-          <ActionCell onView={() => navigate(`create/${record.userId}`)} />
-        );
-      },
+      render: (text: number, record: StudentType) => (
+        <ActionButton studentId={record.id} onClick={createEnrollment} />
+      ),
     },
   ];
 
@@ -73,3 +86,38 @@ const useTableColumns = () => {
 };
 
 export default useTableColumns;
+
+const ActionButton = ({
+  studentId,
+  onClick,
+}: {
+  studentId: number;
+  onClick: ({
+    uniId,
+    collegeId,
+    examId,
+    studentId,
+  }: {
+    uniId: number;
+    collegeId: number;
+    examId: number;
+    studentId: number;
+  }) => void;
+}) => {
+  const { examId } = useParams();
+  const currentUser = useSelector(getCurrentUserInfo);
+  return (
+    <Button
+      onClick={() => {
+        onClick({
+          uniId: currentUser.uniId,
+          collegeId: currentUser.id,
+          examId: Number(examId),
+          studentId,
+        });
+      }}
+    >
+      Enroll
+    </Button>
+  );
+};

@@ -1,9 +1,8 @@
-import { Image, TableProps } from "antd";
+import { Button, Image, TableProps } from "antd";
 import { useNavigate } from "react-router-dom";
 import { getImageUrl } from "src/helpers/helpers";
 import { COURSE_OPTIONS } from "src/utils/constants";
 import { GenderCell } from "../../exams/list/useTableColumns";
-import ActionCell from "./ActionCell";
 import StudentType from "./types";
 
 const useTableColumns = () => {
@@ -57,11 +56,13 @@ const useTableColumns = () => {
     },
 
     {
-      title: "Action",
-      dataIndex: "id",
+      title: "Status",
+      dataIndex: "enrollmentStatus",
       render: (text: number, record: StudentType) => {
         return (
-          <ActionCell onView={() => navigate(`create/${record.userId}`)} />
+          <div>
+            {text === 1 ? <Button>Enrollment request Sent</Button> : "-"}
+          </div>
         );
       },
     },

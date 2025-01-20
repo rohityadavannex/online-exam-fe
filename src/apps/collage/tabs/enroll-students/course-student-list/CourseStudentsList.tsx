@@ -1,11 +1,12 @@
 import { Table } from "antd";
 import classNames from "classnames";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
 import useDebounce from "src/hooks/useDebounce";
+import useNotification from "src/hooks/useNotification";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
-import { useGetCourseStudent } from "../api-client";
+import { useCreateEnrollment, useGetCourseStudent } from "../api-client";
 import SubjectFilterOverlay from "./SubjectFilterOverlay";
 import TableHeader from "./TableHeader";
 import useTableColumns from "./useTableColumns";
@@ -23,6 +24,7 @@ const tabs = [
 
 const CourseStudentsList = () => {
   useSetActiveTab(TAB_NAMES.EXAM);
+  const { successNotification, errorNotification } = useNotification();
   const { courseId } = useParams();
   const [length, setLength] = useState(10);
   const [page, setPage] = useState(1);
@@ -31,12 +33,23 @@ const CourseStudentsList = () => {
   const [isFilterOverlayOpen, setIsFilterOverlayOpen] = useState(false);
 
   const {
+    isSuccess: enrollmentSuccess,
+    execute: createEnrollment,
+    error: enrollmentError,
+  } = useCreateEnrollment();
+
+  const {
     isLoading,
     error,
     data,
     mutate: mutateList,
     isValidating,
-  } = useGetCourseStudent({ courseId, length, page, search: debouncedSearch });
+  } = useGetCourseStudent({
+    courseId: Number(courseId),
+    length,
+    page,
+    search: debouncedSearch,
+  });
 
   const tableData = useMemo(() => data?.data?.rows ?? [], [data?.data]);
 
@@ -45,7 +58,25 @@ const CourseStudentsList = () => {
     [data?.data?.count]
   );
 
-  const { columns } = useTableColumns();
+  const { columns } = useTableColumns({ createEnrollment });
+
+  useEffect(() => {
+    if (enrollmentSuccess) {
+      successNotification();
+    }
+    if (enrollmentError) {
+      if (enrollmentError?.cause?.status === 409) {
+        errorNotification("Already made request for enrollment");
+      } else {
+        errorNotification();
+      }
+    }
+  }, [
+    enrollmentError,
+    enrollmentSuccess,
+    errorNotification,
+    successNotification,
+  ]);
 
   return (
     <>
@@ -74,6 +105,7 @@ const CourseStudentsList = () => {
               onChange: (page) => console.log("page: ", page),
               total: totalRecords,
             }}
+            loading={isLoading}
           />
         </div>
       </div>
