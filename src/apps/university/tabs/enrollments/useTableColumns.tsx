@@ -9,7 +9,17 @@ import {
 import { GenderCell } from "../exams/list/useTableColumns";
 import StudentType from "./types";
 
-const useTableColumns = () => {
+const useTableColumns = ({
+  updateStatus,
+}: {
+  updateStatus: ({
+    studentId,
+    status,
+  }: {
+    studentId: number;
+    status: ENROLLMENT_STATUS;
+  }) => void;
+}) => {
   const navigate = useNavigate();
   const columns: TableProps<StudentType>["columns"] = [
     {
@@ -63,18 +73,37 @@ const useTableColumns = () => {
       title: "Status",
       dataIndex: "enrollmentStatus",
       render: (text: number, record: StudentType) => {
-        if (ENROLLMENT_STATUS.REQUESTED) {
+        if (text === ENROLLMENT_STATUS.REQUESTED) {
           return (
             <div className="flex gap-3">
-              <Button>Decline</Button>
-              <Button type="primary">Accept</Button>
+              <Button
+                onClick={() =>
+                  updateStatus({
+                    studentId: record.studentId,
+                    status: ENROLLMENT_STATUS.REJECTED,
+                  })
+                }
+              >
+                Decline
+              </Button>
+              <Button
+                type="primary"
+                onClick={() =>
+                  updateStatus({
+                    studentId: record.studentId,
+                    status: ENROLLMENT_STATUS.ACCEPTED,
+                  })
+                }
+              >
+                Accept
+              </Button>
             </div>
           );
         }
-        if (ENROLLMENT_STATUS.ACCEPTED) {
+        if (text === ENROLLMENT_STATUS.ACCEPTED) {
           return ENROLLMENT_STATUS_LABELS[ENROLLMENT_STATUS.ACCEPTED];
         }
-        if (ENROLLMENT_STATUS.REJECTED) {
+        if (text === ENROLLMENT_STATUS.REJECTED) {
           return ENROLLMENT_STATUS_LABELS[ENROLLMENT_STATUS.REJECTED];
         }
         return "-";

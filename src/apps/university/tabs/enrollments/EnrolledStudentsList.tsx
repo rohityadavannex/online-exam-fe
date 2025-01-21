@@ -1,13 +1,17 @@
 import { Table } from "antd";
 import classNames from "classnames";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
 import TabHeader from "src/apps/common/tab-header/TabHeader";
 import useDebounce from "src/hooks/useDebounce";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
 
-import { useGetExamEnrolledStudent } from "./api-client";
+import useNotification from "src/hooks/useNotification";
+import {
+  useGetExamEnrolledStudent,
+  useUpdateExamEnrolledStatus,
+} from "./api-client";
 import SubjectFilterOverlay from "./SubjectFilterOverlay";
 import TableHeader from "./TableHeader";
 import useTableColumns from "./useTableColumns";
@@ -25,12 +29,25 @@ const tabs = [
 
 const EnrolledStudentsList = () => {
   useSetActiveTab(TAB_NAMES.EXAM);
+  const { successNotification, errorNotification } = useNotification();
   const { examId } = useParams();
   const [length, setLength] = useState(10);
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState("");
   const debouncedSearch = useDebounce(searchText);
   const [isFilterOverlayOpen, setIsFilterOverlayOpen] = useState(false);
+
+  const {
+    isLoading: isUpdateStatusLoading,
+    execute: updateStatus,
+    isSuccess: updateSuccess,
+    error: updateError,
+  } = useUpdateExamEnrolledStatus({
+    examId: Number(examId),
+    length,
+    page,
+    search: debouncedSearch,
+  });
 
   const {
     isLoading,
@@ -52,7 +69,23 @@ const EnrolledStudentsList = () => {
     [data?.data?.count]
   );
 
-  const { columns } = useTableColumns();
+  const { columns } = useTableColumns({ updateStatus });
+
+  useEffect(() => {
+    if (updateSuccess) {
+      successNotification();
+      mutateList();
+    }
+    if (updateError) {
+      errorNotification();
+    }
+  }, [
+    errorNotification,
+    mutateList,
+    successNotification,
+    updateError,
+    updateSuccess,
+  ]);
 
   return (
     <>
