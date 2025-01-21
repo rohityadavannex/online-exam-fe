@@ -82,6 +82,7 @@ const useTableColumns = ({
         return (
           <ActionCell
             onAdd={() => navigate(`${record.id}/subjects`)}
+            onEnrollBtnClick={() => navigate(`${record.id}/enrollments`)}
             onView={() => navigate(`create/${record.id}`)}
             onDelete={() => onDelete(record.id)}
           />

@@ -15,6 +15,7 @@ import CreateCollage from "../tabs/collages/CreateCollage";
 import CollageList from "../tabs/collages/list/CollageList";
 import CreateCourses from "../tabs/courses/CreateCourses";
 import CoursesList from "../tabs/courses/list/CoursesList";
+import EnrolledStudentsList from "../tabs/enrollments/EnrolledStudentsList";
 import ExamsList from "../tabs/exams/list/ExamsList";
 import CreateQuestionPaper from "../tabs/question-papers/CreateQuestionPaper";
 import CreateSubject from "../tabs/subjects/CreateSubject";
@@ -78,6 +79,11 @@ function UniversityRoutes() {
         <Route
           path="/exams/:examId/subjects/:subjectId/questions"
           element={<CreateQuestionPaper />}
+        />
+
+        <Route
+          path="/exams/:examId/enrollments"
+          element={<EnrolledStudentsList />}
         />
       </Route>
       <Route

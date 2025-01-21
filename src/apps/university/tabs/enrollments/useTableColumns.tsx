@@ -6,7 +6,7 @@ import {
   ENROLLMENT_STATUS,
   ENROLLMENT_STATUS_LABELS,
 } from "src/utils/constants";
-import { GenderCell } from "../../exams/list/useTableColumns";
+import { GenderCell } from "../exams/list/useTableColumns";
 import StudentType from "./types";
 
 const useTableColumns = () => {
@@ -63,17 +63,21 @@ const useTableColumns = () => {
       title: "Status",
       dataIndex: "enrollmentStatus",
       render: (text: number, record: StudentType) => {
-        return (
-          <div>
-            {text === ENROLLMENT_STATUS.REQUESTED ? (
-              <Button>
-                {ENROLLMENT_STATUS_LABELS[ENROLLMENT_STATUS.REQUESTED]}
-              </Button>
-            ) : (
-              "-"
-            )}
-          </div>
-        );
+        if (ENROLLMENT_STATUS.REQUESTED) {
+          return (
+            <div className="flex gap-3">
+              <Button>Decline</Button>
+              <Button type="primary">Accept</Button>
+            </div>
+          );
+        }
+        if (ENROLLMENT_STATUS.ACCEPTED) {
+          return ENROLLMENT_STATUS_LABELS[ENROLLMENT_STATUS.ACCEPTED];
+        }
+        if (ENROLLMENT_STATUS.REJECTED) {
+          return ENROLLMENT_STATUS_LABELS[ENROLLMENT_STATUS.REJECTED];
+        }
+        return "-";
       },
     },
   ];

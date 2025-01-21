@@ -652,3 +652,15 @@ export const EXAM_TYPE_OPTIONS = [
     value: 4,
   },
 ];
+
+export enum ENROLLMENT_STATUS {
+  REQUESTED = 1,
+  ACCEPTED = 2,
+  REJECTED = 3,
+}
+
+export const ENROLLMENT_STATUS_LABELS = {
+  [ENROLLMENT_STATUS.REQUESTED]: "Enrollment Request Sent.",
+  [ENROLLMENT_STATUS.ACCEPTED]: "Accepted.",
+  [ENROLLMENT_STATUS.REJECTED]: "Rejected.",
+};
