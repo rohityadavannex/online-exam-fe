@@ -1,13 +1,15 @@
+import { BuildingLibraryIcon, UsersIcon } from "@heroicons/react/24/outline";
 import { AddIcon, DeleteIcon, ViewIcon } from "src/icons";
-import { UsersIcon } from "src/icons/UsersIcon";
 
 const ActionCell = ({
   onView,
+  handleCenter,
   onAdd,
   onDelete,
   onEnrollBtnClick,
 }: {
   onAdd: () => void;
+  handleCenter: () => void;
   onView: () => void;
   onDelete: () => void;
   onEnrollBtnClick: () => void;
@@ -15,16 +17,19 @@ const ActionCell = ({
   return (
     <div className="w-fit flex px-4 py-3 rounded-lg items-center gap-3 bg-[#FAFBFD] border border-[#EBECEF]">
       <span className="cursor-pointer" onClick={onAdd}>
-        <AddIcon color="gray" />
+        <AddIcon className="size-5" color="gray" />
+      </span>
+      <span className="cursor-pointer" onClick={handleCenter}>
+        <BuildingLibraryIcon className="size-5" color="gray" />
       </span>
       <span className="cursor-pointer" onClick={onEnrollBtnClick}>
-        <UsersIcon className="w-6" />
+        <UsersIcon className="size-5" color="gray" />
       </span>
       <span className="cursor-pointer" onClick={onView}>
-        <ViewIcon />
+        <ViewIcon className="size-5" />
       </span>
       <span className="cursor-pointer" onClick={onDelete}>
-        <DeleteIcon />
+        <DeleteIcon className="size-5" />
       </span>
     </div>
   );
