@@ -1,6 +1,7 @@
 import { Modal, Table } from "antd";
 import classNames from "classnames";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useParams } from "react-router-dom";
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
 import TabHeader from "src/apps/common/tab-header/TabHeader";
 import { useNotification } from "src/components/contexts/NotificationContext";
@@ -8,7 +9,7 @@ import useDebounce from "src/hooks/useDebounce";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
 import {
   useDeleteSubject,
-  useGetSubjects,
+  useGetAllExamCenters,
   useUpdateSubjectStatus,
 } from "../api-client";
 import AddExamCenterModal from "./AddExamCenterModal";
@@ -19,6 +20,7 @@ import useTableColumns from "./useTableColumns";
 const ExamCentersList = () => {
   useSetActiveTab(TAB_NAMES.EXAM);
   const [length, setLength] = useState(10);
+  const { examId } = useParams();
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState("");
   const debouncedSearch = useDebounce(searchText);
@@ -34,7 +36,9 @@ const ExamCentersList = () => {
     data,
     mutate: mutateList,
     isValidating,
-  } = useGetSubjects({ length, page, search: debouncedSearch });
+  } = useGetAllExamCenters({
+    examId: Number(examId),
+  });
 
   const {
     isLoading: isDeleteLoading,
@@ -112,8 +116,7 @@ const ExamCentersList = () => {
       <AddExamCenterModal
         isModalOpen={isExamCenterModalOpen}
         setIsModalOpen={setIsExamCenterModalOpen}
-        onSubmit={() => {}}
-        isLoading={false}
+        examId={Number(examId)}
       />
       <Modal
         title="Are You sure you want to delete this ?"

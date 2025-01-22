@@ -20,7 +20,7 @@ const TableHeader = ({
       </div>
       <div className="flex items-start gap-4 flex-wrap">
         <FilterButton onClick={handleFilterClick} />
-        <AddButton onClick={() => onAddClick()} label="Add Subject" />
+        <AddButton onClick={() => onAddClick()} label="Add Exam Center" />
       </div>
     </div>
   );

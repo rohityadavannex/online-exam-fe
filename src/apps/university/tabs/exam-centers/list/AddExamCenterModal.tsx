@@ -3,7 +3,10 @@ import { useFormik } from "formik";
 import Input from "src/components/inputs/Input";
 import Select from "src/components/select/Select";
 
+import { useEffect, useMemo } from "react";
+import useNotification from "src/hooks/useNotification";
 import { number, object } from "yup";
+import { useCreateExamCenter, useGetAllCollegesList } from "../api-client";
 
 enum FORM_FIELDS {
   COLLEGE_ID = "collegeId",
@@ -13,14 +16,32 @@ enum FORM_FIELDS {
 const AddExamCenterModal = ({
   isModalOpen,
   setIsModalOpen,
-  onSubmit,
-  isLoading,
+
+  examId,
 }: {
   isModalOpen: boolean;
   setIsModalOpen: (value: boolean) => void;
-  onSubmit: () => void;
-  isLoading: boolean;
+
+  examId: number;
 }) => {
+  const { successNotification, errorNotification } = useNotification();
+  const { isLoading: isCollegesLoading, data: collegesRes } =
+    useGetAllCollegesList({ examId });
+
+  const {
+    isLoading: isCreateLoading,
+    execute: createExamCenter,
+    isSuccess: isCreateSuccess,
+    error: createError,
+  } = useCreateExamCenter({ examId });
+
+  const mappedData = useMemo(() => {
+    return (collegesRes?.data?.rows ?? []).map((item: any) => ({
+      label: item.name,
+      value: item.userId,
+    }));
+  }, [collegesRes?.data]);
+
   const { values, errors, handleSubmit, handleChange, touched, setFieldValue } =
     useFormik({
       enableReinitialize: true,
@@ -35,16 +56,34 @@ const AddExamCenterModal = ({
         [FORM_FIELDS.CAPACITY]: number().required("This is a Required field."),
       }),
       onSubmit: (values) => {
-        console.log("line 36 ", values);
+        createExamCenter(values);
       },
     });
+
+  useEffect(() => {
+    if (isCreateSuccess) {
+      successNotification();
+      setIsModalOpen(false);
+    }
+
+    if (createError) {
+      errorNotification();
+    }
+  }, [
+    createError,
+    errorNotification,
+    isCreateSuccess,
+    setIsModalOpen,
+    successNotification,
+  ]);
+
   return (
     <Modal
       title="Add Exam Center"
       open={isModalOpen}
       onOk={() => onSubmit()}
       onCancel={() => setIsModalOpen(false)}
-      okText={isLoading ? "Loading..." : "Submit"}
+      okText={isCreateLoading ? "Loading..." : "Submit"}
       okButtonProps={{
         htmlType: "submit",
         onClick: () => handleSubmit(),
@@ -56,14 +95,14 @@ const AddExamCenterModal = ({
           showSearch
           placeholder="Select College"
           optionFilterProp="label"
-          options={[]}
+          options={mappedData}
           name={FORM_FIELDS.COLLEGE_ID}
           value={values[FORM_FIELDS.COLLEGE_ID]}
           error={errors[FORM_FIELDS.COLLEGE_ID] as string}
           onChange={(val: string) =>
             setFieldValue(`${FORM_FIELDS.COLLEGE_ID}`, val)
           }
-          loading={false}
+          loading={isCollegesLoading}
           required
         />
         <Input

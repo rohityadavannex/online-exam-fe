@@ -1,6 +1,5 @@
 import { useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
-import { getQueryData } from "src/helpers/helpers";
 import useFetchAsync from "src/hooks/useFetchAsync";
 import {
   deleteReq,
@@ -17,23 +16,19 @@ export const useCreateSubject = () => {
   return usePost(`/university/${uniData.userId}/subjects/create`);
 };
 
-export const useGetSubjects = ({
-  length,
-  page,
-  search = "",
-}: {
-  length: number;
-  page: number;
-  search?: string;
-}) => {
+export const useGetAllCollegesList = ({ examId }: { examId: number }) => {
   const uniData = useSelector(getCurrentUserInfo);
-  return useGet(
-    `/university/${uniData.userId}/subjects${getQueryData({
-      length,
-      page,
-      search,
-    })}`
-  );
+  return useGet(`/university/${uniData.userId}/exams/${examId}/colleges`);
+};
+
+export const useCreateExamCenter = ({ examId }: { examId: number }) => {
+  const uniData = useSelector(getCurrentUserInfo);
+  return usePost(`/university/${uniData.userId}/exams/${examId}/exam-centers`);
+};
+
+export const useGetAllExamCenters = ({ examId }: { examId: number }) => {
+  const uniData = useSelector(getCurrentUserInfo);
+  return useGet(`/university/${uniData.userId}/exams/${examId}/exam-centers`);
 };
 
 export const useUpdateSubject = ({ subjectId }: { subjectId: number }) => {

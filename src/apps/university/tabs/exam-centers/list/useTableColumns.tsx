@@ -1,6 +1,5 @@
 import { TableProps, Tag } from "antd";
 import { useNavigate } from "react-router-dom";
-import Toggle from "src/components/toggles/Toggle";
 import { getGenderLabel } from "src/helpers/helpers";
 import { GENDER_ENUM } from "src/utils/constants";
 import ActionCell from "./ActionCell";
@@ -32,16 +31,16 @@ const useTableColumns = ({
       dataIndex: "capacity",
       render: (text: string) => text,
     },
-    {
-      title: "Status",
-      dataIndex: "status",
-      render: (text: boolean, record: SubjectType) => (
-        <Toggle
-          checked={text}
-          onToggle={(value) => onStatusChange(record?.id, value)}
-        />
-      ),
-    },
+    // {
+    //   title: "Status",
+    //   dataIndex: "status",
+    //   render: (text: boolean, record: SubjectType) => (
+    //     <Toggle
+    //       checked={text}
+    //       onToggle={(value) => onStatusChange(record?.id, value)}
+    //     />
+    //   ),
+    // },
     {
       title: "Action",
       dataIndex: "id",
