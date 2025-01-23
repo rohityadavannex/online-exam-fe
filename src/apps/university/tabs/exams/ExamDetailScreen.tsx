@@ -6,11 +6,11 @@ import useSetActiveTab from "src/hooks/useSetActiveTab";
 
 const tabs = [
   {
-    label: "Exam Subjects",
+    label: "Subjects",
     href: "subjects",
   },
   {
-    label: "Exam Centers",
+    label: "Centers",
     href: "centers",
   },
   {

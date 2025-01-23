@@ -1,18 +1,11 @@
 import { TableProps, Tag } from "antd";
-import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import { getGenderLabel } from "src/helpers/helpers";
 import { GENDER_ENUM } from "src/utils/constants";
 import ActionCell from "./ActionCell";
 import SubjectType from "./types";
 
-const useTableColumns = ({
-  onEdit,
-  onDelete,
-}: {
-  onEdit: (id: number) => void;
-  onDelete: (id: number) => void;
-}) => {
+const useTableColumns = ({ onDelete }: { onDelete: (id: number) => void }) => {
   const navigate = useNavigate();
   const columns: TableProps<SubjectType>["columns"] = [
     {
@@ -27,21 +20,19 @@ const useTableColumns = ({
       dataIndex: "name",
       render: (text: string) => text,
     },
-
     {
-      title: "Exam Date",
-      dataIndex: "examDate",
-      render: (text: string) =>
-        text ? dayjs(text).format("DD MMMM YYYY") : "-",
+      title: "Date",
+      dataIndex: "capacity",
+      render: (text: string) => text,
     },
+
     {
       title: "Action",
       dataIndex: "id",
       render: (text: number, record: SubjectType) => {
         return (
           <ActionCell
-            onAdd={() => navigate(`${record.id}/questions`)}
-            onEdit={() => onEdit(record.id)}
+            onView={() => navigate(`create/${record.id}`)}
             onDelete={() => onDelete(record.id)}
           />
         );

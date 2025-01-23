@@ -6,27 +6,23 @@ import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
 import { useNotification } from "src/components/contexts/NotificationContext";
 import useDebounce from "src/hooks/useDebounce";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
-import {
-  useDeleteAssignedSubject,
-  useGetAssignedSubjects,
-} from "../api-client";
-import AssignSubjects from "../AssignSubjects";
+import { useDeleteExamCenter, useGetAllExamCenters } from "../api-client";
+import AddExamCenterModal from "./AddExamCenterModal";
 import SubjectFilterOverlay from "./SubjectFilterOverlay";
 import TableHeader from "./TableHeader";
 import useTableColumns from "./useTableColumns";
 
-const AssignedSubjectsList = () => {
+const ExamTimeTable = () => {
   useSetActiveTab(TAB_NAMES.EXAM);
-  const { examId } = useParams();
   const [length, setLength] = useState(10);
+  const { examId } = useParams();
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState("");
   const debouncedSearch = useDebounce(searchText);
   const [isFilterOverlayOpen, setIsFilterOverlayOpen] = useState(false);
   const { successNotification, errorNotification } = useNotification();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isAssignSubjectModalOpen, setIsAssignSubjectModalOpen] =
-    useState(false);
+  const [isExamCenterModalOpen, setIsExamCenterModalOpen] = useState(false);
   const [idToOperate, setIdToOperate] = useState<Number | undefined>(undefined);
 
   const {
@@ -35,10 +31,7 @@ const AssignedSubjectsList = () => {
     data,
     mutate: mutateList,
     isValidating,
-  } = useGetAssignedSubjects({
-    length,
-    page,
-    search: debouncedSearch,
+  } = useGetAllExamCenters({
     examId: Number(examId),
   });
 
@@ -47,7 +40,10 @@ const AssignedSubjectsList = () => {
     isSuccess: isDeleteSucceed,
     error: deleteErr,
     execute: executeDelete,
-  } = useDeleteAssignedSubject({ examId: Number(examId) });
+  } = useDeleteExamCenter({
+    examId: Number(examId),
+    centerId: idToOperate as number,
+  });
 
   const tableData = useMemo(() => data?.data?.rows ?? [], [data?.data]);
 
@@ -57,16 +53,8 @@ const AssignedSubjectsList = () => {
   );
 
   const closeDeleteModal = useCallback(() => setIsDeleteModalOpen(false), []);
-  const closeAssignSubjectModal = useCallback(
-    () => setIsAssignSubjectModalOpen(false),
-    []
-  );
 
   const { columns } = useTableColumns({
-    onEdit: (id: number) => {
-      setIdToOperate(id);
-      setIsAssignSubjectModalOpen(true);
-    },
     onDelete: (id: number) => {
       setIdToOperate(id);
       setIsDeleteModalOpen(true);
@@ -98,6 +86,11 @@ const AssignedSubjectsList = () => {
         onClose={() => setIsFilterOverlayOpen(false)}
         handleFilter={(filter) => {}}
       />
+      <AddExamCenterModal
+        isModalOpen={isExamCenterModalOpen}
+        setIsModalOpen={setIsExamCenterModalOpen}
+        examId={Number(examId)}
+      />
       <Modal
         title="Are You sure you want to delete this ?"
         open={isDeleteModalOpen}
@@ -105,17 +98,12 @@ const AssignedSubjectsList = () => {
         onCancel={closeDeleteModal}
         okText={isDeleteLoading ? "Loading..." : "Delete"}
       ></Modal>
-      <AssignSubjects
-        isModalOpen={isAssignSubjectModalOpen}
-        onClose={closeAssignSubjectModal}
-        subjectId={idToOperate}
-      />
       <div className="flex flex-col gap-6">
-        {/* <TabHeader label="Assign Subject" /> */}
+        {/* <TabHeader label="Exam Centers" /> */}
         <div className="bg-white rounded-lg px-6 py-9 flex flex-col gap-5">
           <TableHeader
-            onAddClick={() => setIsAssignSubjectModalOpen(true)}
             handleFilterClick={() => setIsFilterOverlayOpen(true)}
+            onAddClick={() => setIsExamCenterModalOpen(true)}
           />
           <Table
             className={classNames({
@@ -140,4 +128,4 @@ const AssignedSubjectsList = () => {
   );
 };
 
-export default AssignedSubjectsList;
+export default ExamTimeTable;
