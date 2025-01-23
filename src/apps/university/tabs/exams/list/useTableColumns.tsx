@@ -84,7 +84,7 @@ const useTableColumns = ({
             onAdd={() => navigate(`${record.id}/subjects`)}
             handleCenter={() => navigate(`${record.id}/centers`)}
             onEnrollBtnClick={() => navigate(`${record.id}/enrollments`)}
-            onView={() => navigate(`create/${record.id}`)}
+            onView={() => navigate(`${record.id}`)}
             onDelete={() => onDelete(record.id)}
           />
         );

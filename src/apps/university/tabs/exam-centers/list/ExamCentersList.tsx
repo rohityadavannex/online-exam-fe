@@ -3,15 +3,10 @@ import classNames from "classnames";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
-import TabHeader from "src/apps/common/tab-header/TabHeader";
 import { useNotification } from "src/components/contexts/NotificationContext";
 import useDebounce from "src/hooks/useDebounce";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
-import {
-  useDeleteSubject,
-  useGetAllExamCenters,
-  useUpdateSubjectStatus,
-} from "../api-client";
+import { useDeleteExamCenter, useGetAllExamCenters } from "../api-client";
 import AddExamCenterModal from "./AddExamCenterModal";
 import SubjectFilterOverlay from "./SubjectFilterOverlay";
 import TableHeader from "./TableHeader";
@@ -45,13 +40,10 @@ const ExamCentersList = () => {
     isSuccess: isDeleteSucceed,
     error: deleteErr,
     execute: executeDelete,
-  } = useDeleteSubject();
-
-  const {
-    execute: handleUniStatusChange,
-    isSuccess: isStatusChangeSuccess,
-    error: statusChangeError,
-  } = useUpdateSubjectStatus();
+  } = useDeleteExamCenter({
+    examId: Number(examId),
+    centerId: idToOperate as number,
+  });
 
   const tableData = useMemo(() => data?.data?.rows ?? [], [data?.data]);
 
@@ -63,9 +55,6 @@ const ExamCentersList = () => {
   const closeDeleteModal = useCallback(() => setIsDeleteModalOpen(false), []);
 
   const { columns } = useTableColumns({
-    onStatusChange: (id: number, status: boolean) => {
-      handleUniStatusChange({ subjectId: id, data: { status } });
-    },
     onDelete: (id: number) => {
       setIdToOperate(id);
       setIsDeleteModalOpen(true);
@@ -90,22 +79,6 @@ const ExamCentersList = () => {
     closeDeleteModal,
   ]);
 
-  useEffect(() => {
-    if (isStatusChangeSuccess) {
-      mutateList();
-      successNotification("Updated successfully");
-    }
-    if (statusChangeError) {
-      errorNotification();
-    }
-  }, [
-    errorNotification,
-    isStatusChangeSuccess,
-    mutateList,
-    statusChangeError,
-    successNotification,
-  ]);
-
   return (
     <>
       <SubjectFilterOverlay
@@ -126,7 +99,7 @@ const ExamCentersList = () => {
         okText={isDeleteLoading ? "Loading..." : "Delete"}
       ></Modal>
       <div className="flex flex-col gap-6">
-        <TabHeader label="Exam Centers" />
+        {/* <TabHeader label="Exam Centers" /> */}
         <div className="bg-white rounded-lg px-6 py-9 flex flex-col gap-5">
           <TableHeader
             handleFilterClick={() => setIsFilterOverlayOpen(true)}

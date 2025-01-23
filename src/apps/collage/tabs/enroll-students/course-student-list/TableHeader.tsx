@@ -19,7 +19,7 @@ const TableHeader = ({
       <div className="flex items-start gap-4 flex-wrap">
         <FilterButton onClick={handleFilterClick} />
         <AddButton
-          onClick={() => navigate("/student/create")}
+          onClick={() => navigate("/students/create")}
           label="Add Student"
         />
       </div>

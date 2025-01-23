@@ -5,13 +5,7 @@ import { GENDER_ENUM } from "src/utils/constants";
 import ActionCell from "./ActionCell";
 import SubjectType from "./types";
 
-const useTableColumns = ({
-  onStatusChange,
-  onDelete,
-}: {
-  onStatusChange: (id: number, status: boolean) => void;
-  onDelete: (id: number) => void;
-}) => {
+const useTableColumns = ({ onDelete }: { onDelete: (id: number) => void }) => {
   const navigate = useNavigate();
   const columns: TableProps<SubjectType>["columns"] = [
     {
@@ -31,16 +25,7 @@ const useTableColumns = ({
       dataIndex: "capacity",
       render: (text: string) => text,
     },
-    // {
-    //   title: "Status",
-    //   dataIndex: "status",
-    //   render: (text: boolean, record: SubjectType) => (
-    //     <Toggle
-    //       checked={text}
-    //       onToggle={(value) => onStatusChange(record?.id, value)}
-    //     />
-    //   ),
-    // },
+
     {
       title: "Action",
       dataIndex: "id",

@@ -141,6 +141,7 @@ const ExamsList = () => {
               onChange: (page) => console.log("page: ", page),
               total: totalRecords,
             }}
+            loading={isLoading}
           />
         </div>
       </div>
