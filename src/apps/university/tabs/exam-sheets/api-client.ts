@@ -44,3 +44,10 @@ export const useDeleteExamSheet = ({ examId }: { examId: number }) => {
 
   return useFetchAsync(deleteFn);
 };
+
+export const useStartExamSheetAllotment = ({ examId }: { examId: number }) => {
+  const uniData = useSelector(getCurrentUserInfo);
+  return usePost(
+    `/university/${uniData.userId}/exams/${examId}/allot-exam-sheets`
+  );
+};
