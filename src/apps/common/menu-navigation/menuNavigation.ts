@@ -29,6 +29,7 @@ export const TAB_NAMES = {
   COLLAGES: "COLLAGES",
   COURSES: "COURSES",
   EXAM: "EXAM",
+  EXAMINER: "EXAMINER",
 };
 
 export const siteAdminNavOptions = [
@@ -81,6 +82,12 @@ export const universityNavOptions = [
     label: "Exams",
     name: TAB_NAMES.EXAM,
     href: "/exams",
+    icon: UserIcon,
+  },
+  {
+    label: "Examiners",
+    name: TAB_NAMES.EXAMINER,
+    href: "/examiners",
     icon: UserIcon,
   },
 ];

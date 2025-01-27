@@ -19,6 +19,8 @@ import EnrolledStudentsList from "../tabs/enrollments/EnrolledStudentsList";
 import ExamCentersList from "../tabs/exam-centers/list/ExamCentersList";
 import CreateExamSheets from "../tabs/exam-sheets/CreateExamSheets";
 import ExamSheetsList from "../tabs/exam-sheets/list/ExamSheetsList";
+import CreateExaminer from "../tabs/examiners/CreateExaminer";
+import ExaminersList from "../tabs/examiners/list/ExaminersList";
 import ExamDetailScreen from "../tabs/exams/ExamDetailScreen";
 import ExamsList from "../tabs/exams/list/ExamsList";
 import CreateQuestionPaper from "../tabs/question-papers/CreateQuestionPaper";
@@ -89,6 +91,12 @@ function UniversityRoutes() {
           <Route path="exam-sheets" element={<ExamSheetsList />} />
           <Route path="exam-sheets/create" element={<CreateExamSheets />} />
         </Route>
+
+        <Route path="/examiners" element={<ExaminersList />} />
+        <Route
+          path="/examiners/create/:examinerId?"
+          element={<CreateExaminer />}
+        />
       </Route>
       <Route
         path="*"
