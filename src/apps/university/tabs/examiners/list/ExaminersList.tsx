@@ -115,7 +115,7 @@ const ExaminersList = () => {
         okText={isDeleteLoading ? "Loading..." : "Delete"}
       ></Modal>
       <div className="flex flex-col gap-6">
-        <TabHeader label="Staff" />
+        <TabHeader label="Examiners" />
         <div className="bg-white rounded-lg px-6 py-9 flex flex-col gap-5">
           <TableHeader handleFilterClick={() => setIsFilterOverlayOpen(true)} />
           <Table
