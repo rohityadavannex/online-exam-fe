@@ -1,6 +1,6 @@
 import { Spin } from "antd";
 import { useSelector } from "react-redux";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { AuthRoute } from "src/App";
 import { getCurrentUserInfo } from "src/redux/selectors/app";
 import ForgotPassword from "src/tabs/auth/forgot-password/ForgotPassword";
@@ -15,6 +15,11 @@ import CreateCollage from "../tabs/collages/CreateCollage";
 import CollageList from "../tabs/collages/list/CollageList";
 import CreateCourses from "../tabs/courses/CreateCourses";
 import CoursesList from "../tabs/courses/list/CoursesList";
+import EnrolledStudentsList from "../tabs/enrollments/EnrolledStudentsList";
+import ExamCentersList from "../tabs/exam-centers/list/ExamCentersList";
+import CreateExamSheets from "../tabs/exam-sheets/CreateExamSheets";
+import ExamSheetsList from "../tabs/exam-sheets/list/ExamSheetsList";
+import ExamDetailScreen from "../tabs/exams/ExamDetailScreen";
 import ExamsList from "../tabs/exams/list/ExamsList";
 import CreateQuestionPaper from "../tabs/question-papers/CreateQuestionPaper";
 import CreateSubject from "../tabs/subjects/CreateSubject";
@@ -71,14 +76,19 @@ function UniversityRoutes() {
         />
 
         <Route path="/exams" element={<ExamsList />} />
-        <Route
-          path="/exams/:examId/subjects"
-          element={<AssignedSubjectsList />}
-        />
-        <Route
-          path="/exams/:examId/subjects/:subjectId/questions"
-          element={<CreateQuestionPaper />}
-        />
+        <Route path="/exams/:examId" element={<ExamDetailScreen />}>
+          <Route index element={<Navigate to={"subjects"} />} />
+          <Route path="subjects" element={<AssignedSubjectsList />} />
+          <Route
+            path="subjects/:subjectId/questions"
+            element={<CreateQuestionPaper />}
+          />
+
+          <Route path="enrollments" element={<EnrolledStudentsList />} />
+          <Route path="centers" element={<ExamCentersList />} />
+          <Route path="exam-sheets" element={<ExamSheetsList />} />
+          <Route path="exam-sheets/create" element={<CreateExamSheets />} />
+        </Route>
       </Route>
       <Route
         path="*"

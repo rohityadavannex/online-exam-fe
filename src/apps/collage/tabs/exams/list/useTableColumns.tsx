@@ -1,6 +1,5 @@
 import { TableProps, Tag } from "antd";
 import { useNavigate } from "react-router-dom";
-import Toggle from "src/components/toggles/Toggle";
 import {
   getExamTypeLabel,
   getGenderLabel,
@@ -8,16 +7,12 @@ import {
 } from "src/helpers/helpers";
 import { GENDER_ENUM } from "src/utils/constants";
 import ActionCell from "./ActionCell";
-import AcademicYearType from "./types";
+import { default as AcademicYearType, default as ExamsType } from "./types";
 
 const useTableColumns = ({
-  onStatusChange,
-  onDelete,
   getCourseLabel,
   getAcademicYearLabel,
 }: {
-  onStatusChange: (id: number, status: boolean) => void;
-  onDelete: (id: number) => void;
   getCourseLabel: (id: number) => string;
   getAcademicYearLabel: (id: number) => string;
 }) => {
@@ -65,27 +60,17 @@ const useTableColumns = ({
       dataIndex: "note",
       render: (text: string) => text,
     },
-    {
-      title: "Status",
-      dataIndex: "status",
-      render: (text: boolean, record: AcademicYearType) => (
-        <Toggle
-          checked={text}
-          onToggle={(value) => onStatusChange(record?.id, value)}
-        />
-      ),
-    },
+
     {
       title: "Action",
       dataIndex: "id",
-      render: (text: number, record: AcademicYearType) => {
+      render: (text: number, record: ExamsType) => {
         return (
           <ActionCell
-            onAdd={() => navigate(`${record.id}/subjects`)}
-            handleCenter={() => navigate(`${record.id}/centers`)}
-            onEnrollBtnClick={() => navigate(`${record.id}/enrollments`)}
-            onView={() => navigate(`${record.id}`)}
-            onDelete={() => onDelete(record.id)}
+            onAdd={() =>
+              navigate(`${record.id}/${record.course}/enroll-students`)
+            }
+            onView={() => navigate(`create/${record.id}`)}
           />
         );
       },

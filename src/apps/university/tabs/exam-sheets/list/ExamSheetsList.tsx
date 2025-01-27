@@ -1,24 +1,20 @@
 import { Modal, Table } from "antd";
 import classNames from "classnames";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useParams } from "react-router-dom";
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
-import TabHeader from "src/apps/common/tab-header/TabHeader";
 import { useNotification } from "src/components/contexts/NotificationContext";
 import useDebounce from "src/hooks/useDebounce";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
-import { useGetUniversityAcademicYears } from "../../academic-years/api-client";
-import { useGetUniversityCourses } from "../../courses/api-client";
-import {
-  useDeleteExam,
-  useGetExamsList,
-  useUpdateExamStatus,
-} from "../api-client";
+import { useGetUniversitySubjects } from "../../subjects/api-client";
+import { useDeleteExamSheet, useGetExamSheets } from "../api-client";
 import SubjectFilterOverlay from "./SubjectFilterOverlay";
 import TableHeader from "./TableHeader";
 import useTableColumns from "./useTableColumns";
 
-const ExamsList = () => {
-  useSetActiveTab(TAB_NAMES.EXAM);
+const ExamSheetsList = () => {
+  useSetActiveTab(TAB_NAMES.COURSES);
+  const { examId } = useParams();
   const [length, setLength] = useState(10);
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState("");
@@ -28,8 +24,7 @@ const ExamsList = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [idToOperate, setIdToOperate] = useState<Number | undefined>(undefined);
 
-  const { getCourseLabel } = useGetUniversityCourses();
-  const { getLabel: getAcademicYearLabel } = useGetUniversityAcademicYears();
+  const { getSubjectLabel } = useGetUniversitySubjects();
 
   const {
     isLoading,
@@ -37,20 +32,19 @@ const ExamsList = () => {
     data,
     mutate: mutateList,
     isValidating,
-  } = useGetExamsList({ length, page, search: debouncedSearch });
+  } = useGetExamSheets({
+    examId: Number(examId),
+    length,
+    page,
+    search: debouncedSearch,
+  });
 
   const {
     isLoading: isDeleteLoading,
     isSuccess: isDeleteSucceed,
     error: deleteErr,
     execute: executeDelete,
-  } = useDeleteExam();
-
-  const {
-    execute: handleUniStatusChange,
-    isSuccess: isStatusChangeSuccess,
-    error: statusChangeError,
-  } = useUpdateExamStatus();
+  } = useDeleteExamSheet({ examId: Number(examId) });
 
   const tableData = useMemo(() => data?.data?.rows ?? [], [data?.data]);
 
@@ -62,11 +56,7 @@ const ExamsList = () => {
   const closeDeleteModal = useCallback(() => setIsDeleteModalOpen(false), []);
 
   const { columns } = useTableColumns({
-    getCourseLabel,
-    getAcademicYearLabel,
-    onStatusChange: (id: number, status: boolean) => {
-      handleUniStatusChange({ examId: id, data: { status } });
-    },
+    getSubjectLabel,
     onDelete: (id: number) => {
       setIdToOperate(id);
       setIsDeleteModalOpen(true);
@@ -91,22 +81,6 @@ const ExamsList = () => {
     closeDeleteModal,
   ]);
 
-  useEffect(() => {
-    if (isStatusChangeSuccess) {
-      mutateList();
-      successNotification("Updated successfully");
-    }
-    if (statusChangeError) {
-      errorNotification();
-    }
-  }, [
-    errorNotification,
-    isStatusChangeSuccess,
-    mutateList,
-    statusChangeError,
-    successNotification,
-  ]);
-
   return (
     <>
       <SubjectFilterOverlay
@@ -122,7 +96,6 @@ const ExamsList = () => {
         okText={isDeleteLoading ? "Loading..." : "Delete"}
       ></Modal>
       <div className="flex flex-col gap-6">
-        <TabHeader label="Exams" />
         <div className="bg-white rounded-lg px-6 py-9 flex flex-col gap-5">
           <TableHeader handleFilterClick={() => setIsFilterOverlayOpen(true)} />
           <Table
@@ -149,4 +122,4 @@ const ExamsList = () => {
   );
 };
 
-export default ExamsList;
+export default ExamSheetsList;

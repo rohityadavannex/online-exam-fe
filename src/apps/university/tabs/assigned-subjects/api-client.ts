@@ -2,12 +2,25 @@ import { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { getQueryData } from "src/helpers/helpers";
 import useFetchAsync from "src/hooks/useFetchAsync";
-import { deleteReq, useGet, usePost } from "src/http-clients/clients";
+import { deleteReq, useGet, usePatch, usePost } from "src/http-clients/clients";
 import { getCurrentUserInfo } from "src/redux/selectors/app";
 
 export const useAssignSubject = ({ examId }: { examId: Number }) => {
   const uniData = useSelector(getCurrentUserInfo);
   return usePost(`/university/${uniData.userId}/exams/${examId}/subjects`);
+};
+
+export const useUpdateAssignSubject = ({
+  examId,
+  subjectId,
+}: {
+  examId: Number;
+  subjectId: number;
+}) => {
+  const uniData = useSelector(getCurrentUserInfo);
+  return usePatch(
+    `/university/${uniData.userId}/exams/${examId}/subjects/${subjectId}`
+  );
 };
 
 export const useGetAssignedSubjects = ({
@@ -45,4 +58,19 @@ export const useDeleteAssignedSubject = ({ examId }: { examId: number }) => {
   );
 
   return useFetchAsync(deleteFn);
+};
+
+export const useGetAssignedSubjectInfo = ({
+  examId,
+  subjectId,
+}: {
+  examId: number;
+  subjectId: number;
+}) => {
+  const uniData = useSelector(getCurrentUserInfo);
+  return useGet(
+    examId
+      ? `/university/${uniData.userId}/exams/${examId}/subjects/${subjectId}`
+      : undefined
+  );
 };

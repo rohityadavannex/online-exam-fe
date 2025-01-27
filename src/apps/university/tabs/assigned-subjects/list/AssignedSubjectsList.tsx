@@ -3,7 +3,6 @@ import classNames from "classnames";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
-import TabHeader from "src/apps/common/tab-header/TabHeader";
 import { useNotification } from "src/components/contexts/NotificationContext";
 import useDebounce from "src/hooks/useDebounce";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
@@ -64,6 +63,10 @@ const AssignedSubjectsList = () => {
   );
 
   const { columns } = useTableColumns({
+    onEdit: (id: number) => {
+      setIdToOperate(id);
+      setIsAssignSubjectModalOpen(true);
+    },
     onDelete: (id: number) => {
       setIdToOperate(id);
       setIsDeleteModalOpen(true);
@@ -108,7 +111,7 @@ const AssignedSubjectsList = () => {
         subjectId={idToOperate}
       />
       <div className="flex flex-col gap-6">
-        <TabHeader label="Assign Subject" />
+        {/* <TabHeader label="Assign Subject" /> */}
         <div className="bg-white rounded-lg px-6 py-9 flex flex-col gap-5">
           <TableHeader
             onAddClick={() => setIsAssignSubjectModalOpen(true)}

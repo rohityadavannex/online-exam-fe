@@ -3,7 +3,7 @@ import useNotification from "src/hooks/useNotification";
 import { ElementWithWrapper } from "../inputs/Input";
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
-const UploadImage = ({
+const UploadFile = ({
   value,
   onChange,
   label,
@@ -29,16 +29,16 @@ const UploadImage = ({
   };
 
   const beforeUpload = (file: FileType) => {
-    const isJpgOrPng =
-      file?.type === "image/jpeg" || file?.type === "image/png";
-    if (imageOnly && !isJpgOrPng) {
+    console.log("line 32 ", file);
+    const isPdf = file?.type === "application/pdf";
+    if (imageOnly && !isPdf) {
       errorNotification("You can only upload JPG/PNG file!");
     }
     const isLt2M = file.size / 1024 / 1024 < maxSize;
     if (!isLt2M) {
       errorNotification("Image must smaller than 2MB!");
     }
-    return isJpgOrPng && isLt2M;
+    return isPdf && isLt2M;
   };
 
   const uploadButton = (
@@ -60,16 +60,7 @@ const UploadImage = ({
         customRequest={() => {}}
       >
         {value ? (
-          <img
-            src={
-              typeof value === "string"
-                ? `${process.env.REACT_APP_API_URL}/uploads/${value}`
-                : URL.createObjectURL(value as unknown as FileType)
-            }
-            alt="avatar"
-            style={{ width: "100%", height: "100%" }}
-            className="rounded-md object-cover"
-          />
+          <div>{typeof value === "object" ? value?.name : value}</div>
         ) : (
           uploadButton
         )}
@@ -78,4 +69,4 @@ const UploadImage = ({
   );
 };
 
-export default UploadImage;
+export default UploadFile;
