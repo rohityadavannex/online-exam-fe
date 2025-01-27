@@ -255,8 +255,12 @@ export const FONT_FAMILIES = [
 ];
 
 export enum ROLES {
-  SUPER_ADMIN = 1,
-  ADMIN = 2,
+  SITE_ADMIN = 1,
+  UNIVERSITY = 2,
+  COLLEGE = 3,
+  TEACHER = 4,
+  STUDENT = 5,
+  EXAMINER = 6,
 }
 
 export const ROLE_PERMISSION_FEATURES: { label: string; value: string }[] = [
@@ -589,7 +593,7 @@ export const HOUSES = [
 ];
 
 export enum STAFF {
-  TEACHER = 4,
+  TEACHER = ROLES.TEACHER,
 }
 
 export const STAFF_OPTIONS = [
