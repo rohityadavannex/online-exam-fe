@@ -17,6 +17,10 @@ const tabs = [
     label: "Enrolled Students",
     href: "enrollments",
   },
+  {
+    label: "Exam Sheets",
+    href: "exam-sheets",
+  },
 ];
 
 const ExamDetailScreen = () => {

@@ -17,7 +17,8 @@ import CreateCourses from "../tabs/courses/CreateCourses";
 import CoursesList from "../tabs/courses/list/CoursesList";
 import EnrolledStudentsList from "../tabs/enrollments/EnrolledStudentsList";
 import ExamCentersList from "../tabs/exam-centers/list/ExamCentersList";
-import ExamTimeTable from "../tabs/exam-time-table/list/ExamTimeTable";
+import CreateExamSheets from "../tabs/exam-sheets/CreateExamSheets";
+import ExamSheetsList from "../tabs/exam-sheets/list/ExamSheetsList";
 import ExamDetailScreen from "../tabs/exams/ExamDetailScreen";
 import ExamsList from "../tabs/exams/list/ExamsList";
 import CreateQuestionPaper from "../tabs/question-papers/CreateQuestionPaper";
@@ -85,7 +86,8 @@ function UniversityRoutes() {
 
           <Route path="enrollments" element={<EnrolledStudentsList />} />
           <Route path="centers" element={<ExamCentersList />} />
-          <Route path="time-table" element={<ExamTimeTable />} />
+          <Route path="exam-sheets" element={<ExamSheetsList />} />
+          <Route path="exam-sheets/create" element={<CreateExamSheets />} />
         </Route>
       </Route>
       <Route
