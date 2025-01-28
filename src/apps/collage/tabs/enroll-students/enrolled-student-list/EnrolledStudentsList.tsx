@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
 import useDebounce from "src/hooks/useDebounce";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
+import { useGetUniversityCourses } from "../../exams/api-client";
 import { useGetExamEnrolledStudent } from "../api-client";
 import SubjectFilterOverlay from "./SubjectFilterOverlay";
 import TableHeader from "./TableHeader";
@@ -29,7 +30,7 @@ const EnrolledStudentsList = () => {
   const [searchText, setSearchText] = useState("");
   const debouncedSearch = useDebounce(searchText);
   const [isFilterOverlayOpen, setIsFilterOverlayOpen] = useState(false);
-
+  const { getCourseLabel } = useGetUniversityCourses();
   const {
     isLoading,
     error,
@@ -50,7 +51,7 @@ const EnrolledStudentsList = () => {
     [data?.data?.count]
   );
 
-  const { columns } = useTableColumns();
+  const { columns } = useTableColumns({ getCourseLabel });
 
   return (
     <>

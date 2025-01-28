@@ -1,10 +1,13 @@
 import { Table } from "antd";
 import classNames from "classnames";
 import { useMemo, useState } from "react";
+import { useSelector } from "react-redux";
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
 import TabHeader from "src/apps/common/tab-header/TabHeader";
+import { useGetUniversitySubjects } from "src/apps/university/tabs/subjects/api-client";
 import useDebounce from "src/hooks/useDebounce";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
+import { getCurrentUserInfo } from "src/redux/selectors/app";
 import { useGetAnswerSheets } from "../api-client";
 import SubjectFilterOverlay from "./SubjectFilterOverlay";
 import TableHeader from "./TableHeader";
@@ -17,6 +20,10 @@ const AnswerSheets = () => {
   const [searchText, setSearchText] = useState("");
   const debouncedSearch = useDebounce(searchText);
   const [isFilterOverlayOpen, setIsFilterOverlayOpen] = useState(false);
+
+  const currentUser = useSelector(getCurrentUserInfo);
+
+  const { getSubjectLabel } = useGetUniversitySubjects(currentUser?.uniId);
 
   const {
     isLoading,
@@ -33,7 +40,7 @@ const AnswerSheets = () => {
     [data?.data?.count]
   );
 
-  const { columns } = useTableColumns();
+  const { columns } = useTableColumns({ getSubjectLabel });
 
   return (
     <>

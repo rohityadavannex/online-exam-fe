@@ -4,7 +4,11 @@ import { PdfIcon } from "src/icons";
 import ActionCell from "./ActionCell";
 import StudentType from "./types";
 
-const useTableColumns = () => {
+const useTableColumns = ({
+  getSubjectLabel,
+}: {
+  getSubjectLabel: (id: number) => string;
+}) => {
   const navigate = useNavigate();
   const columns: TableProps<StudentType>["columns"] = [
     {
@@ -18,6 +22,11 @@ const useTableColumns = () => {
       title: "Serial No.",
       dataIndex: "serialNo",
       render: (text: string) => text,
+    },
+    {
+      title: "Subject",
+      dataIndex: "subjectId",
+      render: (text: number) => getSubjectLabel(text),
     },
     {
       title: "Answer Sheet",
@@ -36,7 +45,12 @@ const useTableColumns = () => {
       title: "Action",
       dataIndex: "sheetId",
       render: (text: number, record: StudentType) => {
-        return <ActionCell onView={() => navigate(`check/${text}`)} />;
+        return (
+          <ActionCell
+            //@ts-ignore
+            onView={() => navigate(`check/${record.subjectId}/${text}`)}
+          />
+        );
       },
     },
   ];

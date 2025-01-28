@@ -38,7 +38,8 @@ const EditableTable = ({ questionsData }: any) => {
   const handleSubmit = (values: any) => {
     console.log("Updated values:", values);
     const mappedData = values.tableData.map((item: any) => {
-      return { ...item, obtainedMarks: Number(item.obtainedMarks) };
+      const { id, ...rest } = item;
+      return { ...rest, obtainedMarks: Number(item.obtainedMarks) };
     });
 
     execute({ data: mappedData });

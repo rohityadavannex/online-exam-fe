@@ -42,7 +42,7 @@ function ExaminerRoutes() {
         </Route>
         <Route path="/answer-sheets" element={<AnswerSheets />} />
         <Route
-          path="/answer-sheets/check/:sheetId"
+          path="/answer-sheets/check/:subjectId/:sheetId"
           element={<CheckAnswerSheet />}
         />
       </Route>

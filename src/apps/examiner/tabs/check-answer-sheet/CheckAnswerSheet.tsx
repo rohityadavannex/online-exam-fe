@@ -9,9 +9,10 @@ import EditableTable from "./EditableTable";
 const CheckAnswerSheet = () => {
   useSetActiveTab(TAB_NAMES.ANSWER_SHEETS);
 
-  const { sheetId } = useParams();
+  const { sheetId, subjectId } = useParams();
   const { isLoading, data } = useGetAnswerSheetInfo({
     sheetId: Number(sheetId),
+    subjectId: Number(subjectId),
   });
 
   const sheetData = useMemo(() => data?.data ?? {}, [data?.data]);

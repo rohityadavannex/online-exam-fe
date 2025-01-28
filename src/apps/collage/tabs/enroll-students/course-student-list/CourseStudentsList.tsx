@@ -6,6 +6,7 @@ import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
 import useDebounce from "src/hooks/useDebounce";
 import useNotification from "src/hooks/useNotification";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
+import { useGetUniversityCourses } from "../../exams/api-client";
 import { useCreateEnrollment, useGetCourseStudent } from "../api-client";
 import SubjectFilterOverlay from "./SubjectFilterOverlay";
 import TableHeader from "./TableHeader";
@@ -31,6 +32,7 @@ const CourseStudentsList = () => {
   const [searchText, setSearchText] = useState("");
   const debouncedSearch = useDebounce(searchText);
   const [isFilterOverlayOpen, setIsFilterOverlayOpen] = useState(false);
+  const { getCourseLabel } = useGetUniversityCourses();
 
   const {
     isSuccess: enrollmentSuccess,
@@ -58,7 +60,7 @@ const CourseStudentsList = () => {
     [data?.data?.count]
   );
 
-  const { columns } = useTableColumns({ createEnrollment });
+  const { columns } = useTableColumns({ getCourseLabel, createEnrollment });
 
   useEffect(() => {
     if (enrollmentSuccess) {

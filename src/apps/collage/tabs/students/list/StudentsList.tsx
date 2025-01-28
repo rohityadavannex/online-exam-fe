@@ -6,6 +6,7 @@ import TabHeader from "src/apps/common/tab-header/TabHeader";
 import { useNotification } from "src/components/contexts/NotificationContext";
 import useDebounce from "src/hooks/useDebounce";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
+import { useGetUniversityCourses } from "../../exams/api-client";
 import {
   useDeleteStudent,
   useGetStudent,
@@ -17,6 +18,8 @@ import useTableColumns from "./useTableColumns";
 
 const StudentsList = () => {
   useSetActiveTab(TAB_NAMES.STUDENT);
+
+  const { getCourseLabel } = useGetUniversityCourses();
   const [length, setLength] = useState(10);
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState("");
@@ -57,6 +60,7 @@ const StudentsList = () => {
   const closeDeleteModal = useCallback(() => setIsDeleteModalOpen(false), []);
 
   const { columns } = useTableColumns({
+    getCourseLabel,
     onStatusChange: (id: number, status: boolean) => {
       handleUniStatusChange({ studentId: id, data: { status } });
     },

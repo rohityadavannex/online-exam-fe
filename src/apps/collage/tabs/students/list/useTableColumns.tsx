@@ -2,14 +2,16 @@ import { Image, TableProps, Tag } from "antd";
 import { useNavigate } from "react-router-dom";
 import Toggle from "src/components/toggles/Toggle";
 import { getGenderLabel, getImageUrl } from "src/helpers/helpers";
-import { COURSE_OPTIONS, GENDER_ENUM } from "src/utils/constants";
+import { GENDER_ENUM } from "src/utils/constants";
 import ActionCell from "./ActionCell";
 import StudentType from "./types";
 
 const useTableColumns = ({
+  getCourseLabel,
   onStatusChange,
   onDelete,
 }: {
+  getCourseLabel: (id: number) => string;
   onStatusChange: (id: number, status: boolean) => void;
   onDelete: (id: number) => void;
 }) => {
@@ -55,11 +57,7 @@ const useTableColumns = ({
     {
       title: "Course",
       dataIndex: "course",
-      render: (text: number) => (
-        <div>
-          {COURSE_OPTIONS.find((course) => course.value === text)?.label ?? "-"}
-        </div>
-      ),
+      render: (text: number) => <div>{getCourseLabel(text)}</div>,
     },
     {
       title: "Status",
