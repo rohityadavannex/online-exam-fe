@@ -10,5 +10,7 @@ export const useGetAnswerSheets = ({
   page: number;
   search?: string;
 }) => {
-  return useGet(`/collage/student${getQueryData({ length, page, search })}`);
+  return useGet(
+    `/examiners/answer-sheets${getQueryData({ length, page, search })}`
+  );
 };
