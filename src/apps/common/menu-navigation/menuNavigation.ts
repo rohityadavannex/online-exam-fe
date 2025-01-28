@@ -30,6 +30,7 @@ export const TAB_NAMES = {
   COURSES: "COURSES",
   EXAM: "EXAM",
   EXAMINER: "EXAMINER",
+  ANSWER_SHEETS: "ANSWER_SHEETS",
 };
 
 export const siteAdminNavOptions = [
@@ -115,6 +116,21 @@ export const collageNavOptions = [
     label: "Exams",
     name: TAB_NAMES.EXAM,
     href: "/exams",
+    icon: UserIcon,
+  },
+];
+
+export const examinerNavOptions = [
+  {
+    label: "Dashboard",
+    name: TAB_NAMES.DASHBOARD,
+    href: "/",
+    icon: DashboardIcon,
+  },
+  {
+    label: "Answer Sheets",
+    name: TAB_NAMES.ANSWER_SHEETS,
+    href: "/answer-sheets",
     icon: UserIcon,
   },
 ];

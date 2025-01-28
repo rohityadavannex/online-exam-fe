@@ -2,12 +2,13 @@ import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import {
   collageNavOptions,
+  examinerNavOptions,
   getAdminNavTabs,
   siteAdminNavOptions,
   universityNavOptions,
 } from "src/apps/common/menu-navigation/menuNavigation";
-import { ROLES } from "src/helpers/helpers";
 import { checkViewAccess, getUserRole } from "src/redux/selectors/app";
+import { ROLES } from "src/utils/constants";
 
 const useGetNav = () => {
   const userRole = useSelector(getUserRole);
@@ -21,8 +22,12 @@ const useGetNav = () => {
       return universityNavOptions;
     }
 
-    if (userRole === ROLES.COLLAGE) {
+    if (userRole === ROLES.COLLEGE) {
       return collageNavOptions;
+    }
+
+    if (userRole === ROLES.EXAMINER) {
+      return examinerNavOptions;
     }
 
     return getAdminNavTabs(hasViewAccessToTab);

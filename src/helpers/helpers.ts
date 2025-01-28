@@ -8,6 +8,7 @@ import {
   LEAD_STATUS_OPTIONS,
   LEAD_TYPE,
   PAYMENT_METHOD_OPTIONS,
+  ROLES,
   SEMESTER_OPTIONS,
 } from "src/utils/constants";
 import { v4 as uuidv4 } from "uuid";
@@ -164,12 +165,6 @@ export function mappedCSVData(
   }));
 }
 
-export enum ROLES {
-  SITE_ADMIN = 1,
-  UNIVERSITY = 2,
-  COLLAGE = 3,
-}
-
 export function getRoleName(roleId: Number) {
   if (roleId === ROLES.SITE_ADMIN) {
     return "SiteAdmin";
@@ -177,8 +172,11 @@ export function getRoleName(roleId: Number) {
   if (roleId === ROLES.UNIVERSITY) {
     return "University";
   }
-  if (roleId === ROLES.COLLAGE) {
+  if (roleId === ROLES.COLLEGE) {
     return "Collage";
+  }
+  if (roleId === ROLES.EXAMINER) {
+    return "Examiner";
   }
   return "-";
 }
