@@ -34,11 +34,9 @@ const useTableColumns = () => {
     },
     {
       title: "Action",
-      dataIndex: "id",
+      dataIndex: "sheetId",
       render: (text: number, record: StudentType) => {
-        return (
-          <ActionCell onView={() => navigate(`create/${record.userId}`)} />
-        );
+        return <ActionCell onView={() => navigate(`check/${text}`)} />;
       },
     },
   ];

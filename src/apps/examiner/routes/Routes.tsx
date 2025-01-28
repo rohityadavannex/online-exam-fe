@@ -9,6 +9,7 @@ import Register from "src/tabs/auth/register/Register";
 import ResetPassword from "src/tabs/auth/reset-password/ResetPassword";
 import Dashboard from "src/tabs/dashboard/Dashboard";
 import AnswerSheets from "../tabs/answer-sheets/list/AnswerSheets";
+import CheckAnswerSheet from "../tabs/check-answer-sheet/CheckAnswerSheet";
 
 function ExaminerRoutes() {
   const navigate = useNavigate();
@@ -40,6 +41,10 @@ function ExaminerRoutes() {
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
         <Route path="/answer-sheets" element={<AnswerSheets />} />
+        <Route
+          path="/answer-sheets/check/:sheetId"
+          element={<CheckAnswerSheet />}
+        />
       </Route>
       <Route
         path="*"
