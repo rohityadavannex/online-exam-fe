@@ -1,8 +1,21 @@
 import { Button, Input, Table } from "antd";
 import { Field, Form, Formik } from "formik";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import useNotification from "src/hooks/useNotification";
+import { useAddMarksForAnswerSheet } from "./api-client";
 
 const EditableTable = ({ questionsData }: any) => {
-  console.log("line 5 ", questionsData);
+  const { sheetId } = useParams();
+  const { successNotification, errorNotification } = useNotification();
+  const { isLoading, execute, isSuccess, error } = useAddMarksForAnswerSheet({
+    sheetId: Number(sheetId),
+  });
+
+  const hasMarks = questionsData.some(
+    (question: any) => question.obtainedMarks > 0
+  );
+
   //   const initialValues = {
   //     tableData: [
   //       { id: 1, marks: 90, obtainedMarks: 85 },
@@ -17,36 +30,56 @@ const EditableTable = ({ questionsData }: any) => {
         id: index + 1,
         questionId: question.questionId,
         marks: question.marks,
-        obtainedMarks: 0,
+        obtainedMarks: question.obtainedMarks ?? 0,
       };
     }),
   };
 
-  console.log("line 24 ", initialValues);
-
   const handleSubmit = (values: any) => {
     console.log("Updated values:", values);
+    const mappedData = values.tableData.map((item: any) => {
+      return { ...item, obtainedMarks: Number(item.obtainedMarks) };
+    });
+
+    execute({ data: mappedData });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      successNotification();
+    }
+
+    if (error) {
+      errorNotification();
+    }
+  }, [error, errorNotification, isSuccess, successNotification]);
 
   const columns = [
     {
       title: "Question No.",
       dataIndex: "id",
-      render: (text: any) => <span>{text}</span>,
+      render: (text: any) => (
+        <span className="flex w-full justify-center">{text}</span>
+      ),
     },
     {
       title: "Marks",
       dataIndex: "marks",
-      render: (text: any) => <span>{text}</span>,
+      render: (text: any) => (
+        <span className="flex w-full justify-center">{text}</span>
+      ),
     },
     {
       title: "Obtained Marks",
       dataIndex: "obtainedMarks",
-      render: (_, record: any, index: number) => (
-        <Field name={`tableData.${index}.obtainedMarks`}>
-          {({ field }: any) => <Input {...field} />}
-        </Field>
-      ),
+      render: (text: any, record: any, index: number) =>
+        hasMarks ? (
+          <span className="flex w-full justify-center">{text}</span>
+        ) : (
+          <Field name={`tableData.${index}.obtainedMarks`}>
+            {({ field }: any) => <Input {...field} />}
+          </Field>
+        ),
     },
   ];
 
@@ -65,9 +98,17 @@ const EditableTable = ({ questionsData }: any) => {
             pagination={false}
             className="w-full"
           />
-          <Button type="primary" htmlType="submit" style={{ marginTop: 16 }}>
-            Submit
-          </Button>
+          {!hasMarks && (
+            <Button
+              type="primary"
+              htmlType="submit"
+              style={{ marginTop: 16 }}
+              disabled={isLoading}
+              loading={isLoading}
+            >
+              Submit
+            </Button>
+          )}
         </Form>
       )}
     </Formik>
