@@ -1,19 +1,16 @@
 import { Table } from "antd";
 import classNames from "classnames";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import { useParams } from "react-router-dom";
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
 import TabHeader from "src/apps/common/tab-header/TabHeader";
-import useDebounce from "src/hooks/useDebounce";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
-import { useGetExaminers } from "../api-client";
+import { useGetStudentExamResult } from "../api-client";
 import useTableColumns from "./useTableColumns";
 
 const StudentResult = () => {
   useSetActiveTab(TAB_NAMES.EXAM);
-  const [length, setLength] = useState(10);
-  const [page, setPage] = useState(1);
-  const [searchText, setSearchText] = useState("");
-  const debouncedSearch = useDebounce(searchText);
+  const { examId, studentId } = useParams();
 
   const {
     isLoading,
@@ -21,9 +18,9 @@ const StudentResult = () => {
     data,
     mutate: mutateList,
     isValidating,
-  } = useGetExaminers({ length, page, search: debouncedSearch });
+  } = useGetStudentExamResult({ examId, studentId });
 
-  const tableData = useMemo(() => data?.data?.rows ?? [], [data?.data]);
+  const tableData = useMemo(() => data?.data ?? [], [data?.data]);
 
   const totalRecords = useMemo(
     () => data?.data?.count ?? 0,
@@ -44,14 +41,7 @@ const StudentResult = () => {
           columns={columns}
           rowHoverable={false}
           scroll={{ x: true }}
-          pagination={{
-            pageSize: 10,
-            position: ["bottomRight"],
-            showTotal: (total, [start, end]) =>
-              `Showing ${start} to ${end} of ${total} entries`,
-            onChange: (page) => console.log("page: ", page),
-            total: totalRecords,
-          }}
+          pagination={false}
         />
       </div>
     </div>

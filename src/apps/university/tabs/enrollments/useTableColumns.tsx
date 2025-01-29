@@ -115,7 +115,7 @@ const useTableColumns = ({
         <Button
           icon={<EyeIcon className="size-5" />}
           onClick={() =>
-            navigate(`/exams/${examId}/${record.studentId}/result`)
+            navigate(`/exams/${examId}/${record.registrationId}/result`)
           }
         />
       ),
