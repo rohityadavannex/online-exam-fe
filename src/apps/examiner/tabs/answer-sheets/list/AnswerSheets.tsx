@@ -1,44 +1,29 @@
 import { Table } from "antd";
 import classNames from "classnames";
-import { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useMemo, useState } from "react";
+import { useSelector } from "react-redux";
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
+import TabHeader from "src/apps/common/tab-header/TabHeader";
+import { useGetUniversitySubjects } from "src/apps/university/tabs/subjects/api-client";
 import useDebounce from "src/hooks/useDebounce";
-import useNotification from "src/hooks/useNotification";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
-import { useGetUniversityCourses } from "../../exams/api-client";
-import { useCreateEnrollment, useGetCourseStudent } from "../api-client";
+import { getCurrentUserInfo } from "src/redux/selectors/app";
+import { useGetAnswerSheets } from "../api-client";
 import SubjectFilterOverlay from "./SubjectFilterOverlay";
 import TableHeader from "./TableHeader";
 import useTableColumns from "./useTableColumns";
 
-const tabs = [
-  {
-    label: "Enrolled Students",
-    href: "enrolled",
-  },
-  {
-    label: "Students",
-    href: "all",
-  },
-];
-
-const CourseStudentsList = () => {
-  useSetActiveTab(TAB_NAMES.EXAM);
-  const { successNotification, errorNotification } = useNotification();
-  const { courseId } = useParams();
+const AnswerSheets = () => {
+  useSetActiveTab(TAB_NAMES.ANSWER_SHEETS);
   const [length, setLength] = useState(10);
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState("");
   const debouncedSearch = useDebounce(searchText);
   const [isFilterOverlayOpen, setIsFilterOverlayOpen] = useState(false);
-  const { getCourseLabel } = useGetUniversityCourses();
 
-  const {
-    isSuccess: enrollmentSuccess,
-    execute: createEnrollment,
-    error: enrollmentError,
-  } = useCreateEnrollment();
+  const currentUser = useSelector(getCurrentUserInfo);
+
+  const { getSubjectLabel } = useGetUniversitySubjects(currentUser?.uniId);
 
   const {
     isLoading,
@@ -46,12 +31,7 @@ const CourseStudentsList = () => {
     data,
     mutate: mutateList,
     isValidating,
-  } = useGetCourseStudent({
-    courseId: Number(courseId),
-    length,
-    page,
-    search: debouncedSearch,
-  });
+  } = useGetAnswerSheets({ length, page, search: debouncedSearch });
 
   const tableData = useMemo(() => data?.data?.rows ?? [], [data?.data]);
 
@@ -60,25 +40,7 @@ const CourseStudentsList = () => {
     [data?.data?.count]
   );
 
-  const { columns } = useTableColumns({ getCourseLabel, createEnrollment });
-
-  useEffect(() => {
-    if (enrollmentSuccess) {
-      successNotification();
-    }
-    if (enrollmentError) {
-      if (enrollmentError?.cause?.status === 409) {
-        errorNotification("Already made request for enrollment");
-      } else {
-        errorNotification();
-      }
-    }
-  }, [
-    enrollmentError,
-    enrollmentSuccess,
-    errorNotification,
-    successNotification,
-  ]);
+  const { columns } = useTableColumns({ getSubjectLabel });
 
   return (
     <>
@@ -87,8 +49,8 @@ const CourseStudentsList = () => {
         onClose={() => setIsFilterOverlayOpen(false)}
         handleFilter={(filter) => {}}
       />
-
       <div className="flex flex-col gap-6">
+        <TabHeader label="Answer Sheets" />
         <div className="bg-white rounded-lg px-6 py-9 flex flex-col gap-5">
           <TableHeader handleFilterClick={() => setIsFilterOverlayOpen(true)} />
           <Table
@@ -107,7 +69,6 @@ const CourseStudentsList = () => {
               onChange: (page) => console.log("page: ", page),
               total: totalRecords,
             }}
-            loading={isLoading}
           />
         </div>
       </div>
@@ -115,4 +76,4 @@ const CourseStudentsList = () => {
   );
 };
 
-export default CourseStudentsList;
+export default AnswerSheets;

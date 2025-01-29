@@ -40,7 +40,7 @@ const useTableColumns = ({
       render: (text: number, record: SubjectType) => {
         return (
           <ActionCell
-            onAdd={() => navigate(`${record.id}/questions`)}
+            onAdd={() => navigate(`${record.subjectId}/questions`)}
             onEdit={() => onEdit(record.id)}
             onDelete={() => onDelete(record.id)}
           />

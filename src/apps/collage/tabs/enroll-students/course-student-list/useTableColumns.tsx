@@ -3,13 +3,14 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getImageUrl } from "src/helpers/helpers";
 import { getCurrentUserInfo } from "src/redux/selectors/app";
-import { COURSE_OPTIONS } from "src/utils/constants";
 import { GenderCell } from "../../exams/list/useTableColumns";
 import StudentType from "./types";
 
 const useTableColumns = ({
+  getCourseLabel,
   createEnrollment,
 }: {
+  getCourseLabel: (id: number) => string;
   createEnrollment: ({
     uniId,
     collegeId,
@@ -64,11 +65,7 @@ const useTableColumns = ({
     {
       title: "Course",
       dataIndex: "course",
-      render: (text: number) => (
-        <div>
-          {COURSE_OPTIONS.find((course) => course.value === text)?.label ?? "-"}
-        </div>
-      ),
+      render: (text: number) => <div>{getCourseLabel(text)}</div>,
     },
 
     {

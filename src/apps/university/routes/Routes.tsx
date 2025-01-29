@@ -21,6 +21,7 @@ import CreateExamSheets from "../tabs/exam-sheets/CreateExamSheets";
 import ExamSheetsList from "../tabs/exam-sheets/list/ExamSheetsList";
 import CreateExaminer from "../tabs/examiners/CreateExaminer";
 import ExaminersList from "../tabs/examiners/list/ExaminersList";
+import CreateExam from "../tabs/exams/CreateExam";
 import ExamDetailScreen from "../tabs/exams/ExamDetailScreen";
 import ExamsList from "../tabs/exams/list/ExamsList";
 import CreateQuestionPaper from "../tabs/question-papers/CreateQuestionPaper";
@@ -78,6 +79,7 @@ function UniversityRoutes() {
         />
 
         <Route path="/exams" element={<ExamsList />} />
+        <Route path="/exams/create" element={<CreateExam />} />
         <Route path="/exams/:examId" element={<ExamDetailScreen />}>
           <Route index element={<Navigate to={"subjects"} />} />
           <Route path="subjects" element={<AssignedSubjectsList />} />

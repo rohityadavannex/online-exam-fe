@@ -79,9 +79,11 @@ export const useUpdateSubjectStatus = () => {
   return useFetchAsync(updateStatus);
 };
 
-export const useGetUniversitySubjects = () => {
+export const useGetUniversitySubjects = (uniId?: number) => {
   const uniData = useSelector(getCurrentUserInfo);
-  const { data, ...rest } = useGet(`/university/${uniData.id}/subjects-list`);
+  const { data, ...rest } = useGet(
+    `/university/${uniId ?? uniData.id}/subjects-list`
+  );
   const subjectsOptions = useMemo(() => {
     return (data?.data?.rows ?? []).map((subject: SubjectType) => {
       return { label: subject.name, value: subject.id };
