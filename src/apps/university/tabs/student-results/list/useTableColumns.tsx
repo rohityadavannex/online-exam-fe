@@ -27,11 +27,11 @@ const useTableColumns = () => {
       dataIndex: "obtainedMarks",
       render: (text: string) => text,
     },
-    {
-      title: "Result",
-      dataIndex: "phone",
-      render: (text: string) => text,
-    },
+    // {
+    //   title: "Result",
+    //   dataIndex: "phone",
+    //   render: (text: string) => text,
+    // },
   ];
 
   return {

@@ -20,11 +20,30 @@ const StudentResult = () => {
     isValidating,
   } = useGetStudentExamResult({ examId, studentId });
 
-  const tableData = useMemo(() => data?.data ?? [], [data?.data]);
+  const resData = useMemo(() => data?.data ?? {}, [data?.data]);
+  const tableData = useMemo(() => resData?.data ?? [], [resData?.data]);
 
-  const totalRecords = useMemo(
-    () => data?.data?.count ?? 0,
-    [data?.data?.count]
+  const totalMarks = useMemo(
+    () =>
+      tableData.reduce((acc, item) => {
+        return acc + item.totalMarks;
+      }, 0),
+    [tableData]
+  );
+
+  const totalObtainedMarks = useMemo(
+    () =>
+      tableData.reduce((acc, item) => {
+        return acc + item.obtainedMarks;
+      }, 0),
+    [tableData]
+  );
+
+  const minimumPassingPercentage = resData?.minimumPassingPercentage ?? 0;
+
+  const percentage = useMemo(
+    () => ((totalObtainedMarks / totalMarks) * 100).toFixed(2),
+    [totalMarks, totalObtainedMarks]
   );
 
   const { columns } = useTableColumns();
@@ -42,6 +61,20 @@ const StudentResult = () => {
           rowHoverable={false}
           scroll={{ x: true }}
           pagination={false}
+          footer={() => (
+            <div className="grid grid-cols-2">
+              <div>
+                <span className="font-semibold">Percentage:</span>{" "}
+                <span>{`${percentage} %`}</span>{" "}
+              </div>
+              <div>
+                <span className="font-semibold">Result:</span>{" "}
+                <span>
+                  {percentage >= minimumPassingPercentage ? "Pass" : "Failed"}
+                </span>{" "}
+              </div>
+            </div>
+          )}
         />
       </div>
     </div>
