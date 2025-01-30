@@ -48,7 +48,7 @@ const useTableColumns = ({
       render: (text: number, record: StaffType) => {
         return (
           <ActionCell
-            onView={() => navigate(`${text}/create`)}
+            onView={() => navigate(`create/${text}`)}
             onDelete={() => onDelete(text)}
           />
         );

@@ -268,7 +268,10 @@ export const ROLE_PERMISSION_FEATURES: { label: string; value: string }[] = [
     label: "Dashboard",
     value: TAB_NAMES.DASHBOARD,
   },
-
+  {
+    label: "Colleges",
+    value: TAB_NAMES.COLLAGES,
+  },
   {
     label: "Roles",
     value: TAB_NAMES.ROLES,

@@ -107,7 +107,7 @@ function UniversityRoutes() {
         />
 
         <Route path="/roles" element={<RolesList />} />
-        <Route path="/roles/:roleId/create" element={<CreateRole />} />
+        <Route path="/roles/create/:roleId?" element={<CreateRole />} />
       </Route>
       <Route
         path="*"
