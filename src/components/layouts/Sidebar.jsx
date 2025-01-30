@@ -175,11 +175,11 @@ const SidebarItem = ({
       >
         {Icon !== undefined && (
           <Icon
-            className={classNames("shrink-0", {
+            className={classNames("shrink-0 size-5", {
               "#FFFFFF": isActive && !isChild,
               "text-gray-400 group-hover:text-primary": !isActive,
             })}
-            color={isActive ? (isChild ? "#0C8CE9" : "#FFFFFF") : undefined}
+            color={isActive ? (isChild ? "#0C8CE9" : "#FFFFFF") : "#2c2c2e"}
             aria-hidden="true"
           />
         )}
