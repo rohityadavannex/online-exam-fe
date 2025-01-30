@@ -1,5 +1,6 @@
 import {
   AcademicCapIcon,
+  AdjustmentsVerticalIcon,
   BookOpenIcon,
   BuildingLibraryIcon,
   CalendarDaysIcon,
@@ -98,6 +99,12 @@ export const universityNavOptions = [
     name: TAB_NAMES.EXAMINER,
     href: "/examiners",
     icon: NewspaperIcon,
+  },
+  {
+    label: "Roles",
+    name: TAB_NAMES.ROLES,
+    href: "/roles",
+    icon: AdjustmentsVerticalIcon,
   },
 ];
 

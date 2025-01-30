@@ -25,6 +25,8 @@ import CreateExam from "../tabs/exams/CreateExam";
 import ExamDetailScreen from "../tabs/exams/ExamDetailScreen";
 import ExamsList from "../tabs/exams/list/ExamsList";
 import CreateQuestionPaper from "../tabs/question-papers/CreateQuestionPaper";
+import CreateRole from "../tabs/roles/create/CreateRole";
+import RolesList from "../tabs/roles/list/RolesList";
 import StudentResult from "../tabs/student-results/list/StudentResult";
 import CreateSubject from "../tabs/subjects/CreateSubject";
 import SubjectsList from "../tabs/subjects/list/SubjectsList";
@@ -103,6 +105,9 @@ function UniversityRoutes() {
           path="/examiners/create/:examinerId?"
           element={<CreateExaminer />}
         />
+
+        <Route path="/roles" element={<RolesList />} />
+        <Route path="/roles/:roleId/create" element={<CreateRole />} />
       </Route>
       <Route
         path="*"
