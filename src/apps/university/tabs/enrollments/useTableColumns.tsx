@@ -1,8 +1,8 @@
+import { EyeIcon } from "@heroicons/react/24/outline";
 import { Button, Image, TableProps } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getImageUrl } from "src/helpers/helpers";
 import {
-  COURSE_OPTIONS,
   ENROLLMENT_STATUS,
   ENROLLMENT_STATUS_LABELS,
 } from "src/utils/constants";
@@ -10,8 +10,10 @@ import { GenderCell } from "../exams/list/useTableColumns";
 import StudentType from "./types";
 
 const useTableColumns = ({
+  getCourseLabel,
   updateStatus,
 }: {
+  getCourseLabel: (id: number) => string;
   updateStatus: ({
     studentId,
     status,
@@ -20,6 +22,7 @@ const useTableColumns = ({
     status: ENROLLMENT_STATUS;
   }) => void;
 }) => {
+  const { examId } = useParams();
   const navigate = useNavigate();
   const columns: TableProps<StudentType>["columns"] = [
     {
@@ -62,11 +65,7 @@ const useTableColumns = ({
     {
       title: "Course",
       dataIndex: "course",
-      render: (text: number) => (
-        <div>
-          {COURSE_OPTIONS.find((course) => course.value === text)?.label ?? "-"}
-        </div>
-      ),
+      render: (text: number) => <div>{getCourseLabel(text)}</div>,
     },
 
     {
@@ -108,6 +107,18 @@ const useTableColumns = ({
         }
         return "-";
       },
+    },
+    {
+      title: "Result",
+      dataIndex: "phone",
+      render: (text: string, record: StudentType) => (
+        <Button
+          icon={<EyeIcon className="size-5" />}
+          onClick={() =>
+            navigate(`/exams/${examId}/${record.registrationId}/result`)
+          }
+        />
+      ),
     },
   ];
 

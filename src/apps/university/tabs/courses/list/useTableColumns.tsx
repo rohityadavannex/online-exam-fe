@@ -29,6 +29,12 @@ const useTableColumns = ({
     },
 
     {
+      title: "Passing Percentage (%)",
+      dataIndex: "minimumPassingPercentage",
+      render: (text: string) => text,
+    },
+
+    {
       title: "Status",
       dataIndex: "status",
       render: (text: boolean, record: CourseType) => (

@@ -7,6 +7,7 @@ import useDebounce from "src/hooks/useDebounce";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
 
 import useNotification from "src/hooks/useNotification";
+import { useGetUniversityCourses } from "../courses/api-client";
 import {
   useGetExamEnrolledStudent,
   useUpdateExamEnrolledStatus,
@@ -35,6 +36,8 @@ const EnrolledStudentsList = () => {
   const [searchText, setSearchText] = useState("");
   const debouncedSearch = useDebounce(searchText);
   const [isFilterOverlayOpen, setIsFilterOverlayOpen] = useState(false);
+
+  const { getCourseLabel } = useGetUniversityCourses();
 
   const {
     isLoading: isUpdateStatusLoading,
@@ -68,7 +71,7 @@ const EnrolledStudentsList = () => {
     [data?.data?.count]
   );
 
-  const { columns } = useTableColumns({ updateStatus });
+  const { columns } = useTableColumns({ getCourseLabel, updateStatus });
 
   useEffect(() => {
     if (updateSuccess) {

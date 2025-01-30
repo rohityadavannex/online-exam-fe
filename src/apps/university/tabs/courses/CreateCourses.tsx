@@ -17,6 +17,7 @@ import {
 
 enum FORM_FIELDS {
   NAME = "name",
+  MINIMUM_PASSING_MARKS = "minimumPassingPercentage",
   STATUS = "status",
 }
 
@@ -51,6 +52,8 @@ const CreateCourses = () => {
       enableReinitialize: true,
       initialValues: {
         [FORM_FIELDS.NAME]: initialData?.name ?? "",
+        [FORM_FIELDS.MINIMUM_PASSING_MARKS]:
+          initialData?.minimumPassingPercentage ?? null,
         [FORM_FIELDS.STATUS]: initialData?.status ?? false,
       },
       validationSchema: object({
@@ -106,10 +109,22 @@ const CreateCourses = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input
               label="Name"
-              placeholder="Enter Subject Name"
+              placeholder="Enter Name"
               name={FORM_FIELDS.NAME}
               value={values[FORM_FIELDS.NAME] as string}
               error={getFieldError(FORM_FIELDS.NAME)}
+              onChange={handleChange}
+              disabled={isUpdateLoading}
+              required
+            />
+
+            <Input
+              type="number"
+              label="Minimum Passing Percentage"
+              placeholder="Enter Minimum Passing Percentage"
+              name={FORM_FIELDS.MINIMUM_PASSING_MARKS}
+              value={values[FORM_FIELDS.MINIMUM_PASSING_MARKS] as string}
+              error={getFieldError(FORM_FIELDS.MINIMUM_PASSING_MARKS)}
               onChange={handleChange}
               disabled={isUpdateLoading}
               required
