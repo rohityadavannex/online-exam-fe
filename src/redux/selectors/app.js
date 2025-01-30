@@ -43,7 +43,6 @@ export const hasPlanAccess = (state, tabName) => {
 };
 
 export const hasViewAccess = (state, tabName) => {
-  return true;
   const userRole = getUserRole(state);
   // for super admin
   if (userRole === 1) {
@@ -89,7 +88,6 @@ export const hasDeleteAccess = (state, tabName) => {
 };
 
 export const checkViewAccess = (state) => {
-  return () => true;
   return (tabName) => hasViewAccess(state, tabName);
 };
 

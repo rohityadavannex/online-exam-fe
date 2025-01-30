@@ -25,3 +25,20 @@ export const userInfoRequestFailed = (payload) => ({
   type: USER_INFO_REQUEST_FAILED,
   payload,
 });
+
+//USER INFO ACTIONS
+export const USER_ROLE_ACCESS_REQUEST = "USER_ROLE_ACCESS_REQUEST";
+export const USER_ROLE_ACCESS_REQUEST_SUCCEED =
+  "USER_ROLE_ACCESS_REQUEST_SUCCEED";
+export const USER_ROLE_ACCESS_REQUEST_FAILED =
+  "USER_ROLE_ACCESS_REQUEST_FAILED";
+
+export const userRoleAccessRequest = () => ({ type: USER_ROLE_ACCESS_REQUEST });
+export const userRoleAccessRequestSucceed = (payload) => ({
+  type: USER_ROLE_ACCESS_REQUEST_SUCCEED,
+  payload,
+});
+export const userRoleAccessRequestFailed = (payload) => ({
+  type: USER_ROLE_ACCESS_REQUEST_FAILED,
+  payload,
+});

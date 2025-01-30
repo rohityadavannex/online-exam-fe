@@ -7,7 +7,8 @@ import {
   ChartPieIcon,
   DocumentTextIcon,
   HomeIcon,
-  NewspaperIcon,
+  UserGroupIcon,
+  UsersIcon,
 } from "@heroicons/react/24/outline";
 import { PlansIcon } from "src/icons/PlansIcon";
 import { RolesIcon } from "src/icons/RolesIcon";
@@ -94,11 +95,17 @@ export const universityNavOptions = [
     href: "/exams",
     icon: DocumentTextIcon,
   },
+  // {
+  //   label: "Examiners",
+  //   name: TAB_NAMES.EXAMINER,
+  //   href: "/examiners",
+  //   icon: NewspaperIcon,
+  // },
   {
-    label: "Examiners",
-    name: TAB_NAMES.EXAMINER,
-    href: "/examiners",
-    icon: NewspaperIcon,
+    label: "Staff",
+    name: TAB_NAMES.STAFF,
+    href: "/staff",
+    icon: UsersIcon,
   },
   {
     label: "Roles",
@@ -119,19 +126,19 @@ export const collageNavOptions = [
     label: "Staff",
     name: TAB_NAMES.STAFF,
     href: "/staff",
-    icon: UserIcon,
+    icon: UsersIcon,
   },
   {
     label: "Student",
     name: TAB_NAMES.STUDENT,
     href: "/students",
-    icon: UserIcon,
+    icon: UserGroupIcon,
   },
   {
     label: "Exams",
     name: TAB_NAMES.EXAM,
     href: "/exams",
-    icon: UserIcon,
+    icon: AcademicCapIcon,
   },
 ];
 
