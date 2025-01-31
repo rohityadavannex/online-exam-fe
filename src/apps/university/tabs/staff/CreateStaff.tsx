@@ -16,11 +16,7 @@ import useSetActiveTab from "src/hooks/useSetActiveTab";
 import { GENDERS } from "src/utils/constants";
 import { object, string } from "yup";
 import { useGetRoles } from "../roles/api-client";
-import {
-  useCreateExaminer,
-  useGetExaminerInfo,
-  useUpdateExaminer,
-} from "./api-client";
+import { useCreateStaff, useGetStaffInfo, useUpdateStaff } from "./api-client";
 
 enum FORM_FIELDS {
   NAME = "name",
@@ -41,7 +37,7 @@ enum FORM_FIELDS {
 const CreateStaff = () => {
   useSetActiveTab(TAB_NAMES.STAFF);
   const navigate = useNavigate();
-  const { examinerId } = useParams();
+  const { staffId } = useParams();
   const { errorNotification, successNotification } = useNotification();
 
   const {
@@ -66,17 +62,17 @@ const CreateStaff = () => {
     execute: executeCreate,
     isSuccess: isCreateSuccess,
     error: isCreateError,
-  } = useCreateExaminer();
+  } = useCreateStaff();
 
   const {
     isLoading: isUpdateLoading,
     execute: executeUpdate,
     isSuccess: isUpdateSuccess,
     error: isUpdateError,
-  } = useUpdateExaminer({ examinerId: Number(examinerId) });
+  } = useUpdateStaff({ staffId: Number(staffId) });
 
-  const { isLoading: isGetInfoLoading, data: response } = useGetExaminerInfo({
-    examinerId: Number(examinerId),
+  const { isLoading: isGetInfoLoading, data: response } = useGetStaffInfo({
+    staffId: Number(staffId),
   });
 
   const initialData = useMemo(() => response?.data ?? {}, [response?.data]);
@@ -108,7 +104,7 @@ const CreateStaff = () => {
       }),
       onSubmit: (values) => {
         console.log("Form submitted ", values);
-        if (examinerId) {
+        if (staffId) {
           executeUpdate(values);
           return;
         }

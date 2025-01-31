@@ -7,6 +7,7 @@ import {
   ChartPieIcon,
   DocumentTextIcon,
   HomeIcon,
+  NewspaperIcon,
   UserGroupIcon,
   UsersIcon,
 } from "@heroicons/react/24/outline";
@@ -95,12 +96,12 @@ export const universityNavOptions = [
     href: "/exams",
     icon: DocumentTextIcon,
   },
-  // {
-  //   label: "Examiners",
-  //   name: TAB_NAMES.EXAMINER,
-  //   href: "/examiners",
-  //   icon: NewspaperIcon,
-  // },
+  {
+    label: "Examiners",
+    name: TAB_NAMES.EXAMINER,
+    href: "/examiners",
+    icon: NewspaperIcon,
+  },
   {
     label: "Staff",
     name: TAB_NAMES.STAFF,

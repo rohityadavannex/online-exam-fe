@@ -9,9 +9,9 @@ import useDebounce from "src/hooks/useDebounce";
 import useSetActiveTab from "src/hooks/useSetActiveTab";
 import { useGetRoles } from "../../roles/api-client";
 import {
-  useDeleteExaminer,
+  useDeleteStaff,
   useGetExaminers,
-  useUpdateExaminerStatus,
+  useUpdateStaffStatus,
 } from "../api-client";
 import SubjectFilterOverlay from "./SubjectFilterOverlay";
 import TableHeader from "./TableHeader";
@@ -68,13 +68,13 @@ const StaffList = () => {
     isSuccess: isDeleteSucceed,
     error: deleteErr,
     execute: executeDelete,
-  } = useDeleteExaminer();
+  } = useDeleteStaff();
 
   const {
     execute: handleUniStatusChange,
     isSuccess: isStatusChangeSuccess,
     error: statusChangeError,
-  } = useUpdateExaminerStatus();
+  } = useUpdateStaffStatus();
 
   const tableData = useMemo(() => data?.data?.rows ?? [], [data?.data]);
 

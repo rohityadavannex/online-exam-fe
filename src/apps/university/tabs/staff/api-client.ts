@@ -9,8 +9,8 @@ import {
   usePost,
 } from "src/http-clients/clients";
 
-export const useCreateExaminer = () => {
-  return usePost("/university/examiner/create");
+export const useCreateStaff = () => {
+  return usePost("/university/staff/create");
 };
 
 export const useGetExaminers = ({
@@ -22,37 +22,29 @@ export const useGetExaminers = ({
   page: number;
   search?: string;
 }) => {
-  return useGet(
-    `/university/examiner${getQueryData({ length, page, search })}`
-  );
+  return useGet(`/university/staff${getQueryData({ length, page, search })}`);
 };
 
-export const useUpdateExaminer = ({ examinerId }: { examinerId: number }) => {
-  return usePatch(`/university/examiner/edit/${examinerId}`);
+export const useUpdateStaff = ({ staffId }: { staffId: number }) => {
+  return usePatch(`/university/staff/edit/${staffId}`);
 };
 
-export const useGetExaminerInfo = ({ examinerId }: { examinerId: number }) => {
-  return useGet(examinerId ? `/university/examiner/${examinerId}` : undefined);
+export const useGetStaffInfo = ({ staffId }: { staffId: number }) => {
+  return useGet(staffId ? `/university/staff/${staffId}` : undefined);
 };
 
-export const useDeleteExaminer = () => {
-  const deleteFn = useCallback((examinerId: number) => {
-    return deleteReq(`/university/examiner/delete/${examinerId}`);
+export const useDeleteStaff = () => {
+  const deleteFn = useCallback((staffId: number) => {
+    return deleteReq(`/university/staff/delete/${staffId}`);
   }, []);
 
   return useFetchAsync(deleteFn);
 };
 
-export const useUpdateExaminerStatus = () => {
+export const useUpdateStaffStatus = () => {
   const updateStatus = useCallback(
-    ({
-      examinerId,
-      data,
-    }: {
-      examinerId: number;
-      data: { status: boolean };
-    }) => {
-      return patch(`/university/examiner/status/${examinerId}`, data);
+    ({ staffId, data }: { staffId: number; data: { status: boolean } }) => {
+      return patch(`/university/staff/status/${staffId}`, data);
     },
     []
   );
