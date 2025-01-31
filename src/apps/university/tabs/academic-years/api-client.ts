@@ -10,12 +10,12 @@ import {
   usePatch,
   usePost,
 } from "src/http-clients/clients";
-import { getCurrentUserInfo } from "src/redux/selectors/app";
+import { getUniId } from "src/redux/selectors/app";
 import AcademicYearType from "./list/types";
 
 export const useCreateAcademicYear = () => {
-  const uniData = useSelector(getCurrentUserInfo);
-  return usePost(`/university/${uniData.id}/academic-years/create`);
+  const uniId = useSelector(getUniId);
+  return usePost(`/university/${uniId}/academic-years/create`);
 };
 
 export const useGetAcademicYears = ({
@@ -27,9 +27,9 @@ export const useGetAcademicYears = ({
   page: number;
   search?: string;
 }) => {
-  const uniData = useSelector(getCurrentUserInfo);
+  const uniId = useSelector(getUniId);
   return useGet(
-    `/university/${uniData.id}/academic-years${getQueryData({
+    `/university/${uniId}/academic-years${getQueryData({
       length,
       page,
       search,
@@ -38,51 +38,47 @@ export const useGetAcademicYears = ({
 };
 
 export const useUpdateAcademicYear = ({ yearId }: { yearId: number }) => {
-  const uniData = useSelector(getCurrentUserInfo);
-  return usePatch(`/university/${uniData.id}/academic-years/edit/${yearId}`);
+  const uniId = useSelector(getUniId);
+  return usePatch(`/university/${uniId}/academic-years/edit/${yearId}`);
 };
 
 export const useGetAcademicYearInfo = ({ yearId }: { yearId: number }) => {
-  const uniData = useSelector(getCurrentUserInfo);
+  const uniId = useSelector(getUniId);
   return useGet(
-    yearId ? `/university/${uniData.id}/academic-years/${yearId}` : undefined
+    yearId ? `/university/${uniId}/academic-years/${yearId}` : undefined
   );
 };
 
 export const useDeleteAcademicYear = () => {
-  const uniData = useSelector(getCurrentUserInfo);
+  const uniId = useSelector(getUniId);
   const deleteFn = useCallback(
     (yearId: number) => {
-      return deleteReq(
-        `/university/${uniData.id}/academic-years/delete/${yearId}`
-      );
+      return deleteReq(`/university/${uniId}/academic-years/delete/${yearId}`);
     },
-    [uniData.id]
+    [uniId]
   );
 
   return useFetchAsync(deleteFn);
 };
 
 export const useUpdateAcademicYearStatus = () => {
-  const uniData = useSelector(getCurrentUserInfo);
+  const uniId = useSelector(getUniId);
   const updateStatus = useCallback(
     ({ yearId, data }: { yearId: number; data: { status: boolean } }) => {
       return patch(
-        `/university/${uniData.id}/academic-years/status/${yearId}`,
+        `/university/${uniId}/academic-years/status/${yearId}`,
         data
       );
     },
-    [uniData.id]
+    [uniId]
   );
 
   return useFetchAsync(updateStatus);
 };
 
 export const useGetUniversityAcademicYears = () => {
-  const uniData = useSelector(getCurrentUserInfo);
-  const { data, ...rest } = useGet(
-    `/university/${uniData.id}/academic-years-list`
-  );
+  const uniId = useSelector(getUniId);
+  const { data, ...rest } = useGet(`/university/${uniId}/academic-years-list`);
   const mappedAcademicYearsData = useMemo(() => {
     return (data?.data?.rows ?? []).map((item: AcademicYearType) => {
       return {

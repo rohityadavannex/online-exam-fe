@@ -29,6 +29,8 @@ const useGetNav = () => {
       return examinerNavOptions;
     }
 
+    console.log("line 32 -------------------> ", userRole);
+
     return universityNavOptions.filter((item) => {
       return hasViewAccessToTab(item.name);
     });

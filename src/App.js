@@ -68,7 +68,7 @@ export default App;
 
 export const AuthRoute = ({ isInLayout = true }) => {
   const navigate = useNavigate();
-
+  console.log("line 71 ", getTokenFromLocalStorage());
   useEffect(() => {
     if (!getTokenFromLocalStorage()) {
       navigate("/login");

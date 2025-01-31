@@ -70,7 +70,7 @@ const CreateUniversity = () => {
         [FORM_FIELDS.CITY]: uniData?.city ?? "",
         [FORM_FIELDS.STATE]: uniData?.state ?? "",
         [FORM_FIELDS.DISTRICT]: uniData?.district ?? "",
-        [FORM_FIELDS.LOGO]: uniData?.logo ?? "",
+        [FORM_FIELDS.LOGO]: uniData?.image ?? "",
         [FORM_FIELDS.STATUS]: uniData?.active ?? false,
       },
       validationSchema: object({
