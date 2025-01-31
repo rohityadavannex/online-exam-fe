@@ -9,12 +9,12 @@ import {
   usePatch,
   usePost,
 } from "src/http-clients/clients";
-import { getCurrentUserInfo } from "src/redux/selectors/app";
+import { getUniId } from "src/redux/selectors/app";
 import SubjectType from "./list/types";
 
 export const useCreateSubject = () => {
-  const uniData = useSelector(getCurrentUserInfo);
-  return usePost(`/university/${uniData.userId}/subjects/create`);
+  const uniId = useSelector(getUniId);
+  return usePost(`/university/${uniId}/subjects/create`);
 };
 
 export const useGetSubjects = ({
@@ -26,9 +26,9 @@ export const useGetSubjects = ({
   page: number;
   search?: string;
 }) => {
-  const uniData = useSelector(getCurrentUserInfo);
+  const uniId = useSelector(getUniId);
   return useGet(
-    `/university/${uniData.userId}/subjects${getQueryData({
+    `/university/${uniId}/subjects${getQueryData({
       length,
       page,
       search,
@@ -37,52 +37,45 @@ export const useGetSubjects = ({
 };
 
 export const useUpdateSubject = ({ subjectId }: { subjectId: number }) => {
-  const uniData = useSelector(getCurrentUserInfo);
-  return usePatch(`/university/${uniData.userId}/subjects/edit/${subjectId}`);
+  const uniId = useSelector(getUniId);
+  return usePatch(`/university/${uniId}/subjects/edit/${subjectId}`);
 };
 
 export const useGetSubjectInfo = ({ subjectId }: { subjectId: number }) => {
-  const uniData = useSelector(getCurrentUserInfo);
+  const uniId = useSelector(getUniId);
   return useGet(
-    subjectId
-      ? `/university/${uniData.userId}/subjects/${subjectId}`
-      : undefined
+    subjectId ? `/university/${uniId}/subjects/${subjectId}` : undefined
   );
 };
 
 export const useDeleteSubject = () => {
-  const uniData = useSelector(getCurrentUserInfo);
+  const uniId = useSelector(getUniId);
   const deleteFn = useCallback(
     (subjectId: number) => {
-      return deleteReq(
-        `/university/${uniData.userId}/subjects/delete/${subjectId}`
-      );
+      return deleteReq(`/university/${uniId}/subjects/delete/${subjectId}`);
     },
-    [uniData.userId]
+    [uniId]
   );
 
   return useFetchAsync(deleteFn);
 };
 
 export const useUpdateSubjectStatus = () => {
-  const uniData = useSelector(getCurrentUserInfo);
+  const uniId = useSelector(getUniId);
   const updateStatus = useCallback(
     ({ subjectId, data }: { subjectId: number; data: { status: boolean } }) => {
-      return patch(
-        `/university/${uniData.userId}/subjects/status/${subjectId}`,
-        data
-      );
+      return patch(`/university/${uniId}/subjects/status/${subjectId}`, data);
     },
-    [uniData.userId]
+    [uniId]
   );
 
   return useFetchAsync(updateStatus);
 };
 
-export const useGetUniversitySubjects = (uniId?: number) => {
-  const uniData = useSelector(getCurrentUserInfo);
+export const useGetUniversitySubjects = (universityId?: number) => {
+  const uniId = useSelector(getUniId);
   const { data, ...rest } = useGet(
-    `/university/${uniId ?? uniData.id}/subjects-list`
+    `/university/${universityId ?? uniId}/subjects-list`
   );
   const subjectsOptions = useMemo(() => {
     return (data?.data?.rows ?? []).map((subject: SubjectType) => {
