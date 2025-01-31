@@ -58,7 +58,7 @@ const ExaminersList = () => {
 
   const { columns } = useTableColumns({
     onStatusChange: (id: number, status: boolean) => {
-      handleUniStatusChange({ staffId: id, data: { status } });
+      handleUniStatusChange({ examinerId: id, data: { status } });
     },
     onDelete: (id: number) => {
       setIdToOperate(id);

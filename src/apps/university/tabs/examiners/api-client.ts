@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { useSelector } from "react-redux";
 import { getQueryData } from "src/helpers/helpers";
 import useFetchAsync from "src/hooks/useFetchAsync";
 import {
@@ -8,8 +9,10 @@ import {
   usePatch,
   usePost,
 } from "src/http-clients/clients";
+import { getUniId } from "src/redux/selectors/app";
 
 export const useCreateExaminer = () => {
+  const uniId = useSelector(getUniId);
   return usePost("/university/examiner/create");
 };
 
@@ -22,28 +25,38 @@ export const useGetExaminers = ({
   page: number;
   search?: string;
 }) => {
+  const uniId = useSelector(getUniId);
   return useGet(
-    `/university/examiner${getQueryData({ length, page, search })}`
+    `/university/${uniId}/examiner${getQueryData({ length, page, search })}`
   );
 };
 
 export const useUpdateExaminer = ({ examinerId }: { examinerId: number }) => {
-  return usePatch(`/university/examiner/edit/${examinerId}`);
+  const uniId = useSelector(getUniId);
+  return usePatch(`/university/${uniId}/examiner/edit/${examinerId}`);
 };
 
 export const useGetExaminerInfo = ({ examinerId }: { examinerId: number }) => {
-  return useGet(examinerId ? `/university/examiner/${examinerId}` : undefined);
+  const uniId = useSelector(getUniId);
+  return useGet(
+    examinerId ? `/university/${uniId}/examiner/${examinerId}` : undefined
+  );
 };
 
 export const useDeleteExaminer = () => {
-  const deleteFn = useCallback((examinerId: number) => {
-    return deleteReq(`/university/examiner/delete/${examinerId}`);
-  }, []);
+  const uniId = useSelector(getUniId);
+  const deleteFn = useCallback(
+    (examinerId: number) => {
+      return deleteReq(`/university/${uniId}/examiner/delete/${examinerId}`);
+    },
+    [uniId]
+  );
 
   return useFetchAsync(deleteFn);
 };
 
 export const useUpdateExaminerStatus = () => {
+  const uniId = useSelector(getUniId);
   const updateStatus = useCallback(
     ({
       examinerId,
@@ -52,9 +65,9 @@ export const useUpdateExaminerStatus = () => {
       examinerId: number;
       data: { status: boolean };
     }) => {
-      return patch(`/university/examiner/status/${examinerId}`, data);
+      return patch(`/university/${uniId}/examiner/status/${examinerId}`, data);
     },
-    []
+    [uniId]
   );
 
   return useFetchAsync(updateStatus);
