@@ -1,7 +1,10 @@
 import { Button } from "antd";
 import { useFormik } from "formik";
+import { useEffect } from "react";
 import Input from "src/components/inputs/Input";
+import useNotification from "src/hooks/useNotification";
 import { object, ref, string } from "yup";
+import { useUpdatePassword } from "./apis";
 
 const FORM_FIELDS = {
   PASSWORD: "password",
@@ -10,7 +13,15 @@ const FORM_FIELDS = {
 };
 
 const UpdatePassword = () => {
-  const { values, errors, handleSubmit, handleChange } = useFormik({
+  const { successNotification, errorNotification } = useNotification();
+  const {
+    isLoading,
+    isSuccess,
+    error,
+    execute: updatePassword,
+  } = useUpdatePassword();
+
+  const { values, errors, handleSubmit, handleChange, resetForm } = useFormik({
     initialValues: {
       [FORM_FIELDS.PASSWORD]: "",
       [FORM_FIELDS.NEW_PASSWORD]: "",
@@ -25,8 +36,21 @@ const UpdatePassword = () => {
         .required("This is a Required field.")
         .oneOf([ref("newPassword"), ""], "Passwords must match"),
     }),
-    onSubmit: ({ password, newPassword, confirmPassword }) => {},
+    onSubmit: ({ password, newPassword, confirmPassword }) => {
+      updatePassword(password, newPassword);
+    },
   });
+
+  useEffect(() => {
+    if (isSuccess) {
+      successNotification();
+      resetForm();
+    }
+
+    if (error) {
+      errorNotification();
+    }
+  }, [error, errorNotification, isSuccess, resetForm, successNotification]);
 
   return (
     <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
@@ -64,7 +88,12 @@ const UpdatePassword = () => {
           />
         </div>
 
-        <Button className={"mt-8"} type="primary" htmlType="submit">
+        <Button
+          className={"mt-8"}
+          type="primary"
+          htmlType="submit"
+          loading={isLoading}
+        >
           Submit
         </Button>
       </form>
