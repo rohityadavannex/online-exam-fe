@@ -2,7 +2,8 @@ import { Spin } from "antd";
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { AuthRoute } from "src/App";
-import { getCurrentUserInfo } from "src/redux/selectors/app";
+import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
+import { checkViewAccess, getCurrentUserInfo } from "src/redux/selectors/app";
 import ForgotPassword from "src/tabs/auth/forgot-password/ForgotPassword";
 import Login from "src/tabs/auth/Login";
 import Register from "src/tabs/auth/register/Register";
@@ -25,6 +26,10 @@ import CreateExam from "../tabs/exams/CreateExam";
 import ExamDetailScreen from "../tabs/exams/ExamDetailScreen";
 import ExamsList from "../tabs/exams/list/ExamsList";
 import CreateQuestionPaper from "../tabs/question-papers/CreateQuestionPaper";
+import CreateRole from "../tabs/roles/create/CreateRole";
+import RolesList from "../tabs/roles/list/RolesList";
+import CreateStaff from "../tabs/staff/CreateStaff";
+import StaffList from "../tabs/staff/list/StaffList";
 import StudentResult from "../tabs/student-results/list/StudentResult";
 import CreateSubject from "../tabs/subjects/CreateSubject";
 import SubjectsList from "../tabs/subjects/list/SubjectsList";
@@ -34,6 +39,8 @@ function UniversityRoutes() {
   const userInfo = useSelector(getCurrentUserInfo);
   console.log("line 16 --------> ", userInfo);
   const userRole = userInfo?.role ?? 3;
+
+  const hasViewAccessToTab = useSelector((state) => checkViewAccess(state));
 
   return (
     <Routes>
@@ -58,51 +65,94 @@ function UniversityRoutes() {
         >
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
-        <Route path="/collages" element={<CollageList />} />
-        <Route
-          path="/collages/create/:collageId?"
-          element={<CreateCollage />}
-        />
 
-        <Route path="/academic-years" element={<AcademicYearsList />} />
-        <Route
-          path="/academic-years/create/:yearId?"
-          element={<CreateAcademicYear />}
-        />
+        {hasViewAccessToTab(TAB_NAMES.COLLAGES) && (
+          <>
+            <Route path="/collages" element={<CollageList />} />
+            <Route
+              path="/collages/create/:collageId?"
+              element={<CreateCollage />}
+            />
+          </>
+        )}
 
-        <Route path="/courses" element={<CoursesList />} />
-        <Route path="/courses/create/:courseId?" element={<CreateCourses />} />
+        {hasViewAccessToTab(TAB_NAMES.ACADEMIC_YEAR) && (
+          <>
+            <Route path="/academic-years" element={<AcademicYearsList />} />
+            <Route
+              path="/academic-years/create/:yearId?"
+              element={<CreateAcademicYear />}
+            />
+          </>
+        )}
 
-        <Route path="/subjects" element={<SubjectsList />} />
-        <Route
-          path="/subjects/create/:subjectId?"
-          element={<CreateSubject />}
-        />
+        {hasViewAccessToTab(TAB_NAMES.COURSES) && (
+          <>
+            <Route path="/courses" element={<CoursesList />} />
+            <Route
+              path="/courses/create/:courseId?"
+              element={<CreateCourses />}
+            />
+          </>
+        )}
 
-        <Route path="/exams" element={<ExamsList />} />
-        <Route path="/exams/create" element={<CreateExam />} />
-        <Route path="/exams/:examId" element={<ExamDetailScreen />}>
-          <Route index element={<Navigate to={"subjects"} />} />
-          <Route path="subjects" element={<AssignedSubjectsList />} />
-          <Route
-            path="subjects/:subjectId/questions"
-            element={<CreateQuestionPaper />}
-          />
+        {hasViewAccessToTab(TAB_NAMES.SUBJECT) && (
+          <>
+            <Route path="/subjects" element={<SubjectsList />} />
+            <Route
+              path="/subjects/create/:subjectId?"
+              element={<CreateSubject />}
+            />
+          </>
+        )}
 
-          <Route path="enrollments" element={<EnrolledStudentsList />} />
-          <Route path="centers" element={<ExamCentersList />} />
-          <Route path="exam-sheets" element={<ExamSheetsList />} />
-          <Route path="exam-sheets/create" element={<CreateExamSheets />} />
-        </Route>
-        <Route
-          path="/exams/:examId/:studentId/result"
-          element={<StudentResult />}
-        />
-        <Route path="/examiners" element={<ExaminersList />} />
-        <Route
-          path="/examiners/create/:examinerId?"
-          element={<CreateExaminer />}
-        />
+        {hasViewAccessToTab(TAB_NAMES.EXAM) && (
+          <>
+            <Route path="/exams" element={<ExamsList />} />
+            <Route path="/exams/create" element={<CreateExam />} />
+            <Route path="/exams/:examId" element={<ExamDetailScreen />}>
+              <Route index element={<Navigate to={"subjects"} />} />
+              <Route path="subjects" element={<AssignedSubjectsList />} />
+              <Route
+                path="subjects/:subjectId/questions"
+                element={<CreateQuestionPaper />}
+              />
+
+              <Route path="enrollments" element={<EnrolledStudentsList />} />
+              <Route path="centers" element={<ExamCentersList />} />
+              <Route path="exam-sheets" element={<ExamSheetsList />} />
+              <Route path="exam-sheets/create" element={<CreateExamSheets />} />
+            </Route>
+            <Route
+              path="/exams/:examId/:studentId/result"
+              element={<StudentResult />}
+            />
+          </>
+        )}
+
+        {hasViewAccessToTab(TAB_NAMES.EXAMINER) && (
+          <>
+            <Route path="/examiners" element={<ExaminersList />} />
+            <Route
+              path="/examiners/create/:examinerId?"
+              element={<CreateExaminer />}
+            />
+          </>
+        )}
+
+        {hasViewAccessToTab(TAB_NAMES.STAFF) && (
+          <>
+            <Route path="/staff" element={<StaffList />} />
+            <Route path="/staff/create/:staffId?" element={<CreateStaff />} />
+          </>
+        )}
+
+        {userRole === 2 && (
+          <>
+            <Route path="/roles" element={<RolesList />} />
+            <Route path="/roles/create/:roleId?" element={<CreateRole />} />
+          </>
+        )}
       </Route>
       <Route
         path="*"

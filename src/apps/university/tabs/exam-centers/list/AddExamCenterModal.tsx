@@ -16,12 +16,12 @@ enum FORM_FIELDS {
 const AddExamCenterModal = ({
   isModalOpen,
   setIsModalOpen,
-
+  refreshData,
   examId,
 }: {
   isModalOpen: boolean;
   setIsModalOpen: (value: boolean) => void;
-
+  refreshData: () => void;
   examId: number;
 }) => {
   const { successNotification, errorNotification } = useNotification();
@@ -42,26 +42,33 @@ const AddExamCenterModal = ({
     }));
   }, [collegesRes?.data]);
 
-  const { values, errors, handleSubmit, handleChange, touched, setFieldValue } =
-    useFormik({
-      enableReinitialize: true,
-      initialValues: {
-        [FORM_FIELDS.COLLEGE_ID]: null,
-        [FORM_FIELDS.CAPACITY]: null,
-      },
-      validationSchema: object({
-        [FORM_FIELDS.COLLEGE_ID]: number().required(
-          "This is a Required field."
-        ),
-        [FORM_FIELDS.CAPACITY]: number().required("This is a Required field."),
-      }),
-      onSubmit: (values) => {
-        createExamCenter(values);
-      },
-    });
+  const {
+    values,
+    errors,
+    handleSubmit,
+    handleChange,
+    touched,
+    setFieldValue,
+    resetForm,
+  } = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      [FORM_FIELDS.COLLEGE_ID]: null,
+      [FORM_FIELDS.CAPACITY]: null,
+    },
+    validationSchema: object({
+      [FORM_FIELDS.COLLEGE_ID]: number().required("This is a Required field."),
+      [FORM_FIELDS.CAPACITY]: number().required("This is a Required field."),
+    }),
+    onSubmit: (values) => {
+      createExamCenter(values);
+    },
+  });
 
   useEffect(() => {
     if (isCreateSuccess) {
+      refreshData();
+      resetForm();
       successNotification();
       setIsModalOpen(false);
     }
@@ -73,6 +80,8 @@ const AddExamCenterModal = ({
     createError,
     errorNotification,
     isCreateSuccess,
+    refreshData,
+    resetForm,
     setIsModalOpen,
     successNotification,
   ]);

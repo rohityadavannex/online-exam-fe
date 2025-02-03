@@ -9,12 +9,12 @@ import {
   usePatch,
   usePost,
 } from "src/http-clients/clients";
-import { getCurrentUserInfo } from "src/redux/selectors/app";
+import { getUniId } from "src/redux/selectors/app";
 import CourseType from "./list/types";
 
 export const useCreateCourse = () => {
-  const uniData = useSelector(getCurrentUserInfo);
-  return usePost(`/university/${uniData.userId}/courses/create`);
+  const uniId = useSelector(getUniId);
+  return usePost(`/university/${uniId}/courses/create`);
 };
 
 export const useGetCourses = ({
@@ -26,9 +26,9 @@ export const useGetCourses = ({
   page: number;
   search?: string;
 }) => {
-  const uniData = useSelector(getCurrentUserInfo);
+  const uniId = useSelector(getUniId);
   return useGet(
-    `/university/${uniData.userId}/courses${getQueryData({
+    `/university/${uniId}/courses${getQueryData({
       length,
       page,
       search,
@@ -37,49 +37,45 @@ export const useGetCourses = ({
 };
 
 export const useUpdateCourse = ({ courseId }: { courseId: number }) => {
-  const uniData = useSelector(getCurrentUserInfo);
-  return usePatch(`/university/${uniData.userId}/courses/edit/${courseId}`);
+  const uniId = useSelector(getUniId);
+  return usePatch(`/university/${uniId}/courses/edit/${courseId}`);
 };
 
 export const useGetCourseInfo = ({ courseId }: { courseId: number }) => {
-  const uniData = useSelector(getCurrentUserInfo);
+  const uniId = useSelector(getUniId);
   return useGet(
-    courseId ? `/university/${uniData.userId}/courses/${courseId}` : undefined
+    courseId ? `/university/${uniId}/courses/${courseId}` : undefined
   );
 };
 
 export const useDeleteCourse = () => {
-  const uniData = useSelector(getCurrentUserInfo);
+  const uniId = useSelector(getUniId);
   const deleteFn = useCallback(
     (courseId: number) => {
-      return deleteReq(
-        `/university/${uniData.userId}/courses/delete/${courseId}`
-      );
+      return deleteReq(`/university/${uniId}/courses/delete/${courseId}`);
     },
-    [uniData.userId]
+    [uniId]
   );
 
   return useFetchAsync(deleteFn);
 };
 
 export const useUpdateCourseStatus = () => {
-  const uniData = useSelector(getCurrentUserInfo);
+  const uniId = useSelector(getUniId);
   const updateStatus = useCallback(
     ({ courseId, data }: { courseId: number; data: { status: boolean } }) => {
-      return patch(
-        `/university/${uniData.userId}/courses/status/${courseId}`,
-        data
-      );
+      return patch(`/university/${uniId}/courses/status/${courseId}`, data);
     },
-    [uniData.userId]
+    [uniId]
   );
 
   return useFetchAsync(updateStatus);
 };
 
 export const useGetUniversityCourses = () => {
-  const uniData = useSelector(getCurrentUserInfo);
-  const { data, ...rest } = useGet(`/university/${uniData.id}/courses-list`);
+  const uniId = useSelector(getUniId);
+
+  const { data, ...rest } = useGet(`/university/${uniId}/courses-list`);
   const coursesOptions = useMemo(() => {
     return (data?.data?.rows ?? []).map((course: CourseType) => {
       return { label: course.name, value: course.id };

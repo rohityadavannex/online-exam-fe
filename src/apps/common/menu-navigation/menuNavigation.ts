@@ -1,5 +1,16 @@
-import { HomeIcon } from "@heroicons/react/24/outline";
-import { DashboardIcon } from "src/icons";
+import {
+  AcademicCapIcon,
+  AdjustmentsVerticalIcon,
+  BookOpenIcon,
+  BuildingLibraryIcon,
+  CalendarDaysIcon,
+  ChartPieIcon,
+  DocumentTextIcon,
+  HomeIcon,
+  NewspaperIcon,
+  UserGroupIcon,
+  UsersIcon,
+} from "@heroicons/react/24/outline";
 import { PlansIcon } from "src/icons/PlansIcon";
 import { RolesIcon } from "src/icons/RolesIcon";
 import { SettingsIcon } from "src/icons/SettingsIcon";
@@ -38,7 +49,7 @@ export const siteAdminNavOptions = [
     label: "Dashboard",
     name: TAB_NAMES.DASHBOARD,
     href: "/",
-    icon: DashboardIcon,
+    icon: ChartPieIcon,
   },
   {
     label: "University",
@@ -53,43 +64,55 @@ export const universityNavOptions = [
     label: "Dashboard",
     name: TAB_NAMES.DASHBOARD,
     href: "/",
-    icon: DashboardIcon,
+    icon: ChartPieIcon,
   },
   {
     label: "Collages",
     name: TAB_NAMES.COLLAGES,
     href: "/collages",
-    icon: UserIcon,
+    icon: BuildingLibraryIcon,
   },
   {
     label: "Academic Years",
     name: TAB_NAMES.ACADEMIC_YEAR,
     href: "/academic-years",
-    icon: UserIcon,
+    icon: CalendarDaysIcon,
   },
   {
     label: "Courses",
     name: TAB_NAMES.COURSES,
     href: "/courses",
-    icon: UserIcon,
+    icon: AcademicCapIcon,
   },
   {
     label: "Subjects",
     name: TAB_NAMES.SUBJECT,
     href: "/subjects",
-    icon: UserIcon,
+    icon: BookOpenIcon,
   },
   {
     label: "Exams",
     name: TAB_NAMES.EXAM,
     href: "/exams",
-    icon: UserIcon,
+    icon: DocumentTextIcon,
   },
   {
     label: "Examiners",
     name: TAB_NAMES.EXAMINER,
     href: "/examiners",
-    icon: UserIcon,
+    icon: NewspaperIcon,
+  },
+  {
+    label: "Staff",
+    name: TAB_NAMES.STAFF,
+    href: "/staff",
+    icon: UsersIcon,
+  },
+  {
+    label: "Roles",
+    name: TAB_NAMES.ROLES,
+    href: "/roles",
+    icon: AdjustmentsVerticalIcon,
   },
 ];
 
@@ -98,25 +121,25 @@ export const collageNavOptions = [
     label: "Dashboard",
     name: TAB_NAMES.DASHBOARD,
     href: "/",
-    icon: DashboardIcon,
+    icon: ChartPieIcon,
   },
   {
     label: "Staff",
     name: TAB_NAMES.STAFF,
     href: "/staff",
-    icon: UserIcon,
+    icon: UsersIcon,
   },
   {
     label: "Student",
     name: TAB_NAMES.STUDENT,
     href: "/students",
-    icon: UserIcon,
+    icon: UserGroupIcon,
   },
   {
     label: "Exams",
     name: TAB_NAMES.EXAM,
     href: "/exams",
-    icon: UserIcon,
+    icon: AcademicCapIcon,
   },
 ];
 
@@ -125,7 +148,7 @@ export const examinerNavOptions = [
     label: "Dashboard",
     name: TAB_NAMES.DASHBOARD,
     href: "/",
-    icon: DashboardIcon,
+    icon: ChartPieIcon,
   },
   {
     label: "Answer Sheets",
@@ -140,7 +163,7 @@ export const superAdminNavOptions = [
     label: "Dashboard",
     name: TAB_NAMES.DASHBOARD,
     href: "/",
-    icon: DashboardIcon,
+    icon: ChartPieIcon,
   },
   {
     label: "Users",
@@ -176,7 +199,7 @@ export const adminNavOptions = [
     label: "Dashboard",
     name: TAB_NAMES.DASHBOARD,
     href: "/dashboard",
-    icon: DashboardIcon,
+    icon: ChartPieIcon,
   },
 
   {

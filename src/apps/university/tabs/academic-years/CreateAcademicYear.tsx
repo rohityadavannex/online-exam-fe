@@ -58,7 +58,7 @@ const CreateAcademicYear = () => {
         [FORM_FIELDS.START_YEAR]: initialData?.startYear ?? null,
         [FORM_FIELDS.END_YEAR]: initialData?.endYear ?? null,
         [FORM_FIELDS.NOTE]: initialData?.note ?? "",
-        [FORM_FIELDS.STATUS]: initialData?.active ?? false,
+        [FORM_FIELDS.STATUS]: initialData?.status ?? false,
       },
       validationSchema: object({
         [FORM_FIELDS.START_YEAR]: string().required(

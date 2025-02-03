@@ -11,7 +11,6 @@ import CollageRoutes from "./apps/collage/routes/Routes";
 import ExaminerRoutes from "./apps/examiner/routes/Routes";
 import SiteAdminRoutes from "./apps/site-admin/routes/Routes";
 import UniversityRoutes from "./apps/university/routes/Routes";
-import UserRoutes from "./apps/user/routes/Routes";
 import HorizontalLayout from "./components/layouts/HorizontalLayout";
 import { getTokenFromLocalStorage } from "./helpers/helpers";
 import { initialize } from "./redux/actions/app";
@@ -69,7 +68,7 @@ export default App;
 
 export const AuthRoute = ({ isInLayout = true }) => {
   const navigate = useNavigate();
-
+  console.log("line 71 ", getTokenFromLocalStorage());
   useEffect(() => {
     if (!getTokenFromLocalStorage()) {
       navigate("/login");
@@ -93,14 +92,14 @@ function getRoutes(role) {
   if (role === ROLES.SITE_ADMIN) {
     return <SiteAdminRoutes />;
   }
-  if (role === ROLES.UNIVERSITY) {
-    return <UniversityRoutes />;
-  }
+  // if (role === ROLES.UNIVERSITY) {
+  //   return <UniversityRoutes />;
+  // }
   if (role === ROLES.COLLEGE) {
     return <CollageRoutes />;
   }
   if (role === ROLES.EXAMINER) {
     return <ExaminerRoutes />;
   }
-  return <UserRoutes />;
+  return <UniversityRoutes />;
 }

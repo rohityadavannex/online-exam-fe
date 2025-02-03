@@ -268,19 +268,29 @@ export const ROLE_PERMISSION_FEATURES: { label: string; value: string }[] = [
     label: "Dashboard",
     value: TAB_NAMES.DASHBOARD,
   },
-
   {
-    label: "Roles",
-    value: TAB_NAMES.ROLES,
-  },
-
-  {
-    label: "Users",
-    value: TAB_NAMES.USERS,
+    label: "Colleges",
+    value: TAB_NAMES.COLLAGES,
   },
   {
-    label: "Plans",
-    value: TAB_NAMES.PLANS,
+    label: "Academic Years",
+    value: TAB_NAMES.ACADEMIC_YEAR,
+  },
+  {
+    label: "Courses",
+    value: TAB_NAMES.COURSES,
+  },
+  {
+    label: "Subjects",
+    value: TAB_NAMES.SUBJECT,
+  },
+  {
+    label: "Exams",
+    value: TAB_NAMES.EXAM,
+  },
+  {
+    label: "Examiner",
+    value: TAB_NAMES.EXAMINER,
   },
 ];
 

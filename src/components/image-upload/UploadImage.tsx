@@ -22,6 +22,7 @@ const UploadImage = ({
   required?: boolean;
   maxSize?: number;
 }) => {
+  console.log("line 25 ", value);
   const { errorNotification, successNotification } = useNotification();
 
   const handleImageChange = (info: any) => {
