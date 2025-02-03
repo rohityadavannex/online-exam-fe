@@ -67,6 +67,11 @@ const useTableColumns = ({
       dataIndex: "course",
       render: (text: number) => <div>{getCourseLabel(text)}</div>,
     },
+    {
+      title: "Exam Center",
+      dataIndex: "centerName",
+      render: (text: number) => <div>{text ?? "-"}</div>,
+    },
 
     {
       title: "Status",
