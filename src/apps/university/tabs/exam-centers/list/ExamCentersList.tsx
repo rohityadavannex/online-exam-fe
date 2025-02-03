@@ -90,6 +90,7 @@ const ExamCentersList = () => {
         isModalOpen={isExamCenterModalOpen}
         setIsModalOpen={setIsExamCenterModalOpen}
         examId={Number(examId)}
+        refreshData={mutateList}
       />
       <Modal
         title="Are You sure you want to delete this ?"

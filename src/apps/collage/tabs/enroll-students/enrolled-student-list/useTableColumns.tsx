@@ -48,6 +48,11 @@ const useTableColumns = ({
       render: (text: string) => text,
     },
     {
+      title: "Roll No.",
+      dataIndex: "registrationId",
+      render: (text: string) => text ?? "-",
+    },
+    {
       title: "Gender",
       dataIndex: "gender",
       render: (text: number) => <GenderCell id={text} />,
@@ -57,11 +62,21 @@ const useTableColumns = ({
       dataIndex: "course",
       render: (text: number) => <div>{getCourseLabel(text)}</div>,
     },
-
+    {
+      title: "Exam Center",
+      dataIndex: "course",
+      render: (text: number) => <div>{getCourseLabel(text)}</div>,
+    },
     {
       title: "Status",
       dataIndex: "enrollmentStatus",
       render: (text: number, record: StudentType) => {
+        if (text === ENROLLMENT_STATUS.ACCEPTED) {
+          return ENROLLMENT_STATUS_LABELS[ENROLLMENT_STATUS.ACCEPTED];
+        }
+        if (text === ENROLLMENT_STATUS.REJECTED) {
+          return ENROLLMENT_STATUS_LABELS[ENROLLMENT_STATUS.REJECTED];
+        }
         return (
           <div>
             {text === ENROLLMENT_STATUS.REQUESTED ? (

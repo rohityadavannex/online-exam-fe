@@ -25,14 +25,17 @@ const AssignSubjects = ({
   isModalOpen,
   onClose,
   subjectId,
+  refreshData,
 }: {
   isModalOpen: boolean;
   onClose: () => void;
   subjectId?: Number;
+  refreshData: () => void;
 }) => {
   useSetActiveTab(TAB_NAMES.EXAM);
   const navigate = useNavigate();
   const { examId } = useParams();
+
   const { errorNotification, successNotification } = useNotification();
 
   const { isLoading: isGetSubjectsLoading, data: subjectsData } =
@@ -61,24 +64,31 @@ const AssignSubjects = ({
     error: isCreateError,
   } = useAssignSubject({ examId: Number(examId) });
 
-  const { values, errors, handleSubmit, handleChange, touched, setFieldValue } =
-    useFormik({
-      enableReinitialize: true,
-      initialValues: {
-        [FORM_FIELDS.SUBJECT]: subjectInfo?.data?.subjectId ?? null,
-        [FORM_FIELDS.EXAM_DATE]: subjectInfo?.data?.examDate ?? null,
-      },
-      validationSchema: object({
-        [FORM_FIELDS.SUBJECT]: string().required("This is a Required field."),
-      }),
-      onSubmit: (values) => {
-        if (subjectId) {
-          updateData(values);
-          return;
-        }
-        executeCreate(values);
-      },
-    });
+  const {
+    values,
+    errors,
+    handleSubmit,
+    handleChange,
+    touched,
+    setFieldValue,
+    resetForm,
+  } = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      [FORM_FIELDS.SUBJECT]: subjectInfo?.data?.subjectId ?? null,
+      [FORM_FIELDS.EXAM_DATE]: subjectInfo?.data?.examDate ?? null,
+    },
+    validationSchema: object({
+      [FORM_FIELDS.SUBJECT]: string().required("This is a Required field."),
+    }),
+    onSubmit: (values) => {
+      if (subjectId) {
+        updateData(values);
+        return;
+      }
+      executeCreate(values);
+    },
+  });
 
   const getFieldError = useCallback(
     (fieldName: FORM_FIELDS) => {
@@ -89,8 +99,10 @@ const AssignSubjects = ({
 
   useEffect(() => {
     if (isCreateSuccess || isUpdateSuccess) {
+      refreshData();
       successNotification();
       onClose();
+      resetForm();
     }
     if (isCreateError || updateErr) {
       errorNotification();
@@ -102,6 +114,8 @@ const AssignSubjects = ({
     isUpdateSuccess,
     navigate,
     onClose,
+    refreshData,
+    resetForm,
     successNotification,
     updateErr,
   ]);

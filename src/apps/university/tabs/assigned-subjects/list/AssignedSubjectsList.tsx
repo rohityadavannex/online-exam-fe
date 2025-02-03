@@ -33,7 +33,7 @@ const AssignedSubjectsList = () => {
     isLoading,
     error,
     data,
-    mutate: mutateList,
+    mutate: refreshData,
     isValidating,
   } = useGetAssignedSubjects({
     length,
@@ -75,7 +75,7 @@ const AssignedSubjectsList = () => {
 
   useEffect(() => {
     if (isDeleteSucceed) {
-      mutateList();
+      refreshData();
       successNotification("Delete successfully");
       closeDeleteModal();
     }
@@ -87,7 +87,7 @@ const AssignedSubjectsList = () => {
     errorNotification,
     isDeleteSucceed,
     successNotification,
-    mutateList,
+    refreshData,
     closeDeleteModal,
   ]);
 
@@ -109,6 +109,7 @@ const AssignedSubjectsList = () => {
         isModalOpen={isAssignSubjectModalOpen}
         onClose={closeAssignSubjectModal}
         subjectId={idToOperate}
+        refreshData={refreshData}
       />
       <div className="flex flex-col gap-6">
         {/* <TabHeader label="Assign Subject" /> */}
