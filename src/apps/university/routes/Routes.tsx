@@ -2,6 +2,7 @@ import { Spin } from "antd";
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { AuthRoute } from "src/App";
+import Settings from "src/apps/admin/settings/Settings";
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
 import { checkViewAccess, getCurrentUserInfo } from "src/redux/selectors/app";
 import ForgotPassword from "src/tabs/auth/forgot-password/ForgotPassword";
@@ -153,6 +154,8 @@ function UniversityRoutes() {
             <Route path="/roles/create/:roleId?" element={<CreateRole />} />
           </>
         )}
+
+        <Route path="/settings" element={<Settings />} />
       </Route>
       <Route
         path="*"

@@ -40,10 +40,10 @@ const Profile = () => {
           >
             {currentUserInfo?.name ?? "Anonymous"}
           </span>
-          <ChevronDownIcon
+          {/* <ChevronDownIcon
             className="ml-2 h-5 w-5 text-gray-400"
             aria-hidden="true"
-          />
+          /> */}
         </span>
       </Menu.Button>
       <Transition

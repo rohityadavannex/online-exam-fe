@@ -5,6 +5,7 @@ import {
   BuildingLibraryIcon,
   CalendarDaysIcon,
   ChartPieIcon,
+  Cog6ToothIcon,
   DocumentTextIcon,
   HomeIcon,
   NewspaperIcon,
@@ -56,6 +57,12 @@ export const siteAdminNavOptions = [
     name: TAB_NAMES.UNIVERSITY,
     href: "/universities",
     icon: UserIcon,
+  },
+  {
+    label: "Settings",
+    name: TAB_NAMES.SETTINGS,
+    href: "/settings",
+    icon: Cog6ToothIcon,
   },
 ];
 
@@ -114,6 +121,12 @@ export const universityNavOptions = [
     href: "/roles",
     icon: AdjustmentsVerticalIcon,
   },
+  {
+    label: "Settings",
+    name: TAB_NAMES.SETTINGS,
+    href: "/settings",
+    icon: Cog6ToothIcon,
+  },
 ];
 
 export const collageNavOptions = [
@@ -123,12 +136,12 @@ export const collageNavOptions = [
     href: "/",
     icon: ChartPieIcon,
   },
-  {
-    label: "Staff",
-    name: TAB_NAMES.STAFF,
-    href: "/staff",
-    icon: UsersIcon,
-  },
+  // {
+  //   label: "Staff",
+  //   name: TAB_NAMES.STAFF,
+  //   href: "/staff",
+  //   icon: UsersIcon,
+  // },
   {
     label: "Student",
     name: TAB_NAMES.STUDENT,
@@ -140,6 +153,12 @@ export const collageNavOptions = [
     name: TAB_NAMES.EXAM,
     href: "/exams",
     icon: AcademicCapIcon,
+  },
+  {
+    label: "Settings",
+    name: TAB_NAMES.SETTINGS,
+    href: "/settings",
+    icon: Cog6ToothIcon,
   },
 ];
 
@@ -155,6 +174,12 @@ export const examinerNavOptions = [
     name: TAB_NAMES.ANSWER_SHEETS,
     href: "/answer-sheets",
     icon: UserIcon,
+  },
+  {
+    label: "Settings",
+    name: TAB_NAMES.SETTINGS,
+    href: "/settings",
+    icon: Cog6ToothIcon,
   },
 ];
 
