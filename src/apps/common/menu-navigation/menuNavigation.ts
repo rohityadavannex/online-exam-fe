@@ -136,12 +136,12 @@ export const collageNavOptions = [
     href: "/",
     icon: ChartPieIcon,
   },
-  {
-    label: "Staff",
-    name: TAB_NAMES.STAFF,
-    href: "/staff",
-    icon: UsersIcon,
-  },
+  // {
+  //   label: "Staff",
+  //   name: TAB_NAMES.STAFF,
+  //   href: "/staff",
+  //   icon: UsersIcon,
+  // },
   {
     label: "Student",
     name: TAB_NAMES.STUDENT,

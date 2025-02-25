@@ -13,7 +13,7 @@ import { getUniId } from "src/redux/selectors/app";
 
 export const useCreateExaminer = () => {
   const uniId = useSelector(getUniId);
-  return usePost("/university/examiner/create");
+  return usePost(`/university/${uniId}/examiner/create`);
 };
 
 export const useGetExaminers = ({
