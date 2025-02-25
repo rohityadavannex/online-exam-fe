@@ -2,6 +2,7 @@ import { Spin } from "antd";
 import { useSelector } from "react-redux";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { AuthRoute } from "src/App";
+import Settings from "src/apps/admin/settings/Settings";
 import { getCurrentUserInfo } from "src/redux/selectors/app";
 import ForgotPassword from "src/tabs/auth/forgot-password/ForgotPassword";
 import Login from "src/tabs/auth/Login";
@@ -45,6 +46,7 @@ function SiteAdminRoutes() {
           path="/universities/create/:uniId?"
           element={<CreateUniversity />}
         />
+        <Route path="/settings" element={<Settings />} />
       </Route>
       <Route
         path="*"
