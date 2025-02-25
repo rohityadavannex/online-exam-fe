@@ -8,6 +8,7 @@ import Login from "src/tabs/auth/Login";
 import Register from "src/tabs/auth/register/Register";
 import ResetPassword from "src/tabs/auth/reset-password/ResetPassword";
 import Dashboard from "src/tabs/dashboard/Dashboard";
+import CreateUniversity from "../tabs/universities/CreateUniversity";
 import UniversitiesList from "../tabs/universities/list/UniversitiesList";
 
 function SiteAdminRoutes() {
@@ -40,6 +41,10 @@ function SiteAdminRoutes() {
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
         <Route path="/universities" element={<UniversitiesList />} />
+        <Route
+          path="/universities/create/:uniId?"
+          element={<CreateUniversity />}
+        />
       </Route>
       <Route
         path="*"

@@ -2,6 +2,17 @@ import { ROLES } from "src/utils/constants";
 
 export const getActiveTab = (state) => state.app.activeTab;
 
+export const isSiteAdmin = (state) =>
+  getCurrentUserInfo(state)?.role === ROLES.SITE_ADMIN;
+export const isUniversity = (state) =>
+  getCurrentUserInfo(state)?.role === ROLES.UNIVERSITY;
+
+export const getUniId = (state) => {
+  const uniData = getCurrentUserInfo(state);
+  const isUni = isUniversity(state);
+  return isUni ? uniData.id : uniData.uniId;
+};
+
 export const isUserInfoInProgress = (state) =>
   state.userInfo?.inProgress ?? false;
 export const getCurrentUserInfo = (state) => state.userInfo?.data ?? {};
@@ -43,10 +54,8 @@ export const hasPlanAccess = (state, tabName) => {
 };
 
 export const hasViewAccess = (state, tabName) => {
-  return true;
-  const userRole = getUserRole(state);
   // for super admin
-  if (userRole === 1) {
+  if (isUniversity(state) || isSiteAdmin(state)) {
     return true;
   }
   if (
@@ -59,9 +68,8 @@ export const hasViewAccess = (state, tabName) => {
 };
 
 export const hasEditAccess = (state, tabName) => {
-  const userRole = getUserRole(state);
   // for super admin
-  if (userRole === 1) {
+  if (isUniversity(state) || isSiteAdmin(state)) {
     return true;
   }
   if (
@@ -74,9 +82,8 @@ export const hasEditAccess = (state, tabName) => {
 };
 
 export const hasDeleteAccess = (state, tabName) => {
-  const userRole = getUserRole(state);
   // for super admin
-  if (userRole === 1) {
+  if (isUniversity || isSiteAdmin) {
     return true;
   }
   if (
@@ -89,7 +96,6 @@ export const hasDeleteAccess = (state, tabName) => {
 };
 
 export const checkViewAccess = (state) => {
-  return () => true;
   return (tabName) => hasViewAccess(state, tabName);
 };
 

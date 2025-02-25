@@ -1,16 +1,37 @@
 import { TAB_NAMES } from "src/apps/common/menu-navigation/menuNavigation";
 
+export enum GENDER_ENUM {
+  MALE = 1,
+  FEMALE = 2,
+  OTHERS = 3,
+}
+
 export const GENDERS = [
   {
     label: "Male",
-    value: 1,
+    value: GENDER_ENUM.MALE,
   },
   {
     label: "Female",
-    value: 2,
+    value: GENDER_ENUM.FEMALE,
   },
   {
     label: "Others",
+    value: GENDER_ENUM.OTHERS,
+  },
+];
+
+export const COURSE_OPTIONS = [
+  {
+    label: "B.SC",
+    value: 1,
+  },
+  {
+    label: "B.Tech",
+    value: 2,
+  },
+  {
+    label: "B.A.",
     value: 3,
   },
 ];
@@ -234,8 +255,12 @@ export const FONT_FAMILIES = [
 ];
 
 export enum ROLES {
-  SUPER_ADMIN = 1,
-  ADMIN = 2,
+  SITE_ADMIN = 1,
+  UNIVERSITY = 2,
+  COLLEGE = 3,
+  TEACHER = 4,
+  STUDENT = 5,
+  EXAMINER = 6,
 }
 
 export const ROLE_PERMISSION_FEATURES: { label: string; value: string }[] = [
@@ -243,19 +268,29 @@ export const ROLE_PERMISSION_FEATURES: { label: string; value: string }[] = [
     label: "Dashboard",
     value: TAB_NAMES.DASHBOARD,
   },
-
   {
-    label: "Roles",
-    value: TAB_NAMES.ROLES,
-  },
-
-  {
-    label: "Users",
-    value: TAB_NAMES.USERS,
+    label: "Colleges",
+    value: TAB_NAMES.COLLAGES,
   },
   {
-    label: "Plans",
-    value: TAB_NAMES.PLANS,
+    label: "Academic Years",
+    value: TAB_NAMES.ACADEMIC_YEAR,
+  },
+  {
+    label: "Courses",
+    value: TAB_NAMES.COURSES,
+  },
+  {
+    label: "Subjects",
+    value: TAB_NAMES.SUBJECT,
+  },
+  {
+    label: "Exams",
+    value: TAB_NAMES.EXAM,
+  },
+  {
+    label: "Examiner",
+    value: TAB_NAMES.EXAMINER,
   },
 ];
 
@@ -566,3 +601,80 @@ export const HOUSES = [
   { label: "White", value: 3 },
   { label: "Black", value: 4 },
 ];
+
+export enum STAFF {
+  TEACHER = ROLES.TEACHER,
+}
+
+export const STAFF_OPTIONS = [
+  {
+    label: "Teacher",
+    value: STAFF.TEACHER,
+  },
+];
+
+export const SEMESTER_OPTIONS = [
+  {
+    label: "1St semester",
+    value: 1,
+  },
+  {
+    label: "2nd semester",
+    value: 2,
+  },
+  {
+    label: "3rd semester",
+    value: 3,
+  },
+  {
+    label: "4th semester",
+    value: 4,
+  },
+  {
+    label: "5th semester",
+    value: 5,
+  },
+  {
+    label: "6th semester",
+    value: 6,
+  },
+  {
+    label: "7th semester",
+    value: 7,
+  },
+  {
+    label: "8th semester",
+    value: 8,
+  },
+];
+
+export const EXAM_TYPE_OPTIONS = [
+  {
+    label: "Midterm exam",
+    value: 1,
+  },
+  {
+    label: "End-semester exam",
+    value: 2,
+  },
+  {
+    label: "Supplementary exam",
+    value: 3,
+  },
+  {
+    label: "Practical exam",
+    value: 4,
+  },
+];
+
+export enum ENROLLMENT_STATUS {
+  REQUESTED = 1,
+  ACCEPTED = 2,
+  REJECTED = 3,
+}
+
+export const ENROLLMENT_STATUS_LABELS = {
+  [ENROLLMENT_STATUS.REQUESTED]: "Enrollment Request Sent.",
+  [ENROLLMENT_STATUS.ACCEPTED]: "Accepted.",
+  [ENROLLMENT_STATUS.REJECTED]: "Rejected.",
+};

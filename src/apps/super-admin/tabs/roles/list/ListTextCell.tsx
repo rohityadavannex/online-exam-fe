@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import TextCell from "src/components/tables/cells/TextCell";
 
 const ListTextCell = ({
   className,
@@ -9,11 +8,11 @@ const ListTextCell = ({
   value: string[];
 }) => {
   const mappedData = useMemo(() => {
-    return `${value.slice(0, 2).join(",")} ${
+    return `${value.slice(0, 2).join(", ")} ${
       value.length > 2 ? `+${value.length - 2}` : ""
     }`;
   }, [value]);
-  return <TextCell value={mappedData} className={className} />;
+  return <div className={className}>{mappedData}</div>;
 };
 
 export default ListTextCell;

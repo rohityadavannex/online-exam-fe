@@ -15,7 +15,7 @@ const AddButton = ({
       onClick={onClick}
       className="px-5 py-2 rounded-[10px]"
     >
-      <span className="text-base font-normal">{label}</span>
+      {label}
     </Button>
   );
 };

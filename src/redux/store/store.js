@@ -3,6 +3,7 @@ import { createReduxHistoryContext } from "redux-first-history";
 import createSagaMiddleware from "redux-saga";
 import appReducer from "../reducers/appReducer";
 import { userInfoReducer } from "../reducers/userInfoReducer";
+import { userRoleAccessReducer } from "../reducers/userRoleAccessReducer";
 import { userSaga } from "../sagas/appSaga";
 import { history } from "./history";
 
@@ -18,6 +19,7 @@ const reducers = combineReducers({
   router: routerReducer,
   app: appReducer,
   userInfo: userInfoReducer,
+  roleAccess: userRoleAccessReducer,
 });
 
 const rootReducer = (state, action) => {

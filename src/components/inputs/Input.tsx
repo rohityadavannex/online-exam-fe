@@ -34,7 +34,7 @@ export const InputElement = ({
   return (
     <AntdInput
       className={classNames(
-        "h-[46px] w-full px-5 rounded-[10px] border-lightGrey",
+        "h-9 w-full px-5 rounded-lg border-lightGrey",
         className
       )}
       status={error && "error"}

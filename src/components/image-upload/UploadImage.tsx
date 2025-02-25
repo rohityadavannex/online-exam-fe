@@ -9,13 +9,20 @@ const UploadImage = ({
   label,
   error,
   wrapperClassName,
+  imageOnly = true,
+  required,
+  maxSize = 2,
 }: {
   value: string | FileType;
   onChange: (value: FileType) => void;
   label: string;
   error: string | undefined;
   wrapperClassName?: string;
+  imageOnly?: boolean;
+  required?: boolean;
+  maxSize?: number;
 }) => {
+  console.log("line 25 ", value);
   const { errorNotification, successNotification } = useNotification();
 
   const handleImageChange = (info: any) => {
@@ -25,10 +32,10 @@ const UploadImage = ({
   const beforeUpload = (file: FileType) => {
     const isJpgOrPng =
       file?.type === "image/jpeg" || file?.type === "image/png";
-    if (!isJpgOrPng) {
+    if (imageOnly && !isJpgOrPng) {
       errorNotification("You can only upload JPG/PNG file!");
     }
-    const isLt2M = file.size / 1024 / 1024 < 2;
+    const isLt2M = file.size / 1024 / 1024 < maxSize;
     if (!isLt2M) {
       errorNotification("Image must smaller than 2MB!");
     }
@@ -43,7 +50,7 @@ const UploadImage = ({
   );
 
   return (
-    <ElementWithWrapper label={label}>
+    <ElementWithWrapper label={label} required error={error}>
       <Upload
         listType="picture-card"
         //className="avatar-uploader"
@@ -62,7 +69,7 @@ const UploadImage = ({
             }
             alt="avatar"
             style={{ width: "100%", height: "100%" }}
-            className="rounded-full object-cover"
+            className="rounded-md object-cover"
           />
         ) : (
           uploadButton

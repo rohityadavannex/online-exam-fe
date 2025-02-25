@@ -6,7 +6,6 @@ import { logout } from "src/helpers/helpers";
 import { BellIcon, CommentIcon, QueryIcon, UserIcon2 } from "src/icons";
 import { ProfileIcon } from "src/icons/ProfileIcon";
 import { getCurrentUserInfo } from "src/redux/selectors/app";
-import Logo from "../../../src/images/logo/scl.png";
 import ContextDropdown from "../dropdowns/ContextDropdown";
 
 const ProfileV2 = () => {
@@ -18,7 +17,7 @@ const ProfileV2 = () => {
       <div className="w-full ">
         <div className="float-right">
           <div className="flex gap-[35px]">
-            <div className="flex gap-[15px] ">
+            {/* <div className="flex gap-[15px] ">
               <img src={Logo} alt="school logo" />
               <span className="text-[14px] font-[600]">
                 GOTAN INTERNATIONAL SR. SEC. SCHOOL <br />
@@ -26,7 +25,7 @@ const ProfileV2 = () => {
                   Account ID:SLRJ2102636
                 </span>
               </span>
-            </div>
+            </div> */}
             <div className="flex gap-[14px]">
               <div className="p-2 bg-[#EBECEF] h-10 rounded-full">
                 <QueryIcon />

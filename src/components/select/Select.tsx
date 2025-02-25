@@ -31,7 +31,7 @@ export const SelectElement = (props: SelectProps) => {
   return (
     <AntdSelect
       className={classNames(
-        "h-[46px] w-full rounded-[10px] border-lightGrey",
+        "h-9 w-full rounded-[10px] border-lightGrey",
         props.className
       )}
       {...props}

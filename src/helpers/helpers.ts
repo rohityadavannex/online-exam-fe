@@ -2,11 +2,14 @@ import moment from "moment";
 import {
   BREADCRUMBS,
   BUSINESS_TYPE,
+  EXAM_TYPE_OPTIONS,
   GENDERS,
   IDENTITY_DOCUMENTS_OPTIONS,
   LEAD_STATUS_OPTIONS,
   LEAD_TYPE,
   PAYMENT_METHOD_OPTIONS,
+  ROLES,
+  SEMESTER_OPTIONS,
 } from "src/utils/constants";
 import { v4 as uuidv4 } from "uuid";
 import cities from "../utils/cities.json";
@@ -161,3 +164,29 @@ export function mappedCSVData(
     }),
   }));
 }
+
+export function getRoleName(roleId: Number) {
+  if (roleId === ROLES.SITE_ADMIN) {
+    return "SiteAdmin";
+  }
+  if (roleId === ROLES.UNIVERSITY) {
+    return "University";
+  }
+  if (roleId === ROLES.COLLEGE) {
+    return "Collage";
+  }
+  if (roleId === ROLES.EXAMINER) {
+    return "Examiner";
+  }
+  return "-";
+}
+
+export const getExamTypeLabel = (id: number) => {
+  return EXAM_TYPE_OPTIONS.find((exam) => exam.value === id)?.label ?? "-";
+};
+
+export const getSemesterLabel = (id: number) => {
+  return (
+    SEMESTER_OPTIONS.find((semester) => semester.value === id)?.label ?? "-"
+  );
+};
